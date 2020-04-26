@@ -1,0 +1,310 @@
+\documentclass{article}
+\newcommand{\vo}{\vec{o}\@ifnextchar{^}{\,}{}}
+% \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{esvect}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{libertine}
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage[
+   type={CC},
+        modifier={by-nc-sa},
+        version={3.0}
+    ]{doclicense}
+    \title{Linear Algebra (Part 001)\\ Vectors and Vector Algebra}
+    \author{Dr Kapil \\Department of Computer Applications\\ NIT Kurukshetra}
+    
+\begin{document}
+
+    \maketitle
+   Algebra of a certain domain is a study of operations available on the things (nouns) of the domain.\\
+Example. In cooking, things are-
+\begin{itemize}
+    \item Edible material (for example spices, flour, water, milk etc.)
+    \item Utensils
+    \item Burner etc.
+\end{itemize}
+
+And the operations are-
+\begin{itemize}
+    \item Pouring
+    \item Mixing
+    \item Putting something on an ignited burner etc.
+    \item Keeping
+    \item Throwing
+\end{itemize}
+Now, kitchen algebra may mean studying various sequences of the operations and things (in mathematics we say them symbols).\\
+Now you can notice that
+\begin{itemize}
+    \item Some operations are defined only with certain symbols. Like you do not put Glass on an ignited burner.
+    \item Sometimes you mix only two things (binary) at a time while other times you put a lot of things together (n-ary) and then mix. Some operations may be unary only that is they involve only one thing for example throwing.
+    \item Sometimes when you do some operation with edible material and it becomes inedible.
+    Other times you do some operation with inedible material and it becomes edible.
+\end{itemize}
+
+Formally, the definition is-  Algebra is the study of mathematical symbols and the rules for manipulating these symbols; it is a unifying thread of almost all of mathematics. It includes everything from elementary equation solving to the study of abstractions such as groups, rings, and fields (\href{https://en.wikipedia.org/wiki/Algebra}{Wikipedia}).
+
+In Linear Algebra, we study algebra of vectors. Here symbols or things are vectors represented as ($\overrightarrow{x}$ or \textbf{$x$}). Geometric Vectors, that we have seen already
+Example: Velocity , force  and  acceleration  etc.
+As applied  to vectors  we  have  scalar  quantities that has only magnitudes For example temperature,  energy etc.\\
+We have worked with two dimensional (2D) and three dimensional (3-D) vectors during our twelfth standard. You might probably remember that $2\hat{i}+3\hat{j}, (4,5),
+        \begin{pmatrix}
+         3 \\
+         5 \\
+       \end{pmatrix}
+        $ are different ways to represent the vectors of 2-D.\\
+        And that the 3-D vectors are represented as
+        $(2,1,5), 2\hat{i}+5\hat{j}+3\hat{k},
+          \begin{pmatrix}
+          2\\
+          7\\
+          3
+          \end{pmatrix}
+         $\\
+We also perform many operations on them such as
+\begin{enumerate}
+    \item Addition on two vectors is defined as $ \begin{pmatrix}
+  a\\
+  b\\
+  c
+ \end{pmatrix}
+ +
+ \begin{pmatrix}
+ d\\
+ e\\
+ f
+\end{pmatrix}
+=
+ \begin{pmatrix}
+a+d\\
+b+e\\
+c+f
+\end{pmatrix}$. For example\\
+            \begin{enumerate}
+                 \item
+                    $\begin{pmatrix}
+                      2\\                   3\\
+                     \end{pmatrix}
+                      +
+                     \begin{pmatrix}
+                        5\\
+                        -2\\
+                    \end{pmatrix}
+                    =
+                    \begin{pmatrix}
+                        7\\
+                        1\\
+                    \end{pmatrix}$\\
+                \item
+                    $\begin{pmatrix}
+                    1\\
+                    -7\\
+                    2
+                    \end{pmatrix}
+                    +
+                    \begin{pmatrix}
+                        3\\
+                        4\\
+                        3
+                    \end{pmatrix}
+                     =
+                    \begin{pmatrix}
+                    4\\
+                    -3\\
+                    5
+                    \end{pmatrix}$\\
+            \end{enumerate}
+
+
+
+\item Scalar Multiplication scales the length of the vector but the  direction is retained. It is an operation between some scalar value and a vector. Mathematically, we define as if $a\in \mathbb{R}$ then
+$a*\begin{pmatrix}
+b\\c\\d
+
+\end{pmatrix}=
+\begin{pmatrix}
+a*b\\a*c\\a*d
+\end{pmatrix}$. For example-
+\begin{enumerate}
+    \item $2*\begin{pmatrix}
+4\\
+3
+\end{pmatrix}=
+\begin{pmatrix}
+8\\
+6
+\end{pmatrix}$\\
+
+\item $-1/2*\begin{pmatrix}
+7\\3\\10
+\end{pmatrix}=
+\begin{pmatrix}
+7*\frac{-1}{2}\\3*\frac{-1}{2}\\10*\frac{-1}{2}
+\end{pmatrix}=
+\begin{pmatrix}
+\frac{-7}{2}\\\frac{-3}{2}\\\frac{-10}{2}
+\end{pmatrix}$\\
+
+\end{enumerate}
+\end{enumerate}
+
+Both of the stated operations have geometrical interpretations can be seen from class XI and XII books.\\
+Exercise: Do following operations on graph (graphically) and verify with above stated theoretically
+\begin{itemize}
+    \item Addition of two Vectors with parallelogram law on the graph and share. Draw $\begin{pmatrix}
+        2\\3
+    \end{pmatrix},
+    \begin{pmatrix}
+        1\\-1
+    \end{pmatrix}
+     and \begin{pmatrix}
+        2+1\\3-1
+    \end{pmatrix}$
+    \item Multiply a given vector with different scalars and then draw the two vectors. For example draw $\begin{pmatrix}
+        2\\3
+    \end{pmatrix},2*\begin{pmatrix}
+        2\\3
+    \end{pmatrix},
+    -1*\begin{pmatrix}
+        2\\3
+    \end{pmatrix},
+    \frac{1}{2}*\begin{pmatrix}
+        2\\3
+    \end{pmatrix}$ and check if there is some pattern in the same. You can try with more examples by restricting the value of scalar, c like $c\in [0,1]$ or $[-1,0]$ or $[1,\infty)$ or $(-\infty,-1]$ etc.
+\end{itemize}
+
+There are few more operations which we are covering here just for sake of introduction as they are not basic operation. But they will appear again in detail.\\
+\begin{itemize}
+    \item Subtraction is defined as $\begin{pmatrix}
+  a\\
+  b\\
+  c
+ \end{pmatrix}
+ -
+ \begin{pmatrix}
+ d\\
+ e\\
+ f
+\end{pmatrix}
+=
+ \begin{pmatrix}
+a-d\\
+b-e\\
+c-f
+\end{pmatrix}$. It is not a basic operation as it can expressed as $vector_1 + (-1)* vector_2$. A few examples are-
+\begin{enumerate}
+    \item $\begin{pmatrix}
+1\\
+2
+\end{pmatrix}-
+ \begin{pmatrix}
+3\\
+4
+\end{pmatrix}
+=
+ \begin{pmatrix}
+-2\\
+-2
+\end{pmatrix}$\\
+\item  $\begin{pmatrix}
+1\\
+-7\\
+3
+\end{pmatrix}-
+\begin{pmatrix}
+2\\
+8\\
+6
+\end{pmatrix}=
+\begin{pmatrix}
+-1\\
+-15\\
+-3
+\end{pmatrix}$\\
+\end{enumerate}
+
+
+ \item Magnitude of a vector, $\overrightarrow{v}\in\mathbb{R}^n$ is denoted as
+$\|\overrightarrow{v}\|$ and  is  defined as $\|{\overrightarrow{v}\|} =  \sqrt{\sum_{i=1}^{n} {v_i}}$. For example
+\begin{itemize}
+    \item $\overrightarrow{v}=\begin{pmatrix}1\\4\\-3\end{pmatrix}$, then 
+$\|\overrightarrow{v}\|=\sqrt{(1^2+4^2+(-3)^2)} = \sqrt{(26)}$\\
+
+    \item for 2D vector, $\overrightarrow{u}$ = \begin{bmatrix} 2\\7\\ \end{bmatrix}\\
+$\|{\overrightarrow{u}\|^2} = 2^2+7^2=4+49=53=53$\\
+$\|{\overrightarrow{u}\|} = \sqrt{53}$\\
+\end{itemize}
+Magnitude of  any vector is " non- negative" value.  $\\
+$Hopefully you know what does non negative means. $\\
+$ If a is non negative , it means   $a>0$ or $a=0$  \\
+$ While a is positive means$, $ a$>0 $i.e. a cannot  be zero $\\
+\item Dot  Product: Dot product of two  vectors $ \overrightarrow{v},\overrightarrow{u} $is defined as $\\ Let
+\overrightarrow{u}= \begin{pmatrix}1\\2 \end{pmatrix}  
+\overrightarrow{v}=\begin{pmatrix} 4\\-2 \end{pmatrix}\\
+\overrightarrow{u}*\overrightarrow{v}= 1*4+2*(-2)=4-4=0\\
+$i.e.in other words if \overrightarrow{u}=\begin{pmatrix} u1\\u2\\u3 \end{pmatrix}
+and  \overrightarrow{v}= \begin{pmatrix} v1\\v2\\v3 \end{pmatrix}\\
+
+Then \overrightarrow{u}*\overrightarrow{v}=u1*v1+u2*v2+u3*v3 \\
+ $ Above operation and vectors are basic of  this course .\\
+ As we have  seen geometric vectors  , we can also interpret some\\ other objects, specially mathematical objects as vectors. $\\
+ (a) $a line  is represented as \\
+ y=mx+c can be thought of as a point in 2D space with (m,c)
+as coordinates\\
+(b)$ a polynomial can also be treated as vector$ \\
+ P(x)=2*x^2-3*x+5, $can be  thought of  as a vector$ \\
+\begin{pmatrix}
+2\\-3\\5\\
+\end{pmatrix}\\
+(c) $An image is made up of  pixels with intensity values of colour channels Red , Green and Blue$ \\
+\begin{left}
+\begin{tikzpicture}
+\draw[ultra thick, red] (0,0) rectangle (2,2)
+\draw[ultra thick, green] (.5,.5) rectangle (2.5,2.5)
+\draw[ultra thick, blue] (1,1) rectangle (3,3)
+\end{tikzpicture}
+\end{left}
+$ So  for  any image of size 1024*1024 resolution then it\\
+has ~ 1024 k pixels and thus each channels informatics is stored in 1 MB \\
+ And for 3 channels 3 MB space is required .\\
+ So, each image is a vector or collection of 3 million numbers $\\
+ $What is most important thing about  these vectors . All these vectors have  the speciality that after manipulations, the  resultant things  are  also vectors and are of some  style as that  of  input vectors.\\$
+i.e. (i)\begin{pmatrix}
+1\\7\\2
+\end{pmatrix}\in R^3  $ 3D Vectors\\
+then c \overrightarrow{u}=2*\begin{pmatrix}
+1\\7\\2
+\end{pmatrix}= \begin{pmatrix}
+2\\14\\4
+\end{pmatrix}\\
+(ii) \overrightarrow{u}= \begin{pmatrix}
+1\\7\\2
+\end{pmatrix},
+  \overrightarrow{u}= \begin{pmatrix}
+-2\\3\\-4
+\end{pmatrix}\in R^3\\
+\overrightarrow{u}+\overrightarrow{v}= \begin{pmatrix}
+-1\\10\\-2
+\end{pmatrix}\in R^3 \\
+$ In such cases where input symbols(before being manipulation) &\\ output symbols(after being operated)belong to same collection or\\ set. \\
+You can  notice that adding any two polynomials will result into\\ another polynomial only. \\
+ Also , if we multi;ly a polynomial with some constant value then\\ also the  resultant is polynomial.$\\
+P1(x)= 2x^2+3x+1\\
+P2(x)=5x-7 \\
+P1(x)*P2(x)=2x^2+8x-6 $ is also a polynomial $\\
+2*P1(x)=4x^2+6x+2 $ is also a polynomial $\\
+(*)$ So let we define  Vectors as - \\
+ $\rightarrow$ A set of things when added among themselves , the\\ product remain in the same set.\\
+ And when the such thing is multiplied by certain real or complex \\value , then also the product remains in the same set.$\\
+  Set= Collection\\
+$ (*)Elements  of R^n $(R: the set of  real numbers).In other words$\\
+ $ tuples of  n real numbers are vectors\\
+  It follows these two properties.$\\
+ (i)$\forall\overrightarrow{u},\overrightarrow{v}\ \in R^n \\
+ (ii)$\forall c \in R $ and $  $\forall \overrightarrow{u}\in R^n \\
+  c \overrightarrow{u}\in R^n \\
+$So ,  here we will try to understand behaviour of these \\ vectors(R^n).$ But you will see all vectors cab be represented using\\ R^n type vectors $which essentially tells that all the results of\\ R^n$ are also applicable on all the vectors we are  talking about.$
+
+\end{document}

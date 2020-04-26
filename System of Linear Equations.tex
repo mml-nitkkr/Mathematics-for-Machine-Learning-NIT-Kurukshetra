@@ -1,0 +1,274 @@
+to\documentclass{article}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+
+
+
+
+
+
+\title{Linear Algebra (Part 002)\\Understanding Simultaneous System of Linear Equations}
+\author{Dr Kapil\\Department of Computer Applications\\ NIT Kurukshetra}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+In the first part, we tried to understand vector.\\
+
+The property of retaining the same set after being operated is called ``closure`` property.~
+In other words we say $R^n$ is closed over addition and scalar multiplication.\\
+
+Now, let us see these vector in some real problems.\\
+
+\section{System of Linear Equations}\label{first_section}
+    Example : \\
+
+A company produces $N_1$, ..., $N_n$ for which resource $R_1$, ..., $R_m$ are required. To produce one unit of product $N_j$, $a_i{}_j$ unit of resources $R_i$ are required, where $1 \leq i \leq m$ \& $1 \leq j \leq n$. It is known that we have exactly $b_i$ units of resources $R_i$. So what could be the plan i.e. quantity of products should be produced so that no wastage is left over i.e. nothing is left behind.\\
+
+Let $x_j$ be the number of units produced according to the plan for the product $N_j$. Thus, the total consumption of $R_i$ in producing $a_{ij}x_j$. And total consumption of $R_i$ in producing $x_1,x_2,...,x_n$ is $a_i_1x_1 + a_i_2x_2 + ... + a_i_nx_n$. To ensure no wastage, we have to equate it with total available quantity of resource $R_i$ (i.e. $b_i$). Hence,
+
+\begin{align}
+   a_i_1x_1 + a_i_2x_2 + ... + a_i_nx_n & = b_i
+\end{align}
+
+Sum of usage of all the units of resources \(R_i\) in the production of \( N_1, N_2, ..., N_m\)\\
+
+i.e.\\
+\begin{align}
+    a_1_1x_1 + a_1_2x_2 + ... + a_1_nx_n &= b_1\nonumber\\
+    a_2_1x_1 + a_2_2x_2 + ... + a_2_nx_n &= b_2\nonumber\\
+    .\nonumber\\
+    .\nonumber\\
+    .\nonumber\\
+    a_m_1x_1 + a_m_2x_2 + ... + a_m_nx_n &= b_n\nonumber\\
+\end{align}
+
+When a particular value of \((x_1, x_2, ..., x_n)\) solves all the equations that solution of system. This is also known as simultaneous set of linear equations. That is all the equality's
+should hold for same value of \((x_1, x_2, ..., x_n) \in R^n\).\\
+
+Now, instead of trying to understand such a big system. Let us talk about smaller \& concrete system.\\
+Case 1:\\
+\begin{align}
+    x_1 + x_2 &= 2 &&  \text{(L1)}\\
+    x_1 - x_2 &= 0 &&  \text{(L2)}
+\end{align}
+
+Clearly both the equality's are true when \(x_1\) = 1 \& \(x_2\) = 1.\\
+
+If you see them graphically any point on \(L_1\) satisfies equation(3) \& any point on \(L_2\) satisfies equation(4). And the intersection point is the one which satisfies both equation(3) and equation(4).\\
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = $x_1$,
+        ylabel = {$x_2$},
+        xmin=0, xmax=7,
+        ymin=0, ymax=7,
+    ]
+        \addplot [color=red]{2-x};
+        \addlegendentry{$x_1 + x_2 = 2$}
+        \addplot [color=blue]{x};
+        \addlegendentry{$x_1 - x_2 = 0$}
+    
+    \end{axis}
+\end{tikzpicture}
+
+Case 2:\\
+
+\begin{align}
+    x_1 + x_2 &= 2 &&  \text{(L1)}\\
+    2x_1 &= 4 - 2x_2 &&  \text{(L2)}
+\end{align}
+
+Keeping $x_1, x_2$ on the same side of equality \& dividing the equation(4) by 2 throughout, we get to know that these are same equation's. Therefore, any point (a, 2-a) \forall a \in \(R^n\) will satisfy both the equations. And this `a` can take infinitely many value. So, we have infinitely many solutions. And graphically they mean both the line overlap \& hence provide infinite number of solution that can satisfy both equation simultaneously.\\
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = $x_1$,
+        ylabel = {$x_2$},
+        xmin=0, xmax=7,
+        ymin=0, ymax=7,
+    ]
+        \addplot [color=red]{2-x};
+        \addlegendentry{$L_1, L_2$}
+    \end{axis}
+\end{tikzpicture}
+
+Case 3:\\
+
+\begin{align}
+    x_1 + x_2 &= 2 &&  \text{(L1)}\\
+    2x_1 + 2x_2 &= 5  &&  \text{(L2)}
+\end{align}
+
+Obviously, when you multiply first by 2 then for any value of \((x_1, x_2)\), satisfy equation(7) cannot satisfy equation(8).\\
+
+Thus, we cannot have a common solution among them. Graphically, it means you can see, they can not meet.\\
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = $x_1$,
+        ylabel = {$x_2$},
+        xmin=0, xmax=7,
+        ymin=0, ymax=7,
+    ]
+        \addplot [color=red]{2-x};
+        \addlegendentry{$L_1$}
+        \addplot [color=blue]{(5 - 2*x) / 2};
+        \addlegendentry{$L_2$}
+    \end{axis}
+\end{tikzpicture}
+
+You can try to generate the similar case for 3 variable equations. [refer to book page 20.]\\
+
+Conclusion:\\
+
+Any real valued system of linear equations has either no, exactly one, or infinitely many solutions. Now, let us look case 1 int different way.\\
+\begin{align}
+    x_1 + x_2 &= 2 \nonumber\\
+    x_1 - x_2 &= 0 \nonumber
+\end{align}
+
+\[
+\implies x_1 \begin{pmatrix}
+                1\\
+                1\\
+             \end{pmatrix} + x_2 \begin{pmatrix}
+                                    1\\
+                                    -1\\
+                                 \end{pmatrix} &= \begin{pmatrix}
+                                                    2\\
+                                                    0\\
+                                                  \end{pmatrix}
+\]\\
+
+We have only one equation but involving 2D vector \(\vec{v_1}\) \& \(\vec{v_2}\). Now, what does this mean?\\
+Let's go back to our vector operation\\
+\begin{enumerate}
+    \item scalar multiplication - It scales the vector by some scalar quantity\\
+\[  ex.~ \vec{u_1} = \begin{pmatrix}
+                                1\\
+                                2\\
+                            \end{pmatrix}, ~ 2* \vec{u} \begin{pmatrix}
+                                                            1\\
+                                                            2\\
+                                                      \end{pmatrix} &= \begin{pmatrix}
+                                                                            2\\
+                                                                            4\\
+                                                                       \end{pmatrix}
+\]
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = $x_1$,
+        ylabel = {$x_2$},
+        xmin=0, xmax=7,
+        ymin=0, ymax=7,
+    ]
+        \addplot coordinates {(0,0) (1, 2) (2, 4)};
+    \end{axis}
+\end{tikzpicture}
+
+
+Graphically, i.e. it is just changing the magnitude of vector.
+    
+    \item Addition of two vector 
+    
+\[
+    \vec{u} &= \begin{pmatrix}
+                    1\\
+                    1\\
+               \end{pmatrix}, \vec{v} &= 
+               \begin{pmatrix}
+                    1\\
+                    -1\\
+               \end{pmatrix}
+\]    
+
+
+
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = $x_1$,
+        ylabel = {$x_2$},
+        xmin=-5, xmax=5,
+        ymin=-5, ymax=5,
+    ]
+        \addplot coordinates {(0,0) (1, 1) (2, 0)};
+        \addplot coordinates {(0,0) (1,-1)};
+    \end{axis}
+\end{tikzpicture}
+\end{enumerate}
+
+Put the tail of one vector on the head of another and now whatever location you are pointing to, is the resultant vector.\\
+
+Now going back to case 1\\
+
+\[
+    x_1 \begin{pmatrix}
+            1\\
+            1\\
+        \end{pmatrix} + x_2 \begin{pmatrix}
+                                1\\
+                                -1\\
+                            \end{pmatrix} &= \begin{pmatrix}
+                                                2\\
+                                                0\\
+                                             \end{pmatrix}
+\]
+
+So, this equation asks for what scaling factor of the vectors on addition can generate a new \\ vector \( \begin{pmatrix}
+                2\\
+                0\\
+              \end{pmatrix} \) .\\
+
+The sequence of scalar multiplication \& addition is called Linear Combination.\\
+
+So, the question what is the right Linear Combination of \begin{pmatrix}
+                                                            1\\
+                                                            1\\
+                                                        \end{pmatrix} \& \begin{pmatrix}
+                                                                            1\\
+                                                                            -1\\
+                                                                        \end{pmatrix} that can make \begin{pmatrix}
+                                                        2\\
+                                                        0\\
+                                                     \end{pmatrix}.
+                                                     
+Further you can see in following way \begin{pmatrix}
+                                        1 & 1\\ 
+                                        1 & -1\\ 
+                                     \end{pmatrix} \begin{pmatrix}
+                                                        x_1\\
+                                                        x_2\\
+                                                   \end{pmatrix} &= \begin{pmatrix}
+                                                                        2\\
+                                                                        0\\
+                                                                     \end{pmatrix}
+
+
+\(A\vec{x} = \vec{b}\),~ A = \begin{pmatrix}
+                            1 && 1\\
+                            1 && -1\\
+                        \end{pmatrix}, a matrix of order 2*2 \vec{x} is a unknown vector 2*1 \vec{b} know vector.
+
+
+
+
+\section{Exercise (Homework)}
+
+Extend Linear Combination view (or Understanding) for the other two cases.
+
+\end{document}
