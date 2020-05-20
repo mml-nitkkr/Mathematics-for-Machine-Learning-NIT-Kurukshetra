@@ -1,0 +1,1044 @@
+\documentclass{article}
+\usepackage{fancyhdr}
+%\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength\headheight{80.0pt}
+\addtolength{\textheight}{-80.0pt}
+
+\cfoot{
+\vspace{1mm}\hspace{2.5cm}
+\includegraphics[width=0.2\textwidth]{CC-BY-NC-SA.pdf}}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{blkarray}
+\usepackage[table]{xcolor}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\newcommand\bg{\cellcolor{gray!70}}
+
+\usepackage{stackengine,graphicx}
+\def\stacktype{L}
+\def\useanchorwidth{T}
+\newcommand\strike[1]{\stackon[3.3pt]{#1}{\rule{4.5ex}{1pt}}}
+\newcommand\vstrike[1]{\stackon[0pt]{#1}{\smash{\rule[-3pt]{1pt}{2.9ex}}}}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\title{Linear Algebra (Part 004 b)\\Solving System of Linear Equation}
+\author{Dr Kapil\\kapil $@$ nitkkr $\cdot$ ac $\cdot$ in\\Department of Computer Applications\\ NIT Kurukshetra}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \thispagestyle{fancy}
+
+\section{General form of ``System of Linear Equation''}
+\begin{align}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &= b_1 \nonumber\\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &= b_2 \nonumber\\
+    \vdots     ~~~~~~~~~~~~~~~~~~~~~~          & \vdots\nonumber\\
+    a_{m1}x_1 + a_{m2}x_2 + \cdots+ + a_{mn}x_n &= b_m \nonumber
+\end{align}
+
+here, $a_{ij} \in \mathbb{R}$, $b_{i} \in \mathbb{R}$ are known constants and $x_j$'s are unknowns or variables. Also, as we have seen earlier, solving the system of simultaneous linear equation may involve inverse i.e.
+
+\begin{align}
+    A\vec{x} = \vec{b} \Rightarrow (A^{-1}(A\vec{x})) = A^{-1}\vec{b} \Rightarrow (A^{-1}A)\vec{x}  = \vec{x} = A^{-1}\vec{b} \nonumber
+\end{align}
+
+So, here we will see algorithm for both i) finding the inverse of $A$ ($A^{-1}$) and ii) solving the system of linear equations. 
+
+
+
+\section{Matrix multiplication as linear combination of columns or rows}    
+First, let us have small recap of understanding how to replace a column or a row by linear combination of rows in matrices. This is same as what we have learnt in [Part 004 a]. Consider following matrix multiplication-
+
+\begin{align}
+    \begin{bmatrix}
+        1 & 3 & -1\\
+        2 & 0 & 1\\
+    \end{bmatrix}  \begin{bmatrix}
+                        2 & 0\\
+                        1 & 2\\
+                        1 & 0\\
+                  \end{bmatrix} &= \begin{bmatrix} 2\begin{pmatrix} 1 \\2 \end{pmatrix} + 1\begin{pmatrix} 3 \\0        \end{pmatrix} + 1\begin{pmatrix} -1 \\1\end{pmatrix} & 0\begin{pmatrix} 1 \\2 \end{pmatrix} + 2\begin{pmatrix} 3 \\0 \end{pmatrix} + 0\begin{pmatrix} -1 \\1 \end{pmatrix} \end{bmatrix} \nonumber \\ &= \begin{bmatrix}\begin{pmatrix} 2 \\4 \end{pmatrix}+\begin{pmatrix} 3 \\0 \end{pmatrix}+\begin{pmatrix} -1 \\1 \end{pmatrix} & \begin{pmatrix} 6 \\0 \end{pmatrix}\end{bmatrix}\nonumber \\
+                  &= \begin{bmatrix}
+                            4 & 6\\
+                            5 & 0
+                      \end{bmatrix}\nonumber
+\end{align}
+
+So, we can say that every column of the product is a linear combination of columns of the matrix on the left in the multiplication and the way to combine them is given by the columns of the matrix on the right in the multiplication i.e.
+
+\[
+    \begin{bmatrix}
+        \vstrike{} & \vstrike{} & & \vstrike{}\\
+        \vstrike{$a_1$} & \vstrike{$a_2$} & \cdots & \vstrike{$a_n$}\\
+      \vstrike{} & \vstrike{} & & \vstrike{}\\
+    \end{bmatrix} \begin{bmatrix}
+                    b_1 & c_1 & \cdots \\
+                    b_2 & c_2 & \cdots \\
+                    \vdots & \vdots &   \\
+                    b_n & c_n & \cdots
+    \end{bmatrix} = \begin{bmatrix}
+                \begin{pmatrix}
+                \\
+                    b_1\vstrike{$a_1$}+\cdots&+b_n\vstrike{$a_n$}\\
+                \\
+                \end{pmatrix} & \begin{pmatrix}
+                \\
+                    c_1 \vstrike{$a_1$}+\cdots+c_n\vstrike{$a_n$}\\
+                \\    
+                \end{pmatrix} &\cdots
+    \end{bmatrix}
+\]
+
+Matrix multiplication as linear combination of rows of matrix on right and combination is given by the rows of the matrix on left i.e. 
+
+\begin{align}
+    \begin{bmatrix}
+        1 & 3 & -1 \\
+        2 & 0 & 1
+    \end{bmatrix} \begin{bmatrix}
+                    2 & 0 \\
+                    1 & 2 \\
+                    1 & 0
+                  \end{bmatrix} &= \begin{bmatrix}
+                        \begin{pmatrix}        
+                                        1 \begin{bmatrix} 2 & 0\end{bmatrix} + &3 \begin{bmatrix} 1 & 2 \end{bmatrix} + &(-1) \begin{bmatrix} 1 & 0\end{bmatrix}
+                        \end{pmatrix}\\
+                                        \\
+                        \begin{pmatrix}
+                                        2 \begin{bmatrix} 2 & 0\end{bmatrix} + &0 \begin{bmatrix} 1 & 2 \end{bmatrix} +~~~ &1 \begin{bmatrix} 1 & 0\end{bmatrix}
+                        \end{pmatrix}
+                  \end{bmatrix} \nonumber \\
+                                &= \begin{bmatrix}
+                                        \begin{bmatrix} 4 & 6 \end{bmatrix}\\
+                                        \\
+                                        \begin{bmatrix} 5 & 0 \end{bmatrix}
+                                  \end{bmatrix} \nonumber \\
+                                &= \begin{bmatrix}
+                                        4 & 6 \\
+                                        5 & 0
+                                  \end{bmatrix} \nonumber
+\end{align}
+
+You should verify the answer by multiplying the matrix the way you have learned so far in XI or XII class or whatever we have learned in Part 003.
+
+Let us try to make a matrix that can subtract $1^{st}$ row from the second row of matrix \begin{math}A = \begin{bmatrix}
+        Row_1 \\
+        Row_2
+    \end{bmatrix}\end{math}. Now, since we know the multiplication finds the linear combination of the rows of the matrix on right and the combination comes from the matrix on left. Let this matrix that provides the right combination is $M$ and the product \begin{math}C =  \begin{bmatrix} -Row_1 + Row_2 \end{bmatrix}
+                                      = \begin{bmatrix}-1 & 1\end{bmatrix} \begin{bmatrix} Row_1 \\ Row_2 \end{bmatrix} = MA\end{math}\\
+                                       
+\begin{math}
+\therefore \text{M} =    \begin{bmatrix}
+                            -1 & 1
+                        \end{bmatrix}
+\end{math} \\
+
+$\boldsymbol{Question}$. Construct a matrix that change its $Row_2$ and replace it by $Row_1$.\\
+
+$\boldsymbol{Question}$. Construct a matrix that swaps/exchange first two rows of any matrix with 3 rows and keep third row as it is
+\[
+    \begin{bmatrix}
+        & & & \\
+        & & & \\
+        & & & 
+    \end{bmatrix} \begin{bmatrix}
+                        Row_1\\
+                        Row_2\\
+                        Row_3
+                  \end{bmatrix} \longrightarrow \begin{bmatrix}
+                        Row_2\\
+                        Row_1\\
+                        Row_3
+                                                \end{bmatrix}
+\]
+                                       
+$\boldsymbol{Question}$. Construct a matrix, $A$ that when multiplied with matrix $B$ generate another matrix $C$ such that-
+\begin{itemize}
+    \item $CRow_1 = 2\times BRow_1 - 3\times BRow_2 + 5\times BRow_3$
+    \item $CRow_2 =  BRow_3 - BRow_2$
+    \item $CRow_3 = BRow_1 + BRow_2 - BRow_3$
+\end{itemize}
+\[
+    \begin{bmatrix}
+        & & & \\
+        & & & \\
+        & & &
+    \end{bmatrix} \begin{bmatrix}
+                        BRow_1\\
+                        BRow_2\\
+                        BRow_3
+                  \end{bmatrix} \longrightarrow \begin{bmatrix}
+                                    2\times BRow_1 &+ (-3)\times BRow_2 &+ 5\times BRow_3 \\
+                                    0\times BRow_1 &+ (-1)\times BRow_2 &+ 1\times BRow_3\\
+                                    
+                                    1\times BRow_1 &+ 1\times BRow_2 &+(-1)\times  BRow_3
+                                \end{bmatrix}
+\]
+%Can we give answer here that later on goes at the end of chapter/book
+Try similar question for generating different linear combinations of columns or rows that we have discussed earlier.\\
+So, observe that we can do all kind of operations we were performing on equations to solve a system of linear equations through matrices by pre-multiplying right matrices (to have row operations). Let us write all the systems we get one after another while solving the system of linear equations.\\
+
+But before doing this we want you to have a recap on matrix multiplication that we discussed in previous part Part 004(a). Consider following matrix multiplication.
+
+\begin{align}
+    \begin{bmatrix}
+        1 & 3 & -1\\
+        2 & 0 & 1\\
+    \end{bmatrix}  \begin{bmatrix}
+                        2 & 0\\
+                        1 & 2\\
+                        1 & 0\\
+                  \end{bmatrix} &= \begin{bmatrix} 2\begin{pmatrix} 1 \\2 \end{pmatrix} + 1\begin{pmatrix} 3 \\0        \end{pmatrix} + 1\begin{pmatrix} -1 \\1\end{pmatrix} & 0\begin{pmatrix} 1 \\2 \end{pmatrix} + 2\begin{pmatrix} 3 \\0 \end{pmatrix} + 0\begin{pmatrix} -1 \\1 \end{pmatrix} \end{bmatrix} \nonumber \\ &= \begin{bmatrix}\begin{pmatrix} 2 \\4 \end{pmatrix}+\begin{pmatrix} 3 \\0 \end{pmatrix}+\begin{pmatrix} -1 \\1 \end{pmatrix} & \begin{pmatrix} 6 \\0 \end{pmatrix}\end{bmatrix}\nonumber \\
+                  &= \begin{bmatrix}
+                            4 & 6\\
+                            5 & 0
+                      \end{bmatrix}\nonumber
+\end{align}
+
+So, we can say that every column of the product is a linear combination of columns of the matrix on the left in the multiplication and the way to combine them is given by the columns of the matrix on the right in the multiplication i.e.
+
+\[
+    \begin{bmatrix}
+        \vstrike{} & \vstrike{} & & \vstrike{}\\
+        \vstrike{$a_1$} & \vstrike{$a_2$} & \cdots & \vstrike{$a_n$}\\
+      \vstrike{} & \vstrike{} & & \vstrike{}\\
+    \end{bmatrix} \begin{bmatrix}
+                    b_1 & c_1 & \cdots \\
+                    b_2 & c_2 & \cdots \\
+                    \vdots & \vdots &   \\
+                    b_n & c_n & \cdots
+    \end{bmatrix} = \begin{bmatrix}
+                \begin{pmatrix}
+                \\
+                    b_1\vstrike{$a_1$}+\cdots&+b_n\vstrike{$a_n$}\\
+                \\
+                \end{pmatrix} & \begin{pmatrix}
+                \\
+                    c_1 \vstrike{$a_1$}+\cdots+c_n\vstrike{$a_n$}\\
+                \\    
+                \end{pmatrix} &\cdots
+    \end{bmatrix}
+\]
+
+Matrix multiplication as linear combination of rows of matrix on right and combination is given by the rows of the matrix on left i.e. 
+
+\begin{align}
+    \begin{bmatrix}
+        1 & 3 & -1 \\
+        2 & 0 & 1
+    \end{bmatrix} \begin{bmatrix}
+                    2 & 0 \\
+                    1 & 2 \\
+                    1 & 0
+                  \end{bmatrix} &= \begin{bmatrix}
+                        \begin{pmatrix}        
+                                        1 \begin{bmatrix} 2 & 0\end{bmatrix} + &3 \begin{bmatrix} 1 & 2 \end{bmatrix} + &(-1) \begin{bmatrix} 1 & 0\end{bmatrix}
+                        \end{pmatrix}\\
+                                        \\
+                        \begin{pmatrix}
+                                        2 \begin{bmatrix} 2 & 0\end{bmatrix} + &0 \begin{bmatrix} 1 & 2 \end{bmatrix} +~~~ &1 \begin{bmatrix} 1 & 0\end{bmatrix}
+                        \end{pmatrix}
+                  \end{bmatrix} \nonumber \\
+                                &= \begin{bmatrix}
+                                        \begin{bmatrix} 4 & 6 \end{bmatrix}\\
+                                        \\
+                                        \begin{bmatrix} 5 & 0 \end{bmatrix}
+                                  \end{bmatrix} \nonumber \\
+                                &= \begin{bmatrix}
+                                        4 & 6 \\
+                                        5 & 0
+                                  \end{bmatrix} \nonumber
+\end{align}
+
+You should verify the answer by multiplying the matrix the way you have learned so far in XI or XII class or whatever we have learned in Part 003.
+
+Let us try to make a matrix that can subtract $1^{st}$ row from the second row of matrix \begin{math}A = \begin{bmatrix}
+        Row_1 \\
+        Row_2
+    \end{bmatrix}\end{math}. Now, since we know the multiplication finds the linear combination of the rows of the matrix on right and the combination comes from the matrix on left. Let this matrix that provides the right combination is $M$ and the product \begin{math}C =  \begin{bmatrix} -Row_1 + Row_2 \end{bmatrix}
+                                      = \begin{bmatrix}-1 & 1\end{bmatrix} \begin{bmatrix} Row_1 \\ Row_2 \end{bmatrix} = MA\end{math}\\
+                                       
+\begin{math}
+\therefore \text{M} =    \begin{bmatrix}
+                            -1 & 1
+                        \end{bmatrix}
+\end{math} \\
+
+$\boldsymbol{Question}$. Construct a matrix that change its $Row_2$ and replace it by $Row_1$.\\
+
+$\boldsymbol{Question}$. Construct a matrix that swaps/exchange first two rows of any matrix with 3 rows and keep third row as it is
+\[
+    \begin{bmatrix}
+        & & & \\
+        & & & \\
+        & & & 
+    \end{bmatrix} \begin{bmatrix}
+                        Row_1\\
+                        Row_2\\
+                        Row_3
+                  \end{bmatrix} \longrightarrow \begin{bmatrix}
+                        Row_2\\
+                        Row_1\\
+                        Row_3
+                                                \end{bmatrix}
+\]
+                                       
+$\boldsymbol{Question}$. Construct a matrix, $A$ that when multiplied with matrix $B$ generate another matrix $C$ such that-
+\begin{itemize}
+    \item $CRow_1 = 2\times BRow_1 - 3\times BRow_2 + 5\times BRow_3$
+    \item $CRow_2 =  BRow_3 - BRow_2$
+    \item $CRow_3 = BRow_1 + BRow_2 - BRow_3$
+\end{itemize}
+\[
+    \begin{bmatrix}
+        & & & \\
+        & & & \\
+        & & &
+    \end{bmatrix} \begin{bmatrix}
+                        BRow_1\\
+                        BRow_2\\
+                        BRow_3
+                  \end{bmatrix} \longrightarrow \begin{bmatrix}
+                                    2\times BRow_1 &+ (-3)\times BRow_2 &+ 5\times BRow_3 \\
+                                    0\times BRow_1 &+ (-1)\times BRow_2 &+ 1\times BRow_3\\
+                                    
+                                    1\times BRow_1 &+ 1\times BRow_2 &+(-1)\times  BRow_3
+                                \end{bmatrix}
+\]
+%Can we give answer here that later on goes at the end of chapter/book
+Try similar question for generating different linear combinations of columns or rows that we have discussed earlier.\\
+So, observe that we can do all kind of operations we were performing on equations to solve a system of linear equations through matrices by pre-multiplying right matrices (to have row operations). Let us write all the systems we get one after another while solving the system of linear equations.\\
+
+\section{Gauss Elimination using matrices}
+
+In Part 003, we did Gauss elimination on system of equations. And there we tried to eliminate the coefficients of particular variable of the following equations by adding suitable multiple of other equations (generally previous equations). The operation is like replacing a equation by linear combination of other equations. And we have seen how to do it with the help of matrices. So, we can use these ideas to perform Gauss Elimination through matrices. Before doing this let us define some keywords and allowed operations that are required to understand them.\\
+\subsection{Example of System of Linear Equations and related terminologies}
+Let us consider the following system of simultaneous linear equations
+    \begin{align}
+        2x_1 + 3x_2 + 5x_3 &= 1 \nonumber\\
+        4x_1 - 2x_2 - 7x_3 &= 8 \nonumber\\
+        5x_1 + 5x_2 - 3x_3 &= 2 \nonumber
+    \end{align}
+    could have been written as (as we have discussed earlier in Part 003)
+    \begin{align}
+        \begin{bmatrix}
+            2\\
+            4\\
+            5
+        \end{bmatrix} \times x_1 +\begin{bmatrix}
+            3\\
+            -2\\
+            5
+        \end{bmatrix} \times x_2+\begin{bmatrix}
+            5\\
+            -7\\
+            -3
+        \end{bmatrix} \times x_3 =\begin{bmatrix}
+            1\\
+            8\\
+            2
+        \end{bmatrix} \label{a1}
+    \end{align}
+
+And using the rules of matrix multiplication, it can be written as
+    \begin{align}
+        \begin{matrix}
+            I^{st}~~&Equation~~\longrightarrow\\
+            II^{nd}~~&Equation~~\longrightarrow\\
+            III^{rd}~~&Equation~~\longrightarrow
+        \end{matrix}
+                     \begin{bmatrix}
+                        2 & 3 & 5\\
+                        4 & -2 & 5\\
+                        9 & 5 & -3
+                   \end{bmatrix} \begin{bmatrix}
+                                    x_1 \\ x_2 \\ x_3
+                                 \end{bmatrix} &= \begin{bmatrix}
+                                                    1 \\ 8 \\ 2
+                                                  \end{bmatrix} \label{a2}
+    \end{align}
+    
+    In matrix form we can write it as $A\vec{x} = \vec{b}$
+    
+    \begin{align}
+        A = \begin{bmatrix}
+                2 & 3 & 5 \\
+                4 & -2 & -7 \\
+                9 & 5 & -3
+            \end{bmatrix} ~~~~ \vec{x} = \begin{bmatrix}
+                                            x_1 \\
+                                            x_2 \\
+                                            x_3
+                                         \end{bmatrix}\text{ and } \vec{b} = \begin{bmatrix}
+                                            1 \\
+                                            8 \\
+                                            2
+                                         \end{bmatrix} \nonumber
+    \end{align}
+where $A$ is \textit{coefficient matrix} made up of coefficients of variables of \textit{variable vector}, $\vec{x}$ and $\vec{b}$ is \textit{constant vector}. Observing left side of (\ref{a1}) and (\ref{a2}) it can be concluded that $A\vec{x}$ represents the linear combination of columns of $A$.\\
+
+Now, remember that while performing Gauss Elimination, both side of equality should scaled with suitable scalar and then added to another equation. Therefore, instead of working on coefficient matrix, it would be good to work on \textit{augmented matrix} $[A|~\vec{b}~]$.\\
+
+\begin{align}
+        [A |~\vec{b}~] = \begin{bmatrix}[ccc|c]
+                2 & 3 & 5 & 1\\
+                4 & -2 & -7 & 8\\
+                9 & 5 & -3 & 2
+            \end{bmatrix} \nonumber
+\end{align}
+\subsection{An example of Gauss elimination}
+Gauss elimination is based on replacing a equation by linear combination of equations (including non-zero multiple of that equation as well) that helps making some coefficient zero in that equation. Basically, \textit{the two system of linear equations are said to be equivalent} iff both of them are satisfied by same solutions.
+
+For example-
+\[
+\begin{bmatrix}[ccc|c]
+    1 & 2 & 7 & 14 \\
+    -1 & 2 & -2 & -1 \\
+    2 & -1 & -4 & 0
+\end{bmatrix} \begin{matrix}
+                  \longleftarrow & (1) \\  
+                  \longleftarrow & (2) \\  
+                  \longleftarrow & (3) \\  
+              \end{matrix}
+\]
+we did some linear combination ((2) $\longleftarrow$ (2) + (1)) to get the next equivalent system of linear equations. So what could be the matrix and from what side it should be multiplied to the above matrix for the expanded operation that says
+\[
+\begin{bmatrix}
+    Row_1\leftarrow 1\times Row_1+0\times Row_2+0\times Row_3\\
+    Row_2\leftarrow 1\times Row_1+1\times Row_2+0\times Row_3\\
+    Row_3\leftarrow 0\times Row_1+0\times Row_2+1\times Row_3
+\end{bmatrix}
+\]
+to get the new equivalent system of equations as following?
+
+\[
+\begin{bmatrix}
+    & & \\
+    &? & \\
+    & &
+\end{bmatrix} \begin{bmatrix}[ccc|c]
+    1 & 2 & 7 & 14\\
+    0 & 4 & 5 & 13 \\
+    2 & -1 & -4 & 0
+\end{bmatrix} \begin{bmatrix}
+    & & \\
+    &? & \\
+    & &
+\end{bmatrix}
+\]
+Such operation that changes only one row of the matrix are called \textit{elementary operations} and the matrix that knocks off (make one coefficient zero) at $i,j$-th position is called \textit{elimination matrix} ($E_{ij}$).
+
+Now again, to eliminate the coefficient at ($3,1$) position, we need to perform (3) $\longleftarrow (3) - 2\times (1) $, to get new (next) set of equations as following
+\[
+\begin{bmatrix}[ccc|c]
+    1 & 2 & 7 & 14\\
+    0 & 4 & 5 & 13 \\
+    0 & 5 & 18 & 28
+\end{bmatrix}
+\]
+
+which again changes by replacing $(3) \longleftarrow (3) - \frac{5}{4}(2) $
+\[
+\begin{bmatrix}
+    & & \\
+    & & \\
+    & &
+\end{bmatrix}
+\begin{bmatrix}[ccc|c]
+    1 & 2 & 7 & 14\\
+    0 & 4 & 5 & 13 \\
+    0 & 5 & 18 & 28
+\end{bmatrix} \longrightarrow \begin{bmatrix}[ccc|c]
+                                1 & 2 & 7 & 14\\
+                                0 & 4 & 5 & 13\\
+                                0 & 0 & 1 & 1
+                              \end{bmatrix}
+\]
+So finally, we are with the matrix.\\
+\begin{align}
+\begin{bmatrix}[ccc|c] 
+1 & 2 & 7 & 14 \\
+0 & 4 & 5 & 13 \\
+0 & 0 & 1 & 1
+\end{bmatrix}
+\end{align}\label{GE1}
+Now the solution can be obtained by applying back substitution.\\
+
+The leading coefficient of a row (first non zero number from the left) is called the \textit{pivot}. It should always be at right of any pivot of previous rows.\\
+\subsection{Back Substitution}
+If you are looking at the equations simultaneously, you must know equation (\ref{GE1}) refers to following system of equations-  \\
+
+\begin{equation} \tag{Back Substitution}
+\begin{split}
+x_3 &= 1\\
+x_2 &= \frac{13 - 5(1)}{4} = 2 \\
+x_1 &= 14 - 7(1) - 2(2) = 3
+\end{split}
+\end{equation}
+\textbf{Homework Exercise:}
+\begin{enumerate}
+    \item Here, you should think about making a program in Python or MATLAB to solve any system of linear equations using matrices.
+    \item Try example 2.6 on page 29 of mml-book and try to learn these matrices.
+\end{enumerate}
+
+
+\section{Row-echelon form}
+A matrix is said to be in \textit{row-echelon form} if and only if,
+\begin{enumerate} [a.]
+    \item All rows that contain only zero are at the bottom of the matrix; correspondingly, all rows that contain at least one non-zero element are above the rows that contain only zeros.
+    \item Looking at non-zero rows only, the first non-zero number from the left (also called the pivot or leading coefficient) is always strictly to the right of pivot of the row above it.
+\end{enumerate}
+For example,\\
+
+\textbf{Example 1} 
+ \[
+ \left[\begin{array}{cccc}
+     1 &1 &2 &3\\ 
+     \rowcolor{gray!70}
+     0 &0 &0 &0\\
+     0 &2 &4 &3
+  \end{array}\right]
+  \begin{matrix}
+    & &\\
+     \longrightarrow &\emph{All zero row is above a non-zero row}\\
+    & \text{(Not in Row-Echelon form)} \nonumber
+  \end{matrix}
+\]
+
+\textbf{Example 2} 
+\[
+ \left[\begin{array}{cccc}
+    \bg1 &0 &2 &7\\  
+     0 &\bg1 &3 &2\\
+     \bg1 &2 &0 &0
+  \end{array}\right]
+  \begin{matrix}
+    &&\\
+    &&\\
+    \longrightarrow &\emph{Pivot of the arrow is on the left of the pivot of the row just above}\\
+  \end{matrix}\\
+\]
+\begin{align}
+    \centering
+  \text{(Not in Row-Echelon form)} \nonumber
+\end{align}
+
+
+\textbf{Example 3}
+\[
+\left[\begin{array}{ccccc}
+    0 &\bg1 &3 &4 &2\\
+    0 &0 &\bg2 &1 &4\\
+    0 &0 &0 &0 &\bg3\\
+    0 &0 &0 &0 &0
+  \end{array}\right] ~~~~  \text{(In Row-Echelon form)}
+\]
+
+%Now there are few questions-i) What is left to achieve Row-Echelon form in our way to solve system of linear equation through Gauss elimination should lead us to the form. What could be different cases that will not let us move in the form.
+% Consider example below, it gets 0 in 2nd row 2nd column but not in 3rd row 2nd column while using Gauss elimination.
+% 2x_1+3x_2-x_3=4
+% 4x_1+6x_2-5x_3=10 
+% 4x_1-2x_2+3x_3=8
+% suggest that it can be solved by exchanging the rows and similar approach can be utilized if an entire row becomes zero.
+
+% Now take one more example with rectangular coefficient matrix that has some free variables and basic variables
+\subsection{Exchange of two rows}
+While solving system of linear equations the order of equation does not matter, so exchange of two rows will not matter as long we do it on augmented matrix i.e.
+     \[       
+        \begin{bmatrix}
+           2 & -3 & 4\\
+           4 & 1 & 3\\
+           8 & -5 & 11\\
+           8 & 2 & 6
+       \end{bmatrix}
+        \begin{bmatrix}
+            x_1\\x_2\\x_3
+        \end{bmatrix} = 
+        \begin{bmatrix}
+                    3\\8\\14\\16
+        \end{bmatrix} \text{is equivalent to}
+        \begin{bmatrix}
+           8 & 2 & 6\\
+           4 & 1 & 3\\
+           8 & -5 & 11\\
+           2 & -3 & 4
+        \end{bmatrix}
+        \begin{bmatrix}
+            x_1\\x_2\\x_3
+        \end{bmatrix} = 
+        \begin{bmatrix}
+            16\\8\\14\\3
+        \end{bmatrix}
+    \]
+In other words,
+\(       
+        \begin{bmatrix}[ccc|c]
+           2 & -3 & 4 & 3\\
+           4 & 1 & 3 & 8\\
+           8 & -5 & 11 & 14\\
+           8 & 2 & 6 & 16
+       \end{bmatrix} \text{ and }
+       \begin{bmatrix}[ccc|c]
+           8 & 2 & 6 & 16\\
+           4 & 1 & 3 & 8\\
+           8 & -5 & 11 & 14\\
+           2 & -3 & 4 & 3
+        \end{bmatrix}
+\) represents same system of linear equations. To show its necessity consider following augmented matrix-
+\begin{align}
+\begin{bmatrix}[ccc|c] 
+1 & 2 & 7 & 14 \\
+2 & 4 & 15 & 29 \\
+1 & 6 & 12 & 27 \\
+\end{bmatrix}\nonumber
+\end{align}
+
+that after doing suitable elimination you may encounter following augmented matrix-\\
+\begin{align}
+\begin{bmatrix}[ccc|c] 
+1 & 2 & 7 & 14 \\
+0 & 0 & 1 & 1 \\
+0 & 4 & 5 & 13 \\
+\end{bmatrix}\nonumber
+\end{align}
+So, exchanging the rows will help keeping the pivots at right position and lead to row echelon form.\\
+
+\subsection{Basic and Free variables}
+Consider following augmented matrix
+\begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 3 & -1 & 5 \\
+2 & 2 & -4 & -2 & 7 \\
+-1 & -1 & 2 & 1 & -3.5 
+\end{bmatrix}\nonumber
+\end{align}
+After, eliminations with the help of first equation of the system we get-
+
+\begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 3 & -1 & 5 \\
+0 & 0 & -10 & 0 & -3 \\
+0 & 0 & 5 & 0 & 1.5 
+\end{bmatrix}\nonumber
+\end{align}
+Further, with the help of second equation of the system
+
+\begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 3 & -1 & 5 \\
+0 & 0 & -10 & 0 & -3 \\
+0 & 0 & 0 & 0 & 0 
+\end{bmatrix}\label{ef1}
+\end{align}
+Note that not all columns have pivots. And a row is entirely zero.\\
+
+\textbf{Definition:} The variables corresponding to pivots in row-echelon form are known as \textit{basic variables}. Here, variable corresponding to $Col_1$ and $Col_3$ are basic variables.\\
+%Particular solution comes from basic variables
+
+\textbf{Definition:} Variables other than basic variables are said to be \textit{free variables}.  Here, variable corresponding to $Col_2$ and $Col_4$ are free variables.\\
+
+
+If all the variables are basic that is all the columns of coefficient matrix has pivots then unique solution comes. And if there is one or more free variables then the system is lying with no or \textbf{infinitely many solutions}.
+
+Also, note that the last row is entirely zero that is both coefficient portion as well constant term is zero. This equation is always satisfied irrespective of values of the variables. Therefore, the solution of the system of equations is entirely dependent on other equations.
+
+Again, consider following system of equations-\\
+\begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 3 & -1 & 5 \\
+2 & 2 & -4 & -2 & 7 \\
+-1 & -1 & 2 & 1 & 10 
+\end{bmatrix}\nonumber
+\end{align}
+After, appropriate elimination we get-
+\begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 3 & -1 & 5 \\
+0 & 0 & -10 & 0 & -3 \\
+0 & 0 & 0 & 0 & 13.5 
+\end{bmatrix}\nonumber
+\end{align}
+Here, equation corresponding to the third row says that coefficients of all the variables are zero, but the constant part is nonzero (i.e. $13.5$) which cannot be satisfied for any value of variable vector. And hence, left us to \textbf{no solution} case.\\
+Can you think about a method that doesn't require back substitution to finally get the answer?\\
+\textit{Hint:} What if we do such row operations which can make everything else zero? And set all non-zero diagonal, in fact pivot elements one? That is try to make diagonal entries one except in the last augmented column. And make zero else where in the left part of the augmented matrix.\\
+
+\section{Reduced Row-Echelon form}
+A system of equations is said to be in the \textit{reduced row-echelon form} (rref) or \textit{row canonical form} if and only if,
+\begin{enumerate}
+    \item It is in row echelon form
+    \item Every pivot is 1
+    \item Pivot is the only non-zero entry in the column
+\end{enumerate}
+Let us consider again the system of linear equation given in equation (\ref{ef1}) which we are providing here again for the reference-
+\begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 3 & -1 & 5 \\
+0 & 0 & -10 & 0 & -3 \\
+0 & 0 & 0 & 0 & 0 
+\end{bmatrix}\nonumber
+\end{align}
+Here, coefficient at position $(1,1)$ and at position $(2,3)$ are pivots. The matrix is already in row echelon form. To bring it into reduced row-echelon form, we need to do following things-
+\begin{enumerate}
+    \item Every pivot to be made 1. For this, we can replace the required equation by scalar multiple of the same row. And it does not change the set of points satisfying that equation. For the above system, eq(2) of the system can be replaced by multiplying with suitable scalar value on both side of equality i.e. $Row_2\leftarrow Row_2/(-10)$. 
+\begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 3 & -1 & 5 \\
+0 & 0 & 1 & 0 & 0.3 \\
+0 & 0 & 0 & 0 & 0 
+\end{bmatrix}\nonumber
+\end{align}
+    
+    \item Pivot is the only non-zero entry in the column. This can be achieved by not sticking to replacing \textbf{only} lower equations by the linear combination of previous equations of the system. Instead, we can replace previous rows by some linear combination of lower rows as well. In this example, eq(1) of the system by suitable linear combination of eq(1) and (2) i.e. $Row_1\leftarrow Row_1-3\times Row_2$. \begin{align}
+\begin{bmatrix}[cccc|c] 
+1 & 1 & 0 & -1 & 4.1 \\
+0 & 0 & 1 & 0 & 0.3 \\
+0 & 0 & 0 & 0 & 0 
+\end{bmatrix}\nonumber
+\end{align}
+\end{enumerate}
+
+The above method is called Gauss Jordan method of solving the system of linear equations.
+
+\section{A fresh example of solving system of linear equation}
+
+\subsection{with Gauss Elimination followed by Back Substitution method}
+Let us consider the following system of linear equations
+
+\[
+\begin{split}
+    2x_1 - 3x_2 + 4x_3 &= 3\\
+    4x_1 + x_2 + 3x_2 &= 8\\
+    8x_1 - 5x_2 + 11x_3 &= 14\\
+    8x_1 + 2x_2 + 6x_3 &= 16
+\end{split}
+\]
+
+
+In augmented matrix form we can write $A\vec{x} = \vec{b}$ as $\begin{bmatrix}
+    A~|~\vec{b}
+\end{bmatrix}$. so,\\
+\[
+ \left[\begin{array}{ccc|c}
+     2 &3 &4 &5\\
+     4 &1 &3 &8\\
+     8 &-5 &11 &14\\
+     8 &2 &6 &16\\
+  \end{array}\right]
+  \begin{matrix}
+    R_2\leftarrow R_2 - 2R_1\\
+    \xrightarrow{\hspace*{2.5cm}}\\
+    R_3\leftarrow R_3 - 4R_1\\
+    R_4\leftarrow R_4 - 4R_1\\
+  \end{matrix}
+  \left[\begin{array}{ccc|c}
+     2 &-3 &4 &3\\
+     0 &7 &-5 &2\\
+     0 &7 &-5 &2\\
+     0 &14 &-10 &4\\
+  \end{array}\right]
+  \begin{matrix}
+    R_3\leftarrow R_3 - R_2\\
+    \xrightarrow{\hspace*{2.5cm}}\\
+    R_4\leftarrow R_4 - 2R_3\\
+    &&\\
+  \end{matrix}
+  \left[\begin{array}{ccc|c}
+    \bg2 &-3 &4 &3\\
+     0 &\bg7 &-5 &2\\
+     0 &0 &0 &0\\
+     0 &0 &0 &0\\
+  \end{array}\right]
+\]
+Observe how many pivot/basic variables and what are these?\\
+\textbf{Answer-}\\In first row, first non-zero entry is in column 1 and is 2.\\
+In second row, first non-zero entry is in column 2 and is 7.\\
+Therefore, pivot variables are $x_1$ and $x_2$. And $x_3$ is free variable. Since rest of the rows have zero entries on both sides of equality, we can expect at least one solution and since there is one free variable, we can expect infinite solutions.\\
+
+First, we will find particular solution by setting free variables' value zero i.e.
+\[
+\begin{split}
+  2x_1 - 3x_2 + 4x_3 &= 3 \\
+  7x_2 - 5x_3 &= 2 \\
+  \text{setting free variable\hspace{3mm}  } x_3 &= 0\\
+  7x_2 &= 2 \implies x_2 = \frac{2}{7}\\
+  \text{and,\hspace{3mm}} 2x_1 - 3x_2 &= 3 \implies x_1 = \frac{27}{14}\\ 
+\end{split}
+\]
+\[
+\text{so,\hspace{3mm}}x_P =
+        \begin{bmatrix}
+            x_1\\x_2\\x_3\\
+        \end{bmatrix} = \begin{bmatrix}
+                            \frac{27}{14}\\
+                            \frac{2}{7}\\
+                            0\\
+                          \end{bmatrix}
+\]
+Now, assuming some parametric value of $x_3$ and solving for homogeneous system of equation we can find the homogeneous solution of the system.
+\[
+\begin{split}
+  2x_1 - 3x_2 + 4x_3 &= 0 \\
+  7x_2 - 5x_3 &= 0 \\
+  \text{setting free variable } x_3 = k, \text{ where } k \in \mathbb{R} \\
+  7x_2 &= 5k\implies x_2 = \frac{5}{7}k\\
+  \text{and putting the value of }x_3 \text{ and } x_2\text{, we get-}\\
+  2x_1 - 3(\frac{5}{7}k) +4k&= 0 \implies x_1 = -\frac{13}{14}k. \\
+  \text{Hence, the homogeneous solution of the system, }x_h\text{ is given by }
+  x_h = \begin{bmatrix}
+      x_1\\x_2\\x_3
+  \end{bmatrix}=\begin{bmatrix}
+      -\frac{13}{14}\\\frac{5}{7}\\1
+  \end{bmatrix}k
+\end{split}
+\] 
+And clubbing the particular solution, $x_P$, and the homogeneous solution, $x_h$, we will get the total or general solution, $x_T$ of the system of equation as-
+  
+\[
+\begin{split}
+  x_T = x_P+x_h = \begin{bmatrix}
+      x_1\\x_2\\x_3
+  \end{bmatrix}=\begin{bmatrix}
+      \frac{27}{14}\\\frac{2}{7}\\0
+  \end{bmatrix}+\begin{bmatrix}
+      -\frac{13}{14}\\\frac{5}{7}\\1
+  \end{bmatrix}k
+\end{split}
+\]
+ The same process could be done in matrix with the help of Gauss Jordan method.
+ \subsection{Gauss Jordan method}
+ Taking the same augmented matrix which we got after \textbf{Gauss Elimination} and prior to \textbf{Back Substitution}
+ \[
+ \left[\begin{array}{ccc|c}
+     2 &-3 &4 &3\\
+     0 &7 &-5 &2\\
+     0 &0 &0 &0\\
+     0 &0 &0 &0\\
+  \end{array}\right]
+  \xrightarrow{R_1\leftarrow R_1 -(\frac{-3}{7})R_2}
+  \left[\begin{array}{ccc|c}
+     2 &0 &\frac{13}{7} &\frac{27}{7}\\
+     0 &7 &-5 &2\\
+     0 &0 &0 &0\\
+     0 &0 &0 &0\\
+  \end{array}\right]
+  \xrightarrow[R_1\leftarrow \frac{R_1}{2}]{R_2\leftarrow \frac{R_2}{7}}
+  \left[\begin{array}{ccc|c}
+    1 &0 &\frac{13}{14} &\frac{27}{14}\\
+    0 &1 &\frac{-5}{7} &\frac{2}{7}\\
+    0 &0 &0 &0\\
+    0 &0 &0 &0\\
+  \end{array}\right]
+\]
+Notice very special form of the matrix that we have arrived at\\
+\[
+\left[\begin{array}{c|c|c}
+    I_2  &F_{2,1} &\vec{b}_{2,1}\\
+    \hline 
+    0_{2,2} &0_{2,1} &\vec{0}_{2,1}
+  \end{array}\right]\]
+\begin{itemize}
+\item$I_n$ is identity matrix with respect to $n$ pivot or basic variables.
+\item$0_{p,q}$ is matrix with all zeros of $p\times q$.
+\item$b_{p,1}$ is non-zero constant values on the right side of equality.
+\item$F_{p,q}$ is matrix corresponding to free variables.
+\end{itemize}
+
+Now, you can see value of pivot variables directly in $b_{p,1}$ for particular solution. 
+\[
+x_P = \begin{bmatrix}
+    \vec{b}_{p,1}\\
+     \hline
+     \vec{0}
+\end{bmatrix}
+\]
+
+And, to get solution corresponding to non zero value of free variables that can give rise to zero (or does not change the solution generated by pivot). Such system of equations, where the constant part is zero in all the equations of the system then it is called \textbf{homogeneous system of equations} (i.e. $A\vec{x}=\vec{0}$). Let $\vec{x}_B$ is vector of basic variables and $\vec{x}_f$ is a vector of free variables. Then the augmented matrix can be written as following matrix equation-
+
+\[
+\left[\begin{array}{c|c}
+    I_p &F_{p\times f} \\
+    \hline 
+    0_{m-p\times p} & 0_{m-p\times f} 
+  \end{array}\right] \begin{bmatrix}
+                            ~\vec{x}_B~\\
+                            \hline
+                            ~\vec{x}_f~
+                          \end{bmatrix}= \begin{bmatrix}
+                            ~\vec{0}~\\
+                            \hline
+                            ~\vec{0}~
+                          \end{bmatrix}
+\]
+where, $p$ is number of pivot variables, $f$ is the number of free variables of system of $m$ linear equations in $n=p+f$ variables.
+\begin{align*}
+&\implies \vec{x}_B + F\vec{x}_f = \vec{0} \\
+&\implies \vec{x}_B = 0 - F\vec{x}_f = -F\vec{x}_f\\
+\end{align*}
+\[
+\text{Therefore,\hspace{5mm}}  \vec{x}_h =  
+\begin{bmatrix}
+    \vec{x}_B\\ 
+    \vec{x}_f
+\end{bmatrix} = \begin{bmatrix}
+                -F\vec{x}_f\\\vec{x}_f
+                \end{bmatrix} = \begin{bmatrix}
+                                                    -F\\I
+                                                \end{bmatrix} \vec{x}_f, ~\forall ~ \vec{x}_f \in \mathbb{R}^f\]
+\\
+\[
+\vec{x}_h = \begin{bmatrix}
+                x_1\\x_2\\x_3\\
+            \end{bmatrix} = \begin{bmatrix}
+                                \frac{-13}{14}\\
+                                \frac{5}{7}\\
+                                1\\
+                                \end{bmatrix}\lambda, ~~\forall~\lambda~
+\]
+\[
+\therefore\text{General/Total solution, }x_T~=~~ x_P + x_h = \begin{bmatrix}
+    \vec{b}_{p,1}\\
+     \hline
+     \vec{0}
+\end{bmatrix}+\begin{bmatrix}
+    -F\\ 
+    \hline
+    I
+\end{bmatrix}\lambda =
+\begin{bmatrix}
+    \frac{27}{14}\\
+    \frac{2}{7}\\
+    0
+\end{bmatrix} + \begin{bmatrix}
+                  \frac{-13}{14}\\
+                  \frac{5}{7}\\
+                  1
+                \end{bmatrix}\lambda, ~~\forall~\lambda.
+\]
+Notice that you may have as many different $\lambda$'s as the number of free variables. \\
+Bingo!! a lot of stuff is done one small space is yet to be filled, reduced row echelon form can be the output of Gauss Jordan method but how on this earth we can achieve augmented matrix like following from reduced row echelon form-
+\[
+\left[\begin{array}{c|c}
+    I_p &F_{p\times f} \\
+    \hline 
+    0_{m-p\times p} & 0_{m-p\times f} 
+  \end{array}\right] \begin{bmatrix}
+                            ~\vec{x}_B~\\
+                            \hline
+                            ~\vec{x}_f~
+                          \end{bmatrix}= \begin{bmatrix}
+                            ~\vec{0}~\\
+                            \hline
+                            ~\vec{0}~
+                          \end{bmatrix}
+\]
+\subsection{Swapping of Columns}
+Swapping of columns are allowed, but then one has to swap the arrangement of variable vector i.e.-
+      \[
+        \begin{blockarray}{cccc}
+        x_1 & x_2 & x_3 && \\
+        \begin{block}{[ccc|c]}
+        2 & -3 & 4 & 3 \\
+        4 & 1 & 3 & 8 \\
+        8 & -5 & 11 & 14\\
+        8 & 2 & 6 & 16 \\
+        \end{block}
+        \end{blockarray}
+            \xrightarrow{\text{represents}}
+               \begin{bmatrix}
+                   2 & -3 & 4\\
+                   4 & 1 & 3\\
+                   8 & -5 & 11\\
+                   8 & 2 & 6
+               \end{bmatrix}
+                    \begin{bmatrix}
+                        x_1\\x_2\\x_3
+                    \end{bmatrix} = 
+                        \begin{bmatrix}
+                            3\\8\\14\\16
+                        \end{bmatrix}\\
+            \]
+    is equivalent to-
+    \[       
+        \begin{bmatrix}
+        4 & -3 & 2\\
+        3 & 1 & 4\\
+        11 & -5 & 8\\
+        6 & 2 & 8
+    \end{bmatrix}
+        \begin{bmatrix}
+            x_3\\x_2\\x_1
+        \end{bmatrix} = 
+            \begin{bmatrix}
+                3\\8\\14\\16
+            \end{bmatrix}\\
+    \]
+    And the augmented matrix looks like
+    \[
+    \begin{blockarray}{cccc}
+        x_3 & x_2 & x_1 && \\
+        \begin{block}{[ccc|c]}
+        4 & -3 & 2 & 3 \\
+        3 & 1 & 4 & 8 \\
+        11 & -5 & 8 & 14\\
+        6 & 2 & 8 & 16 \\
+        \end{block}
+        \end{blockarray}
+        \]
+To summarize
+\begin{enumerate}
+\item The method we used to achieve row-echelon is \textbf{Gauss Elimination} and 
+\item The method we used to achieve reduced row-echelon is \textbf{Gauss Jordan}.
+\item There will not be any situation in which left side of augmented matrix's row has all zeros while right has non-zero value. But if it come out so, it indicates that there is no solution as equation cannot be satisfied if zero is equated with some non-zero constant quantity.
+ \end{enumerate}  
+ 
+\textbf{Some Exercises}\\
+Can you think how many operations ($+$,$\times$) are required to achieve reduced row-echelon form? What is the computational complexity of ``Gauss Elimination followed by Back Substitution'' and ``Gauss Jordan Method''? 
+
+\subsection{Calculating Inverse}
+
+I hope its now easy for you to solve a system of linear equations through computer. And soon you will see calculating inverse is also an easier case. Here instead of solving $A\vec{x} = \vec{b}$, let us see if we can solve it for three different $\vec{b}$'s simultaneously.
+\[
+\vec{b}_1 = \begin{bmatrix}
+    1\\0\\0
+\end{bmatrix},
+\vec{b}_2 = \begin{bmatrix}
+    0\\1\\0
+\end{bmatrix} ,~~\text{and}~~~
+\vec{b}_3 = \begin{bmatrix}
+    0\\0\\1
+\end{bmatrix}\\
+~~~\textit{i.e}~~~ 
+A\vec{x} =
+\left[\begin{array}{c c c }
+    \vstrike{$b_1$} & \vstrike{$b_2$} & \vstrike{$b_3$}\\ 
+ \end{array}\right]  = I
+\implies A\vec{x} = I
+\]
+So, instead of augmenting only one column, we can augment all the three columns of $I$ at once i.e.
+\[
+\left[\begin{array}{c|c}
+ A & I
+  \end{array}\right]
+  ~~~\longrightarrow~~~
+  \left[\begin{array}{c|c}
+    I & A^{-1}
+  \end{array}\right]
+\]
+So, just by trying to bring $A$ in reduced row-echelon form, we get inverse of $A$ provided we should get enough pivots.
+
+\textbf{Question}\\
+If I want to solve two system of linear equations with same coefficient matrix, will it be wise to solve them independently or to solve at once.\\
+\textit{Hint:} Find the computational complexity (number of operations required in both the approaches) and then compare.
+\end{document}

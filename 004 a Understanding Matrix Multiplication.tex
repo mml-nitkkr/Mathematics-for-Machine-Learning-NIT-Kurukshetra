@@ -1,0 +1,398 @@
+\documentclass{article}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\title{Linear Algebra (Part 004)\\Understanding Matrix Multiplication}
+\author{Dr Kapil\\kapil $@$ nitkkr $\cdot$ ac $\cdot$ in\\Department of Computer Applications\\ NIT Kurukshetra}
+\date{\today}
+
+\begin{document}
+\maketitle
+Matrix multiplication can be understood in many ways. Here, we are going to discuss that. I am sure you will enjoy the meaning of matrix multiplication. Consider the following matrix multiplication\\
+\begin{align}
+    \begin{bmatrix}
+        1 & 4 \\ 2 & 2 \\ -1 & 1 \\ 3 & 8 
+    \end{bmatrix} \begin{bmatrix}
+        1 \\ 2
+    \end{bmatrix} &= \begin{bmatrix}
+        \begin{pmatrix}
+            1\\   2\\
+            -1\\
+            3
+        \end{pmatrix} \times 1 & + ~~\begin{pmatrix}
+            4\\
+            2\\
+            1\\
+            8
+        \end{pmatrix} \times 2
+    \end{bmatrix} \nonumber\\
+    &= \begin{bmatrix}
+    1 \times 1 &+~~ 2 \times 4 \\
+    2 \times 2 &+~~ 2 \times 2\\
+    -1 \times 1 &+~~ 1 \times 2\\
+    3 \times 1 &+~~ 8 \times 2
+    \end{bmatrix} = \begin{bmatrix}
+        9\\
+        6\\
+        1\\
+        19
+    \end{bmatrix}\nonumber
+\end{align}
+
+In general, let \(A = \begin{bmatrix}
+        a & d \\
+        b & e \\
+        c & f
+    \end{bmatrix}, B= \begin{bmatrix}
+        \alpha \\
+        \beta  \end{bmatrix}\text{ and }C = \begin{bmatrix}
+    a\alpha + d\beta \\
+    b\alpha + e\beta \\
+    c\alpha + f\beta
+    \end{bmatrix}\)\\
+\begin{align}
+    \begin{bmatrix}
+        a & d \\
+        b & e \\
+        c & f
+    \end{bmatrix} \begin{bmatrix}
+        \alpha \\
+        \beta
+    \end{bmatrix} &= \begin{bmatrix}
+        \begin{pmatrix}
+            a\\
+            b\\
+            c
+        \end{pmatrix}  \times  \alpha & + ~~\begin{pmatrix}
+            d\\
+            e\\
+            f
+        \end{pmatrix}  \times  \beta
+    \end{bmatrix} \nonumber\\
+    &= \begin{bmatrix}
+    a\alpha + d\beta \\
+    b\alpha + e\beta \\
+    c\alpha + f\beta
+    \end{bmatrix} \nonumber
+\end{align} 
+This view of matrix multiplication tells that-
+\begin{itemize}
+    \item The product of matrix multiplication is linear combination of columns of the matrix on the left.
+    \item The right linear combination to generate one column of product is provided by columns of the matrix on the right.
+\end{itemize}
+For example, $\alpha$ is the first element of column vector $B$ providing the scaling factor by which first column ($ACol_1$) of $A$ should be scaled and $\beta$ (second element of same column vector of $B$) provides the amount of scaling that is required by $ACol_2$ of $A$ to generate the column of product $C$. Therefore, product's columns are linear combinations of columns of $A$ while amount of combination or scaling factor is given by columns of $B$.
+
+So, we can write matrix multiplication $AB$ of two matrices $A$ and $B$ of appropriate order can be seen as linear combination of column vector of matrix on the left (i.e. $A$). As of now we have not introduced the term `Linear Combination` formally, so let us define the same. The word Linear Combination (l.c.) means addition of some scaled vector is the linear combination of original vectors. \\
+More formally and mathematically, -\\
+Let $V$ be a set of vector \{\( \vec{v_1}, \vec{v_2}, \vec{v_3}, \dots , \vec{v_k}\)\} and \(c_1, c_2, \dots,c_k \in \mathbb{R}\) are some scalar then \(c_1\vec{v_1}+ c_2\vec{v_2}+\dots +c_n\vec{v_n}\) is a linear combination of vectors in $V$. Similarly, one can notice following multiplication strategy which is visible if you transpose both sides of equality, i.e.\\
+\begin{align}
+    \begin{bmatrix}\begin{pmatrix}a & d \\ b & e \\ c & f \end{pmatrix}\begin{pmatrix}\alpha \\ \beta \end{pmatrix}\end{bmatrix}^T &= \begin{bmatrix}a\alpha + d\beta \\b\alpha + e\beta \\c\alpha + f\beta  \end{bmatrix}^T\nonumber\\
+    \begin{pmatrix}\alpha & \beta\end{pmatrix}\begin{pmatrix}a & b & c \\ d & e & f \end{pmatrix} &= \begin{pmatrix}a\alpha + d\beta & b\alpha + e\beta & c\alpha + f\beta \end{pmatrix}\nonumber\\
+    &= \begin{bmatrix}\alpha\begin{bmatrix}a & b & c\end{bmatrix} + \beta \begin{bmatrix}d & e & f\end{bmatrix}\end{bmatrix}\nonumber
+\end{align}
+That is matrix multiplication can be viewed as linear combination of rows of matrix on the right ($B$). What a great thing! Notice that linear combination`s scalar value are provided by particular row of $A$.\\
+
+    \textbf{Question}. Can I ask you to find the matrix on left which when multiplied from left to some other matrix ($B$) then the product matrix ($C$)'s rows should be such that-
+\begin{align}
+        CRow_1 &\leftarrow BRow_1 + BRow_2 \nonumber\\
+        CRow_2 &\leftarrow BRow_2 \nonumber\\
+        CRow_3 &\leftarrow BRow_3 \nonumber
+\end{align}
+Solution:\\
+The above thing can written as-\\
+\begin{align}
+    \begin{bmatrix}
+        CRow_1  &\leftarrow 1 \times BRow_1 + 1  \times BRow_2 + 0  \times BRow_3 \nonumber\\
+        CRow_2 &\leftarrow 0 \times BRow_1 + 1  \times BRow_2 + 0  \times BRow_3 \nonumber\\
+        CRow_3 &\leftarrow 0 \times BRow_1 + 0  \times BRow_2 + 1  \times BRow_3 \nonumber
+    \end{bmatrix}
+\end{align}
+
+\begin{align}
+ \begin{bmatrix}
+        CRow_1\\
+        CRow_2\\
+        CRow_3
+    \end{bmatrix} = 
+    \begin{bmatrix}
+        1 & 1 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1
+    \end{bmatrix}\begin{bmatrix}
+                    BRow_1\\
+                    BRow_2\\
+                    BRow_3
+                 \end{bmatrix} \nonumber
+\end{align}
+
+\textbf{Question}. Find matrix $A$ and the side of multiplication (left / right) with some other matrix $B$ (with 4 rows and 2 columns) s.t. the product matrix C`s columns are such that-
+\begin{align}
+    CCol_1 &\leftarrow 2\times BCol_1 + 1\times BCol_2\nonumber\\
+    CCol_2 &\leftarrow 0\times BCol_1 - 1\times BCol_2\nonumber
+\end{align}
+Since, here we have to generate linear combination of columns matrix $B$, the multiplier should be on right side of $B$ during the multiplication.
+\begin{align}
+    CCol_1 & \leftarrow 2 \times BCol_1 + 1 \times BCol_2 &&\leftarrow \text{ These multipliers will go to }Col_1\text{ of } A\nonumber\\
+    CCol_2 & \leftarrow 0 \times BCol_1 - 1\times BCol_2 && \leftarrow \text{ These multipliers will go to }Col_2\text{ of } A\nonumber
+\end{align}
+i.e.
+\begin{align}
+    \begin{bmatrix}
+        2 & -1\\
+        3 & 2\\
+        0 & 1\\
+        4 & -2
+    \end{bmatrix}\begin{bmatrix}
+                    2 & 0\\
+                    1 & -1
+                 \end{bmatrix} &= \begin{bmatrix}\begin{pmatrix}
+        2 \\
+        3 \\
+        0 \\
+        4 
+    \end{pmatrix}\times 2+\begin{pmatrix}
+        -1\\
+        2\\
+        1\\
+        -2
+    \end{pmatrix}\times 1 && \begin{pmatrix}
+        2 \\
+        3 \\
+        0 \\
+        4 
+    \end{pmatrix}\times 0+\begin{pmatrix}
+        -1\\
+        2\\
+        1\\
+        -2
+    \end{pmatrix}\times (-1)
+    \end{bmatrix} \nonumber\\
+    &= \begin{bmatrix}
+        3 & 1\\
+        8 & -2\\
+        1 & -1\\
+        6 & 2
+    \end{bmatrix} \nonumber
+\end{align}
+Now, we will focus on the row view of matrix multiplication, which is more important in solving the system of linear equations. For $C = AB$, what is $A$ if $C$'s and $B$'s row are connected in following sense\\
+\[
+    CRow_1 \leftarrow 1\times BRow_1 + 0\times BRow_2 + 0\times BRow_3
+\]
+
+Scalar that needs to be multiplied to corresponding row vectors.\\
+This one tell that the scalar should be kept in \begin{math}1^{st}~ \text{i.e. }ARow_1 = \begin{bmatrix}1 & 0 & 0\end{bmatrix}\end{math}
+\[
+    CRow2 \leftarrow 2\times BRow_2 - 3\times BRow_1 \\
+     = -3\times BRow_1 + 2\times BRow_2 + 0\times BRow_3
+\]
+
+\begin{math}
+    \therefore \text{2nd row of }A\text{ is } \begin{bmatrix}-3 & 2 & 0\end{bmatrix}
+\end{math}
+if A has just these two rows, then 
+\begin{align}
+    \begin{bmatrix}
+        1 & 0 & 0\\
+        -3 & 2 & 0
+    \end{bmatrix}\begin{bmatrix}
+                    1 & 0 & -1\\
+                    0 & 2 & 3\\
+                    -3 & -2 & 0
+                 \end{bmatrix} &= \begin{bmatrix}
+                                    1 & 0 & -1\\
+                                    -3 & 4 & 9
+                                  \end{bmatrix}\nonumber
+\end{align}
+
+\section{Some Questions}
+For the following operations on matrix $B$, what matrix $A$ is required \& also let us know from which side of $B$, $A$ should be multiplied, so that the product matrix, $C$ should look like below in terms of $B$-\\
+
+\begin{align}
+    CRow_2 &\leftarrow 1\times BRow_1 - 2 \times BRow_3 + 1 \times BRow_2\nonumber\\
+    CRow_1 &\leftarrow 2 \times BRow_2 - 3 \times BRow_3\nonumber\\
+    CRow_3 &\leftarrow (-2)\times BRow_3 + 2 \times BRow_1\nonumber\\
+    \begin{bmatrix}
+     & & &\\
+     & & &\\
+     & & &
+    \end{bmatrix}\begin{bmatrix}
+                     1 & 2\\
+                    -1 & -1\\
+                     0 & 1
+                \end{bmatrix} &= \begin{bmatrix}
+                                    -2 & -5\\
+                                     0 & -1\\
+                                     2 & 2
+                                 \end{bmatrix}\nonumber
+\end{align}
+Can you do the same for the exercises to solve a system of simultaneous linear equations with matrices? Let us suppose you are restricted to change one row at a time (i.e. rest of the rows remains same). What matrix can revert the operation back?\\
+\begin{align}
+    CRow_1 &\leftarrow BRow_1 + BRow_2 \nonumber \\
+    CRow_2 &\leftarrow BRow_2\nonumber\\
+    CRow_3 &\leftarrow BRow_3\nonumber\\
+    \therefore A &= \begin{bmatrix}
+                        1 & 1 & 0\\
+                        0 & 1 & 0\\
+                        0 & 0 & 1
+                    \end{bmatrix} \text{then D which brings back B from C in so that} \nonumber\\
+    BRow_1 &\leftarrow CRow_1 - CRow_2\nonumber\\
+    BRow_2 &\leftarrow CRow_2\nonumber\\
+    BRow_3 &\leftarrow CRow_3\nonumber\\
+    \therefore D &= \begin{bmatrix}
+                        1 & -1 & 0\\
+                        0 & 1 & 0\\
+                        0 & 0 & 1
+                    \end{bmatrix} \text{ i.e. } AB = C \text{ and } 
+                                        B = DC \nonumber
+\end{align}
+$\therefore D$ is \_\_\_\_\_\_\_\_ of $A$? \\
+
+% %%%%%% Sachindanand Baba can you update it to see okay, it has been shifted from 004 b
+% But before doing this we want you to have a recap on matrix multiplication that we discussed in previous part Part 004(a). Consider following matrix multiplication.
+
+% \begin{align}
+%     \begin{bmatrix}
+%         1 & 3 & -1\\
+%         2 & 0 & 1\\
+%     \end{bmatrix}  \begin{bmatrix}
+%                         2 & 0\\
+%                         1 & 2\\
+%                         1 & 0\\
+%                   \end{bmatrix} &= \begin{bmatrix} 2\begin{pmatrix} 1 \\2 \end{pmatrix} + 1\begin{pmatrix} 3 \\0        \end{pmatrix} + 1\begin{pmatrix} -1 \\1\end{pmatrix} & 0\begin{pmatrix} 1 \\2 \end{pmatrix} + 2\begin{pmatrix} 3 \\0 \end{pmatrix} + 0\begin{pmatrix} -1 \\1 \end{pmatrix} \end{bmatrix} \nonumber \\ &= \begin{bmatrix}\begin{pmatrix} 2 \\4 \end{pmatrix}+\begin{pmatrix} 3 \\0 \end{pmatrix}+\begin{pmatrix} -1 \\1 \end{pmatrix} & \begin{pmatrix} 6 \\0 \end{pmatrix}\end{bmatrix}\nonumber \\
+%                   &= \begin{bmatrix}
+%                             4 & 6\\
+%                             5 & 0
+%                       \end{bmatrix}\nonumber
+% \end{align}
+
+% So, we can say that every column of the product is a linear combination of columns of the matrix on the left in the multiplication and the way to combine them is given by the columns of the matrix on the right in the multiplication i.e.
+
+% \[
+%     \begin{bmatrix}
+%         \vstrike{} & \vstrike{} & & \vstrike{}\\
+%         \vstrike{$a_1$} & \vstrike{$a_2$} & \cdots & \vstrike{$a_n$}\\
+%       \vstrike{} & \vstrike{} & & \vstrike{}\\
+%     \end{bmatrix} \begin{bmatrix}
+%                     b_1 & c_1 & \cdots \\
+%                     b_2 & c_2 & \cdots \\
+%                     \vdots & \vdots &   \\
+%                     b_n & c_n & \cdots
+%     \end{bmatrix} = \begin{bmatrix}
+%                 \begin{pmatrix}
+%                 \\
+%                     b_1\vstrike{$a_1$}+\cdots&+b_n\vstrike{$a_n$}\\
+%                 \\
+%                 \end{pmatrix} & \begin{pmatrix}
+%                 \\
+%                     c_1 \vstrike{$a_1$}+\cdots+c_n\vstrike{$a_n$}\\
+%                 \\    
+%                 \end{pmatrix} &\cdots
+%     \end{bmatrix}
+% \]
+
+% Matrix multiplication as linear combination of rows of matrix on right and combination is given by the rows of the matrix on left i.e. 
+
+% \begin{align}
+%     \begin{bmatrix}
+%         1 & 3 & -1 \\
+%         2 & 0 & 1
+%     \end{bmatrix} \begin{bmatrix}
+%                     2 & 0 \\
+%                     1 & 2 \\
+%                     1 & 0
+%                   \end{bmatrix} &= \begin{bmatrix}
+%                         \begin{pmatrix}        
+%                                         1 \begin{bmatrix} 2 & 0\end{bmatrix} + &3 \begin{bmatrix} 1 & 2 \end{bmatrix} + &(-1) \begin{bmatrix} 1 & 0\end{bmatrix}
+%                         \end{pmatrix}\\
+%                                         \\
+%                         \begin{pmatrix}
+%                                         2 \begin{bmatrix} 2 & 0\end{bmatrix} + &0 \begin{bmatrix} 1 & 2 \end{bmatrix} +~~~ &1 \begin{bmatrix} 1 & 0\end{bmatrix}
+%                         \end{pmatrix}
+%                   \end{bmatrix} \nonumber \\
+%                                 &= \begin{bmatrix}
+%                                         \begin{bmatrix} 4 & 6 \end{bmatrix}\\
+%                                         \\
+%                                         \begin{bmatrix} 5 & 0 \end{bmatrix}
+%                                   \end{bmatrix} \nonumber \\
+%                                 &= \begin{bmatrix}
+%                                         4 & 6 \\
+%                                         5 & 0
+%                                   \end{bmatrix} \nonumber
+% \end{align}
+
+% You should verify the answer by multiplying the matrix the way you have learned so far in XI or XII class or whatever we have learned in Part 003.
+
+% Let us try to make a matrix that can subtract $1^{st}$ row from the second row of matrix \begin{math}A = \begin{bmatrix}
+%         Row_1 \\
+%         Row_2
+%     \end{bmatrix}\end{math}. Now, since we know the multiplication finds the linear combination of the rows of the matrix on right and the combination comes from the matrix on left. Let this matrix that provides the right combination is $M$ and the product \begin{math}C =  \begin{bmatrix} -Row_1 + Row_2 \end{bmatrix}
+%                                       = \begin{bmatrix}-1 & 1\end{bmatrix} \begin{bmatrix} Row_1 \\ Row_2 \end{bmatrix} = MA\end{math}\\
+                                       
+% \begin{math}
+% \therefore \text{M} =    \begin{bmatrix}
+%                             -1 & 1
+%                         \end{bmatrix}
+% \end{math} \\
+
+% $\boldsymbol{Question}$. Construct a matrix that change its $Row_2$ and replace it by $Row_1$.\\
+
+% $\boldsymbol{Question}$. Construct a matrix that swaps/exchange first two rows of any matrix with 3 rows and keep third row as it is
+% \[
+%     \begin{bmatrix}
+%         & & & \\
+%         & & & \\
+%         & & & 
+%     \end{bmatrix} \begin{bmatrix}
+%                         Row_1\\
+%                         Row_2\\
+%                         Row_3
+%                   \end{bmatrix} \longrightarrow \begin{bmatrix}
+%                         Row_2\\
+%                         Row_1\\
+%                         Row_3
+%                                                 \end{bmatrix}
+% \]
+                                       
+% $\boldsymbol{Question}$. Construct a matrix, $A$ that when multiplied with matrix $B$ generate another matrix $C$ such that-
+% \begin{itemize}
+%     \item $CRow_1 = 2\times BRow_1 - 3\times BRow_2 + 5\times BRow_3$
+%     \item $CRow_2 =  BRow_3 - BRow_2$
+%     \item $CRow_3 = BRow_1 + BRow_2 - BRow_3$
+% \end{itemize}
+% \[
+%     \begin{bmatrix}
+%         & & & \\
+%         & & & \\
+%         & & &
+%     \end{bmatrix} \begin{bmatrix}
+%                         BRow_1\\
+%                         BRow_2\\
+%                         BRow_3
+%                   \end{bmatrix} \longrightarrow \begin{bmatrix}
+%                                     2\times BRow_1 &+ (-3)\times BRow_2 &+ 5\times BRow_3 \\
+%                                     0\times BRow_1 &+ (-1)\times BRow_2 &+ 1\times BRow_3\\
+                                    
+%                                     1\times BRow_1 &+ 1\times BRow_2 &+(-1)\times  BRow_3
+%                                 \end{bmatrix}
+% \]
+% %Can we give answer here that later on goes at the end of chapter/book
+% Try similar question for generating different linear combinations of columns or rows that we have discussed earlier.\\
+% So, observe that we can do all kind of operations we were performing on equations to solve a system of linear equations through matrices by pre-multiplying right matrices (to have row operations). Let us write all the systems we get one after another while solving the system of linear equations.\\
+
+
+
+In the next part, we will try to address above questions and that is how to do Gauss Elimination with matrices.
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,4 +1,4 @@
-to\documentclass{article}
+\documentclass{article}
 
 \usepackage[margin = 3cm, footskip = 30pt]{geometry}
 \usepackage{amsmath}
@@ -7,21 +7,13 @@ to\documentclass{article}
 \usepackage{pgfplots}
 
 
-
-
-
-
 \title{Linear Algebra (Part 002)\\Understanding Simultaneous System of Linear Equations}
-\author{Dr Kapil\\Department of Computer Applications\\ NIT Kurukshetra}
+\author{Dr. Kapil\\Department of Computer Applications\\ NIT Kurukshetra}
 \date{\today}
 
 \begin{document}
-
 \maketitle
-
-
 In the first part, we tried to understand vector.\\
-
 The property of retaining the same set after being operated is called ``closure`` property.~
 In other words we say $R^n$ is closed over addition and scalar multiplication.\\
 
@@ -158,7 +150,7 @@ Let's go back to our vector operation\\
 \[  ex.~ \vec{u_1} = \begin{pmatrix}
                                 1\\
                                 2\\
-                            \end{pmatrix}, ~ 2* \vec{u} \begin{pmatrix}
+                            \end{pmatrix}, ~ 2\times \vec{u} \begin{pmatrix}
                                                             1\\
                                                             2\\
                                                       \end{pmatrix} &= \begin{pmatrix}
@@ -262,13 +254,65 @@ Further you can see in following way \begin{pmatrix}
 \(A\vec{x} = \vec{b}\),~ A = \begin{pmatrix}
                             1 && 1\\
                             1 && -1\\
-                        \end{pmatrix}, a matrix of order 2*2 \vec{x} is a unknown vector 2*1 \vec{b} know vector.
+                        \end{pmatrix}, a matrix of order $2\times 2$; $\vec{x}$ is a unknown vector and $2\times1~\vec{b}$ is a known vector.
 
 
 
 
 \section{Exercise (Homework)}
 
-Extend Linear Combination view (or Understanding) for the other two cases.
+Extend Linear Combination view (or Understanding) for the other two cases. That means we need to understand how vector form of equations will see the no solution, and infinitely many solution cases.\\ \\
+Case infinitely many solutions:
+\begin{align}
+    x_1 + x_2 = 2 \nonumber\\
+    2x_1 + 2x_2 = 4  \nonumber
+\end{align}
+Its vector view is like this
+\begin{align}
+    \begin{bmatrix}
+    1\\2
+    \end{bmatrix} \times x_1 +
+    \begin{bmatrix}
+    1\\2
+    \end{bmatrix} \times x_2 = 
+    \begin{bmatrix}
+    2\\4
+    \end{bmatrix} \nonumber
+\end{align}
+which means that sum of vectors with same direction are making another vector in that direction and you can do it in many ways. Fix $x_2$ and value of $x_1$ can be found to satisfy the equation.
+can be rewritten as -
+\begin{align}
+    \begin{bmatrix}
+    1\\2
+    \end{bmatrix} \times (x_1 +x_2)=\begin{bmatrix}
+    2\\4
+    \end{bmatrix} \nonumber
+\end{align}
 
+Case no solutions:
+\begin{align}
+    x_1 + x_2 = 2 \nonumber\\
+    2x_1 + 2x_2 = 5  \nonumber
+\end{align}
+Its vector view is like this
+\begin{align}
+    \begin{bmatrix}
+    1\\2
+    \end{bmatrix} \times x_1 +
+    \begin{bmatrix}
+    1\\2
+    \end{bmatrix} \times x_2 = 
+    \begin{bmatrix}
+    2\\5
+    \end{bmatrix} \nonumber
+\end{align}
+which means that sum of vectors with same direction are making another vector in different direction. Its impossible as you can only remain in that direction. The system can be rewritten as -
+\begin{align}
+    \begin{bmatrix}
+    1\\2
+    \end{bmatrix} \times (x_1 +x_2)=\begin{bmatrix}
+    2\\5
+    \end{bmatrix} \nonumber
+\end{align}
+So you cannot generate vector that is in another direction if the given vector are in same direction.
 \end{document}

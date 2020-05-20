@@ -1,6 +1,7 @@
 \documentclass{article}
 \newcommand{\vo}{\vec{o}\@ifnextchar{^}{\,}{}}
-% \usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
+
 \usepackage{amsmath}
 \usepackage{esvect}
 \usepackage{graphics}
@@ -15,7 +16,7 @@
     ]{doclicense}
     \title{Linear Algebra (Part 001)\\ Vectors and Vector Algebra}
     \author{Dr Kapil \\Department of Computer Applications\\ NIT Kurukshetra}
-    
+ 
 \begin{document}
 
     \maketitle
@@ -81,24 +82,10 @@ We also perform many operations on them such as
 a+d\\
 b+e\\
 c+f
-\end{pmatrix}$. For example\\
+\end{pmatrix}$. For example
             \begin{enumerate}
-                 \item
-                    $\begin{pmatrix}
-                      2\\                   3\\
-                     \end{pmatrix}
-                      +
-                     \begin{pmatrix}
-                        5\\
-                        -2\\
-                    \end{pmatrix}
-                    =
-                    \begin{pmatrix}
-                        7\\
-                        1\\
-                    \end{pmatrix}$\\
-                \item
-                    $\begin{pmatrix}
+                 \item $\begin{pmatrix} 2\\ 3\\ \end{pmatrix} + \begin{pmatrix} 5\\ -2\\\end{pmatrix} = \begin{pmatrix} 7\\1\\ \end{pmatrix}$\\
+                \item $\begin{pmatrix}
                     1\\
                     -7\\
                     2
@@ -114,12 +101,12 @@ c+f
                     4\\
                     -3\\
                     5
-                    \end{pmatrix}$\\
+                    \end{pmatrix}$
             \end{enumerate}
 
 
 
-\item Scalar Multiplication scales the length of the vector but the  direction is retained. It is an operation between some scalar value and a vector. Mathematically, we define as if $a\in \mathbb{R}$ then
+\item Scalar Multiplication scales the length of the vector but the  direction is retained. It is an operation between some scalar value and a vector. Mathematically, we define as if $a\in \mathbb{R}$ (where $\mathbb{R}$ is the set of real numbers) then
 $a*\begin{pmatrix}
 b\\c\\d
 
@@ -153,7 +140,7 @@ a*b\\a*c\\a*d
 Both of the stated operations have geometrical interpretations can be seen from class XI and XII books.\\
 Exercise: Do following operations on graph (graphically) and verify with above stated theoretically
 \begin{itemize}
-    \item Addition of two Vectors with parallelogram law on the graph and share. Draw $\begin{pmatrix}
+    \item Addition of two vectors with parallelogram law on the graph and share. Draw $\begin{pmatrix}
         2\\3
     \end{pmatrix},
     \begin{pmatrix}
@@ -193,7 +180,7 @@ There are few more operations which we are covering here just for sake of introd
 a-d\\
 b-e\\
 c-f
-\end{pmatrix}$. It is not a basic operation as it can expressed as $vector_1 + (-1)* vector_2$. A few examples are-
+\end{pmatrix}$. It is not a basic operation as it can expressed as $\boldsymbol{u} + (-1)* \boldsymbol{v}$. A few examples are-
 \begin{enumerate}
     \item $\begin{pmatrix}
 1\\
@@ -226,83 +213,51 @@ c-f
 \end{enumerate}
 
 
- \item Magnitude of a vector, $\overrightarrow{v}\in\mathbb{R}^n$ is denoted as
+\item Magnitude of a vector, $\overrightarrow{v}\in\mathbb{R}^n$ is denoted as
 $\|\overrightarrow{v}\|$ and  is  defined as $\|{\overrightarrow{v}\|} =  \sqrt{\sum_{i=1}^{n} {v_i}}$. For example
-\begin{itemize}
-    \item $\overrightarrow{v}=\begin{pmatrix}1\\4\\-3\end{pmatrix}$, then 
-$\|\overrightarrow{v}\|=\sqrt{(1^2+4^2+(-3)^2)} = \sqrt{(26)}$\\
+    \begin{enumerate}
+        \item for 2D vector, $\overrightarrow{u} = \begin{bmatrix} 2\\7\\ \end{bmatrix},  \|{\overrightarrow{u}\|^2} = 2^2+7^2=4+49=53\\\|{\overrightarrow{u}\|} = \sqrt{53}$
+        \item $\overrightarrow{v}=\begin{pmatrix}1\\4\\-3\end{pmatrix}$, then     $\|\overrightarrow{v}\|=\sqrt{(1^2+4^2+(-3)^2)} = \sqrt{(26)}$ 
+    \end{enumerate}
 
-    \item for 2D vector, $\overrightarrow{u}$ = \begin{bmatrix} 2\\7\\ \end{bmatrix}\\
-$\|{\overrightarrow{u}\|^2} = 2^2+7^2=4+49=53=53$\\
-$\|{\overrightarrow{u}\|} = \sqrt{53}$\\
-\end{itemize}
-Here note that magnitude of  any vector is " non- negative" value. Hopefully you know what does non negative means. If $a\in\mathbb{R}$ is non negative , it means that either $a>0$ or $a=0$. On the other hand if $a$ is positive means $a>0$ and cannot  be zero. 
-\item Dot  Product: Dot product of two  vectors $ \overrightarrow{v}, \overrightarrow{u}$is denoted by $\overrightarrow{v}.\overrightarrow{u}$ and defined as  
-$\overrightarrow{u}= \begin{pmatrix}1\\2 \end{pmatrix}  
-\overrightarrow{v}=\begin{pmatrix} 4\\-2 \end{pmatrix}\\
-\overrightarrow{u}*\overrightarrow{v}= 1*4+2*(-2)=4-4=0\\$
-i.e.in other words if $\overrightarrow{u}=\begin{pmatrix} u1\\u2\\u3 \end{pmatrix}
-and  \overrightarrow{v}= \begin{pmatrix} v1\\v2\\v3 \end{pmatrix}\\$
+Magnitude of  any vector is a "non- negative" value. Mind here that non negative is not same as positive. Because if $a\in\mathbb{R}$ is non negative, it means either $a>0$ or $a=0$, while $a$ is positive means$a>0$ i.e. a cannot  be zero. 
 
-Then $\overrightarrow{u}*\overrightarrow{v}=u1*v1+u2*v2+u3*v3 $\\
+\item Dot  Product of two  vectors $\overrightarrow{v},\overrightarrow{u}\in\mathbb{R}^n$ is denoted as $\overrightarrow{v}\cdot\overrightarrow{u}$ in vector form and $\boldsymbol{v}^T\boldsymbol{u}$ in matrix form and is defined as $\sum_{i=0}^{n} {v_iu_i}$. For example-
+\begin{enumerate}
+    \item $\overrightarrow{u}= \begin{pmatrix}1\\2 \end{pmatrix} \overrightarrow{v}=\begin{pmatrix} 4\\-2 \end{pmatrix}\\\overrightarrow{u}*\overrightarrow{v}= 1*4+2*(-2)=4-4=0$
+\end{enumerate}
 \end{itemize}
- $ Above operation and vectors are basic of  this course .\\
- As we have  seen geometric vectors  , we can also interpret some\\ other objects, specially mathematical objects as vectors. $\\
- (a) $a line  is represented as \\
- y=mx+c can be thought of as a point in 2D space with (m,c)
-as coordinates\\
-(b)$ a polynomial can also be treated as vector$ \\
- P(x)=2*x^2-3*x+5, $can be  thought of  as a vector$ \\
-\begin{pmatrix}
-2\\-3\\5\\
-\end{pmatrix}\\
-(c) $An image is made up of  pixels with intensity values of colour channels Red , Green and Blue$ \\
-\begin{left}
-\begin{tikzpicture}
-\draw[ultra thick, red] (0,0) rectangle (2,2)
-\draw[ultra thick, green] (.5,.5) rectangle (2.5,2.5)
-\draw[ultra thick, blue] (1,1) rectangle (3,3)
-\end{tikzpicture}
-\end{left}
-$ So  for  any image of size 1024*1024 resolution then it\\
-has ~ 1024 k pixels and thus each channels informatics is stored in 1 MB \\
- And for 3 channels 3 MB space is required .\\
- So, each image is a vector or collection of 3 million numbers $\\
- $What is most important thing about  these vectors . All these vectors have  the speciality that after manipulations, the  resultant things  are  also vectors and are of some  style as that  of  input vectors.\\$
-i.e. (i)\begin{pmatrix}
-1\\7\\2
-\end{pmatrix}\in R^3  $ 3D Vectors\\
-then c \overrightarrow{u}=2*\begin{pmatrix}
-1\\7\\2
-\end{pmatrix}= \begin{pmatrix}
-2\\14\\4
-\end{pmatrix}\\
-(ii) \overrightarrow{u}= \begin{pmatrix}
-1\\7\\2
-\end{pmatrix},
-  \overrightarrow{u}= \begin{pmatrix}
--2\\3\\-4
-\end{pmatrix}\in R^3\\
-\overrightarrow{u}+\overrightarrow{v}= \begin{pmatrix}
--1\\10\\-2
-\end{pmatrix}\in R^3 \\
-$ In such cases where input symbols(before being manipulation) &\\ output symbols(after being operated)belong to same collection or\\ set. \\
-You can  notice that adding any two polynomials will result into\\ another polynomial only. \\
- Also , if we multi;ly a polynomial with some constant value then\\ also the  resultant is polynomial.$\\
-P1(x)= 2x^2+3x+1\\
-P2(x)=5x-7 \\
-P1(x)*P2(x)=2x^2+8x-6 $ is also a polynomial $\\
-2*P1(x)=4x^2+6x+2 $ is also a polynomial $\\
-(*)$ So let we define  Vectors as - \\
- $\rightarrow$ A set of things when added among themselves , the\\ product remain in the same set.\\
- And when the such thing is multiplied by certain real or complex \\value , then also the product remains in the same set.$\\
-  Set= Collection\\
-$ (*)Elements  of R^n $(R: the set of  real numbers).In other words$\\
- $ tuples of  n real numbers are vectors\\
-  It follows these two properties.$\\
- (i)$\forall\overrightarrow{u},\overrightarrow{v}\ \in R^n \\
- (ii)$\forall c \in R $ and $  $\forall \overrightarrow{u}\in R^n \\
-  c \overrightarrow{u}\in R^n \\
-$So ,  here we will try to understand behaviour of these \\ vectors(R^n).$ But you will see all vectors cab be represented using\\ R^n type vectors $which essentially tells that all the results of\\ R^n$ are also applicable on all the vectors we are  talking about.$
+Above operation and vectors are basic of  this course. As we have seen geometric vectors, we can also interpret some other objects, specially mathematical objects as vectors. 
+    \begin{enumerate}
+        \item  A line  is represented as $y=mx+c$ can be thought of as a point in 2D space with $(m,c)$ as coordinates.
+        
+        \item A polynomial, $P(x)=2*x^2-3*x+5$, can be  thought of  as a vector $\begin{pmatrix}2\\-3\\5\\\end{pmatrix}$ 
+        
+        \item An image is made up of  pixels with intensity values of colour channels Red , Green and Blue\\
+        $\begin{left}
+        \begin{tikzpicture}
+        \draw[ultra thick, red] (0,0) rectangle (2,2)
+        \draw[ultra thick, green] (.5,.5) rectangle (2.5,2.5)
+        \draw[ultra thick, blue] (1,1) rectangle (3,3)
+        \end{tikzpicture}
+        \end{left}$
+    \end{enumerate}
+So, for any image of size 1024 x 1024 resolution then it has ~ 1M pixels and thus each channel can be stored in 1 MB. And for 3 channels 3 MB space is required. Thus, for each image is a vector or collection of 3 million numbers. What is most important thing about these vectors? It is that all these vectors have the speciality that after being manipulations, the resultant thing remains of same type as that of input thing. For example-
+\begin{enumerate}
+    \item for $\begin{pmatrix}1\\7\\2\end{pmatrix}\in \mathbb{R}^3$, a 3D vector and $c\in\mathbb{R}$ is a scalar then, \\$c\overrightarrow{u}=2*\begin{pmatrix}1\\7\\2\end{pmatrix}= \begin{pmatrix}2\\14\\4\end{pmatrix}\in \mathbb{R}^3$
+   
+    \item for $\overrightarrow{u}= \begin{pmatrix} 1\\7\\2 \end{pmatrix}, \overrightarrow{u}= \begin{pmatrix} -2\\3\\-4 \end{pmatrix}\in \mathbb{R}^3$, then $\overrightarrow{u}+\overrightarrow{v}= \begin{pmatrix}-1\\10\\-2 \end{pmatrix}\in \mathbb{R}^3 $\\
+\end{enumerate} 
+ Thus loosely speaking in the cases where input symbols (before being manipulation) and output symbols (after being operated) belong to same collection or set, the collection \textbf{may be} treated as vectors. You can  notice that adding any two polynomials will also result into another polynomial only. \\
+ Also , if we multiply a polynomial with some constant value then the result is another polynomial. Let $P1(x)= 2x^2+3x+1$ and $P2(x)=5x-7$ be two polynomials then $P1(x)+P2(x)=2x^2+8x-6$ is also a polynomial. And further, $2*P1(x)=4x^2+6x+2$ is also a polynomial
+ 
+ So, let we define vectors as - a set of things when added among themselves, the result remains in the same set.And when the such thing is multiplied by certain real or complex value, then also the product remains in the same set.(Here, I am using set and collection interchangeably as if they mean same.)\\
+  
+Here, $\mathbb{R}^n$ is the Cartesian product of $\mathbb{R}$ $n-times$. In other words, it is a set of $n-tuple$ of real numbers is also a set of vectors as it follows these two properties for $\forall\overrightarrow{u},\overrightarrow{v} \in \mathbb{R}^n$ and $\forall c \in \mathbb{R} $
+    \begin{enumerate}
+        \item $\overrightarrow{u}+\overrightarrow{v} \in \mathbb{R}^n$ 
+        \item $c \overrightarrow{u}\in \mathbb{R}^n$
+    \end{enumerate}
+In this course we will try to understand behaviour of the vectors ($\mathbb{R}^n$). But you will see that almost all the vectors can be represented using $\mathbb{R}^n$ type of vectors which essentially tells that all the results of $\mathbb{R}^n$ will also be applicable on all the vectors we are talking about.
 
 \end{document}

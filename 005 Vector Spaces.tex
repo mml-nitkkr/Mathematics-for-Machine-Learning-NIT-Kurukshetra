@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+%\pagestyle{fancy}
+\cfoot{
+\vspace{1mm}\hspace{3cm}
+\includegraphics[width=0.2\textwidth]{CC-BY-NC-SA.pdf}}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength\headheight{80.0pt}
+\addtolength{\textheight}{-80.0pt}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{blkarray}
+\usepackage[table]{xcolor}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\newcommand\bg{\cellcolor{gray!70}}
+
+\usepackage{stackengine,graphicx}
+\def\stacktype{L}
+\def\useanchorwidth{T}
+\newcommand\strike[1]{\stackon[3.3pt]{#1}{\rule{4.5ex}{1pt}}}
+\newcommand\vstrike[1]{\stackon[0pt]{#1}{\smash{\rule[-3pt]{1pt}{2.9ex}}}}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\title{Linear Algebra (Part 007)\\Vector Spaces}
+\author{Dr Kapil\\kapil $@$ nitkkr $\cdot$ ac $\cdot$ in\\Department of Computer Applications\\ NIT Kurukshetra}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+As we said earlier, loosely speaking any thing or object that can be added together \& after being multiplied by a scalar, and they remain object of same type.
+
+Now, we will start their definition formally with graphs. \\
+
+Graphs : Consider a set G \& an operation $\bigotimes$:G x G $\rightarrow$ G defined on G. Then (G, $\bigotimes$) is called a group iff - 
+\begin{enumerate}
+    \item Closure of G under $\bigotimes$ : $\forall$ x, y $\in$ G s.t x$\bigoplus$y $\in$ G
+    \item Associativity : $\in$ x, y, z $\in$ s.t (x $\bigotimes$ y) $\bigotimes$ z = x $\bigotimes$ (y $\bigotimes$ z)
+    \item Neutral element or Identity element's existence \par $\exists$ e $\in$ G, $\forall$ x $\in$ G s.t x $\bigotimes$ e = x = e $\bigotimes$ x
+    \item Existence of inverse: $\forall$ x $\in$ G $\exists$ y $\forall$ G s.t x$\bigotimes$y = e = y $\bigotimes$ x \\ often inverse of x is denoted by $x_{-1}$. However it may not mean $\frac{1}{x}$
+\end{enumerate}
+
+An abelian group is a group that's operation is commutative i.e. $\forall$ x, y $\in$ G  x$\bigotimes$y = y$\bigotimes$x\\
+
+$\boldsymbol{Q}$ Find if following of the set with associated operation are groups or not.
+
+\begin{enumerate}
+    \item ($\mathbb{Z}$, +), $\mathbb{Z}$ is a set of integer 
+    \item ($\mathbb{N}_o$), $\mathbb{N}_o$ is set of natural numbers including (N, identity)
+    \item ($\mathbb{Z}, .$)
+    \item ($\mathbb{R}, .$), (N, 0`s inverse)
+    \item ($\mathbb{R} \ \{0\}, .)$ is Abelian
+    \item ($\mathbb{R}_n$, +), ($\mathbb{z}_n$, +), n \in \mathbb{N} are abelian if + is defined component wise
+    \item ($\mathbb{R}_{mxn}$, .) (
+\end{enumerate}
+
+\end{document}

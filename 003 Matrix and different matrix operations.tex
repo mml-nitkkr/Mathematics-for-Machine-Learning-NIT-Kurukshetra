@@ -1,0 +1,478 @@
+\documentclass{article}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\title{Linear Algebra (Part 003)\\Matrices and different matrix operations}
+\author{Dr Kapil\\kapil[at]nitkkr[dot]ac[dot]in\\Department of Computer Applications\\ NIT Kurukshetra}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+With \(m,n \in \mathbb{N}\), a real valued \((m \times n)\) order matrix \(A\) denoted as \(A_{m \times n}\) is a \(mn\) tuple (where \(\mathbb{N}\) is set of Natural numbers i.e. \(\mathbb{N} = \{ 1, 2, ... \}\)) of elements \( a_{ij}\), \(1 \leq i \leq m\), \(1 \leq j \leq n \) which is ordered according to a rectangle scheme consisting of \(m\)-rows \& \(n\)-columns \\
+\[
+    A = \begin{bmatrix}
+            a_{11} & a_{12} & \cdots & a_{1n} \\
+            a_{21} & a_{22} & \cdots & a_{2n} \\
+            \vdots  & \vdots  & \ddots & \vdots  \\
+            a_{m1} & a_{m2} & \cdots & a_{mn} 
+        \end{bmatrix}
+\]
+
+where, \( a_{ij} \in \mathbb{R}\) with special cases like \((1, n)\) matrix is called as row vector and \((m, 1)\) matrix is called as column vector.
+\section{Matrix Operations}
+\subsection{Matrix Transpose}
+To be done (TBD)
+\subsection{Scalar Multiplication}
+To be done (TBD)
+
+\subsection{Matrix Addition}
+
+\begin{align}
+    \begin{pmatrix}
+        1 & 4 & 3 \\
+        2 & 7 & 1
+    \end{pmatrix} + \begin{pmatrix}
+                        2 & -5 & 4 \\
+                        -3 & 1 & -7
+                    \end{pmatrix} &= \begin{pmatrix}
+                                        1+2 & 4+(-5) & 3+4 \\
+                                        2+(-3)& 7+1 & 1+(-7)
+                                     \end{pmatrix}\nonumber \\
+                                  &= \begin{pmatrix}
+                                        3 & -1 & 7\\
+                                        -1 & 8 & -6
+                                     \end{pmatrix} \nonumber
+\end{align}
+
+Formally, if \(A, B, \in \mathbb{R}^{m\times n}\) \\
+
+\(
+ ~~~~~~~~A = \begin{bmatrix}
+        a_{11} & a_{12} & \cdots & a_{1n} \\
+         a_{21} & a_{22} & \cdots & a_{2n}\\
+        \vdots  & \vdots  & \ddots & \vdots\\
+        a_{m1} & a_{m2} & \cdots & a_{mn}
+     \end{bmatrix}_{m\times n}, ~~~~~~~~~~
+B = \begin{bmatrix}
+        b_{11} & b_{12} & \cdots & b_{1n} \\
+         b_{21} & b_{22} & \cdots & b_{2n}\\
+        \vdots  & \vdots  & \ddots & \vdots\\
+        b_{m1} & b_{m2} & \cdots & b_{mn}
+     \end{bmatrix}_{m\times n}
+\)\\
+
+
+can be represented as \(A = [a_{ij}],~ B = [b_{ij}]~ \forall i \in \{1,...,m\},\forall j \in \{1,...,n\}\) (Compact Notation) then addition of \(A\) and \(B\) is defined as -\\
+\[
+C = A + B = \begin{bmatrix}
+        a_{11} + b_{11} & \cdots & a_{1n} + b_{1n} \\
+        b_{21} + b_{21} &  \cdots & a_{2n} + b_{2n}\\
+        \vdots    & \ddots & \vdots\\
+       a_{m1} + b_{m1}  & \cdots & a_{mn} + b_{mn}
+     \end{bmatrix}_{m\times n}
+\]\\
+and in compact form \(C = A + B\) can be represented as \([c_{ij}]=[a_{ij} + b_{ij}],~\forall i \in \{1,...,n\}\) and \(j \in \{1,...,m\}\).
+
+
+\subsection{Matrix Multiplication}
+
+For matrices \(  A \in \mathbb{R}^{m\times n},~B \in \mathbb{R}^{n\times k} \), then the product of \(A~~\&~~B\) i.e. matrix \( C \in \mathbb{R}^{m\times k} \) is defined as -- \\
+
+\[
+    [c_{ij}]_{m\times k} = [ \sum_{l=1}^{n} a_{il} b_{lj} ]_{m\times k}~~~~~~~~~~~~~~ i \in \{1,...,m\} ~ \& ~ j \in \{1,...,k\}
+\]
+
+Notice the dimensions of \(A, B~\&~C\), especially that the summation is over internal index that is on columns of \(A\) and rows of \(B\) which should be same for \(A\) and \(B\) for matrix multiplication to be defined. It means \(\begin{pmatrix}
+                                        1 & 7\\
+                                        2 & 3
+                                   \end{pmatrix}_{2\times 2} \cdot \begin{pmatrix}
+                                                        1\\
+                                                        3\\
+                                                        5
+                                                   \end{pmatrix}_{3 \times 1}\) can not be multiplied as its internal dimensions does not match\\
+
+
+Also, matrix multiplication should not confused with element wise product i.e. \( c_{ij} = a_{ij} * b_{ij} \). This element wise product is known as Hadamard Product. \\
+
+Example multiplication-
+\begin{align}
+    \begin{pmatrix}
+        1 & 3\\
+        2 & 5\\
+        -1 & 4
+    \end{pmatrix}_{3\times 2} \begin{pmatrix}
+                        2 & 1 & 0\\
+                        0 & -1 & 1
+                  \end{pmatrix}_{2 \times 3} &= \begin{pmatrix}
+                                      1\times 2+3\times 0 & 1\times 1+3\times (-1) & 1\times 0+3\times 1\\
+                                      2\times 2+5\times 0 & 2\times 1+5\times (-1) & 2\times 0+5\times 1\\
+                                      -1\times 2+4(0) & -1\times 1+4\times (-1) & -1\times 0+4\times 1
+                                   \end{pmatrix} \nonumber \\
+                                 &= \begin{pmatrix}
+                                        2 & -2 & 3\\
+                                        4 & -3 & 5\\
+                                        -1 & -5 & 4
+                                    \end{pmatrix}_{3\times 3} \nonumber
+\end{align}
+
+Definitely, if you multiply
+\[
+    \begin{pmatrix}
+        2 & 2 & 0\\
+        0 & -1 & 1
+    \end{pmatrix} . \begin{pmatrix}
+                        1 & 3\\
+                        2 & 5\\
+                        -1 & 4
+                    \end{pmatrix}  \in \mathbb{R} ^ {2\times2}
+\]
+
+Notice that matrix multiplication cannot be commutative. In fact, sometimes the multiplication is even not defined if we do it other way.\\
+Here, it is important to note that why just one example is sufficient to say that matrix multiplication is not commutative. For this, we need to what is the definition of a binary operation (that takes to operands) being commutative. \\
+Definition: A binary operation \(o\), defined on set \(U\), is said to be \textbf{commutative} iff \(\forall u_1,u_2 \in U,~~u_1~o~u_2 = u_2~o~u_1\).\\
+Now, for something needs to be false, its negation must be true. So, negating the definition to get the definition of not commutative-\\
+Definition: A binary operation \(o\), defined on set \(U\), is said to be \textbf{not commutative} iff \(\exists u_1,u_2 \in U,~~u_1~o~u_2 \ne u_2~o~u_1\).\\
+Since, we have found one such example which does not follow the rule. It does our job.
+\section{Special Matrices}
+\subsection{Upper Triangular Matrices}
+To be done(TBD)
+\subsection{Lower Triangular Matrices}
+To be done(TBD)
+\subsection{Symmetric Matrices}
+To be done(TBD)
+\subsection{Square Matrices}
+Any square matrix has same number of rows and columns. Since, here \(m=n\), we denote matrix \(A\) or order \(n\times n\) by \(A_n\). To be done(TBD)
+\subsection{Diagonal Matrices}
+To be done(TBD)
+\subsection{Identity Matrices (\(I_n\) of size \(n\times n\))}
+
+All diagonal elements are 1 (one) and rest of the elements are 0 (zero).\\
+\begin{math}
+I_2 = \begin{bmatrix}
+            1 & 0 \\
+            0 & 1
+         \end{bmatrix},~~ I_3 = 
+         \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & 1 & 0 \\
+            0 & 0 & 1
+         \end{bmatrix}
+\end{math}
+
+\section{Matrix Properties}
+\subsection{Associative Property}
+Matrix multiplication is associative. It means that order of multiplication can be changed without changing the result i.e. \((AB)C = A(BC)\). In other words, if you multiply \(A\) with \(B\) first followed by right(or post) multiplication with \(C\), it is same as that when you multiplied \(B\) with \(C\) first followed by left (or pre) multiplication with \(A\), where \(A\), \(B\) and \(C\) are such that the multiplication is defined or in other words \( \forall~~ A \in \mathbb{R} ^{m\times n} ,~~ B \in \mathbb{R} ^{n\times p} ,~~ C \in \mathbb{R} ^{p\times q} \).\\
+
+Since, matrix multiplication is not commutative, \(AB\) and \(BA\) means different so to identify them for \(AB\), we say \(A\) is ``pre multiplied with'' or ``multiplied from left of'' \(B\). Simultaneously, we can say that \(B\) is ``post multiplied with'' or ``multiplied from right of'' \(A\).\\
+
+In fact, matrix addition is also associative i.e. \((A+B)+C = A+(B+C)\).
+
+\subsection{Distributive Property}
+Matrix multiplication is distributive over matrix addition. That is \( \forall ~ A, B \in \mathbb{R} ^{m\times n}, ~\forall~C,D\in \mathbb{R} ^{n\times p})\)
+\begin{itemize}
+    \item Matrix Multiplication is right distributive over matrix addition\\
+\( (A + B)C = AC + BC \)
+    \item Matrix Multiplication is left distributive over matrix addition.\\
+    \(A(C + D) = AC + AD \)
+\end{itemize}
+\subsection{Multiplicative Identity}
+Multiplication of any matrix \(A \in \mathbb{R} ^{m\times n}\) with appropriate order identity matrix results into the same matrix.
+\[ I_m  A = A = A  I_n\]
+Notice \(I_m \neq I_n\) as `\(m\)` may not be same as that of `\(n\)`.\\
+
+\subsection{Multiplicative Inverse}
+Inverse of a square matrix \(A_{n \times n}\) is defined as another matrix \(B\) such that \(BA = I = AB\).\\
+In general inverse of a matrix \(A\) is represented by \(A ^{-1}\).\\
+
+Let us just take a quick look on our Simultaneous System of Linear Equations again. In matrix from, it is \(A\vec{x} = \vec{b}\), if we pre-multiply the expressions on both sides of equality of the equation by \(A ^{-1}\) then we get
+\begin{align}
+    A^{-1}(A\vec{x}) &= A^{-1}\vec{b} &(\text{pre-multiplying both sides by} A^{-1}, \text{ provided } A^{-1} \text{ exists})\nonumber \\
+    (A^{-1}A)\vec{x} &= A^{-1}\vec{b} &(\text{Associative Property of Matrix Multiplication})\nonumber \\
+    I\vec{x} &= A^{-1}\vec{b} &(\text{by definition of Identity Matrix}) \nonumber \\
+    \vec{x} &= A^{-1}b \nonumber
+\end{align}
+
+As we know system of Linear equations have three cases, that must be some where here too.\\
+Now, let-\\
+\[ A = \begin{pmatrix}
+            a_{11} & a_{12}\\
+            a_{21} & a_{22}
+        \end{pmatrix}\]
+        the inverse is \[A^{-1} = \frac{2}{a_{11}a_{22} - a_{12}a_{21}} \begin{pmatrix}
+                                                                                            a_{22} & -a_{12}\\
+                                                                                            -a_{21} & a_{11}
+                                                                                       \end{pmatrix}\]\\
+
+Multiplying \( A^{-1} \) with \(A\) i.e. \( A^{-1} A ~ \) and \( ~ A  A^{-1} \) to verify if you get I, the identity matrix or not. You can notice that \((A^{-1})^{-1}\) i.e. inverse of \(A^{-1}\) is \(A\). So, What happens to \(A^{-1}\) if \(a_{11}a_{22} - a_{12}a_{21} = 0\)? Correct in that case inverse doesn't exist, interestingly if you rearrange we get \(\frac{a_{11}}{a_{21}} = \frac{a_{12}}{a_{22}}\).
+
+Notice that this condition is appears when we either has infinite solution or has no solution at all. Thus, if matrix \(A\) has inverse then it is called regular/ invertible/ non-singular matrix. Else it is non-invertible/ singular matrix.
+
+\section{Types of Matrix}
+\subsection{Transpose}
+If \(A \in \mathbb{R} ^{m \times n}, \text{ then } B \in \mathbb{R} ^{n\times m}\) is said to be transpose of \(A\) iff \([b_{ij}] = [a_{ji}]~~\forall~ i \in \{1,...,m\}, j\in\{1,...,n\}\). Generally, transpose of \(A\) is represented by \(A^T\).
+
+\[\text{Let}~ A = \begin{bmatrix}
+            1 & 3 & 4\\
+            2 & 7 & 2
+        \end{bmatrix} ~ \text{then} ~ A^{T} = \begin{bmatrix}
+                                            1 & 2 \\
+                                            3 & 7 \\
+                                            4 & 2
+                                       \end{bmatrix}\]
+
+\subsection{Symmetric Matrix}
+\(A \in \mathbb{R} ^{m\times m}\) is symmetric matrix iff \(A =A ^{T}\).\\
+
+It is interesting to note that sum of two symmetric matrices is a symmetric matrix but their product need not be symmetric, for ex. 
+\begin{itemize} 
+    \item  Addition of two symmetric matrices
+    \[   \begin{bmatrix}
+        1 & 0\\
+        0 & 0
+    \end{bmatrix} + \begin{bmatrix}
+        1 & 1\\
+        1 & 1
+    \end{bmatrix} = \begin{bmatrix}
+        2 & 1\\
+        1 & 1
+    \end{bmatrix} \nonumber \text{Symmetric}
+\]
+\item Multiplication of two symmetric matrices
+\[
+    \begin{bmatrix}
+        1 & 0\\
+        0 & 0
+    \end{bmatrix}\begin{bmatrix}
+        1 & 1\\
+        1 & 1
+    \end{bmatrix} = \begin{bmatrix}
+        1 & 1\\
+        0 & 0
+    \end{bmatrix} \nonumber \text{Not Symmetric}
+\]
+    
+\end{itemize}
+
+\section{Multiplication of a scalar with a Matrix}
+Definition: Any matrix \(A \in \mathbb{R} ^{m \times n}\) when multiplied by some scalar \(\lambda \in \mathbb{R}\)
+
+\begin{math}
+     C = \lambda A ~~~ \iff [c_{ij}] = [\lambda a_{ij}] \forall i \in \{1,...,m\}, j\in \{1,...,n\}
+\end{math}
+
+Multiplication with a scalar \(\lambda \in \mathbb{R}\), scales each element of \(A\).
+
+\subsection{Properties of scalar multiplication}
+\(\forall~ \lambda,~\phi \in \mathbb{R},~A \in \mathbb{R}^{m\times n},~B \in \mathbb{R}^{n\times k},~C \in \mathbb{R}^{m\times n}\)
+\subsubsection{Associative Property}
+
+\begin{itemize}
+    \item \((\lambda\phi)A = \lambda(\phi A)\) 
+    \item \(\lambda(AB) = (\lambda A)B = A(\lambda B) = (AB)\lambda \)
+\end{itemize}
+
+\subsubsection{Distributive Property}
+\begin{itemize}
+    \item \((\lambda + \phi)A = \lambda A + \phi A\)
+    \item \(\lambda(A + C) = \lambda A + \lambda C\)
+\end{itemize}
+
+Notice that, here we are working with different type of operations-
+\begin{itemize}
+    \item Addition of two scalars
+    \item Multiplication of two scalars
+    \item Addition of two matrices
+    \item Multiplication of two matrices    
+    \item Multiplication of a scalar with a matrix
+\end{itemize}
+
+\section{Prove that Inverse of \(AB\) is \(B^{-1}A^{-1}\)}
+Proof: To prove the same, we will try to prove two things.
+\begin{itemize}
+    \item \((B^{-1}A^{-1})(AB) = I\) i.e. \(B^{-1}A^{-1}\) is left inverse of \(AB\)
+    \item \((AB)(B^{-1}A^{-1}) = I\) i.e. \(B^{-1}A^{-1}\) is right inverse of \(AB\)
+\end{itemize}
+
+\begin{align}
+    (B^{-1}A^{-1}) (AB) & = B^{-1}(A^{-1}(AB)) && \text{(Associativity)} \nonumber\\
+                        & = B^{-1}((A^{-1}A)B) && \text{(Associativity)} \nonumber\\
+                        & = B^{-1}((I)B) && (A^{-1}A = I) \nonumber\\
+                        & = B^{-1}(B)   && ( IB = B)\nonumber\\
+                        & = B^{-1}B \nonumber\\
+                        & = I && (B^{-1}B = I) \nonumber
+\end{align}
+
+\begin{align}
+    (AB)(B^{-1}A^{-1}) &= A(B(B^{-1}A^{-1})) && \text{(Associativity)} \nonumber\\
+                       &= A((BB^{-1})A^{-1}) && \text{(Associativity)} \nonumber\\
+                       &= A(IA^{-1}) && (BB^{-1} = I) \nonumber\\
+                       &= AA^{-1} && ( IB = B)\nonumber\\
+                       &= I && (AA^{-1} = I)\nonumber
+\end{align}
+
+Hence, it is proved that inverse of \(AB\) is \(B^{-1}A^{-1}\). It is something like wearing clothes, in winter the cloth you wear last like coat, you put that off first.
+
+For \(A, B\) are matrices of appropriate size and \(\lambda\) is some scalar, then following things hold 
+\begin{align}
+ (\lambda A) ^T &= A^T\lambda ^T = A^T\lambda = \lambda A ^ T\nonumber\\
+    (A + B)^{-1} &\neq B^{-1} + A^{-1}\nonumber\\
+    (A^T)^T &= A\nonumber\\
+    (A + B)^T &= A^T + B^T\nonumber\\
+    (AB)^T &= B^TA^T\nonumber
+\end{align}
+
+Let us get back to our problem of solving Simultaneous System of Linear Equation. Consider the following system
+
+\begin{align}
+    2x_1 + 3x_2 + 5x_3 &= 1 \label{e1}\\
+    4x_1 - 2x_2 - 7x_3 &= 8 \label{e2}\\
+    9x_1 + 5x_2 - 3x_3 &= 2 \label{e3}
+\end{align}
+
+Our method to solve this problem should be such, that it can be turned into an algorithm and can be programmed to solve through computational units.\\
+
+First, we will aim to remove \(x_1\) from ~\ref{e2} and ~\ref{e3} using equation~\ref{e1}. This can be done by multiplying the whole equation~\ref{e1} by a suitable scalar value and then subtract it from equation~\ref{e2} and equation~\ref{e3} separately. But before doing this, notice that multiplying a equation with some scalar value $\neq$ 0 (on both side of equality) does not change any point satisfying this equation. That means \( 2x_1 + 3x_2 + 5x_3 = 1 \) has all solution which are satisfied by equation \(2cx_1 + 3cx_2 + 5cx_3 = c\) , for any \(c \in \mathbb{R} - \{0\} \) and vice versa.\\
+
+We get,
+\begin{align}
+    && 4x_1 - 2x_2 - 7x_3 - \frac{4}{2}(2x_1 + 3x_2 + 5x_3) &= 8 - \frac{4}{2}*1\nonumber \\
+    \Rightarrow && 4x_1 - 2x_2 - 7x_3 - (4x_1 + 6x_2 + 10x_3) &= 8 - 2\nonumber \\
+    \Rightarrow && 0x_1 + (-2-6)x_2 + (-7-10)x_3 &= 6\nonumber \\
+    \Rightarrow && -8x_2 - 17x_3 &= 6 \nonumber
+\end{align}
+
+Now multiplying (\ref{e1}) by \(\frac{9}{2}\) and then subtracting it from (\ref{e3})\\
+We get,
+\begin{align}
+    && 9x_1 + 5x_2 - 3x_3 - \frac{9}{2}(2x_1 + 3x_2 + 5x_3) &= 2 - \frac{9}{2}*1 \nonumber \\
+    \Rightarrow && (9 - \frac{9}{2}*2)x_1 + (5 - \frac{9}{2}*3)x_2 + (-3 -\frac{9}{2}*5)x_3 &= 2 - \frac{9}{2}\nonumber \\
+    \Rightarrow && 0x_1 + (-8.5)x_2 + (-25.5)x_3 &= -2.5\nonumber \\
+    \Rightarrow && -8.5x_2 + -25.5x_3 &= -2.5 \nonumber
+\end{align}
+
+Therefore, new system of equation is
+\begin{align}
+    2x_1 +3x_2 +5x_3 =1 \nonumber \\
+    -8x_2 -17x_3 =6 \nonumber \\
+    -8.5x_2 -25.5x_3 =-2.5 \nonumber 
+\end{align}
+
+You should be skeptical about the solution of this system because this system might have different solution than the previous (original) system of linear equation.\\
+
+So, what ever operation we have performed, we should check that their effect should not change the point of intersection. Because that is the only point or information we are interested in.\\
+
+Consider following set of equations in 2 variables
+\begin{align}
+    a_1x_1 + a_2x_2 &= a_3 && \Rightarrow && a_1x_1 + a_2x_2 - a_3 = 0 \\
+    b_1x_1 + b_2x_2 &= b_3 && \Rightarrow && b_1x_1 + b_2x_2 - b_3 = 0
+\end{align}
+
+Now consider \( (\alpha a_1 + \lambda b_1)x_1 + (\alpha a_2 + \lambda b_2)x_2 = \alpha a_3 + \lambda b_3\)
+\begin{align}
+    \alpha(a_1x_1 + a_2x_2 - a_3) + \lambda(b_1x_1 + b_2x_2 - b_3) = 0
+\end{align}
+for every \(x_1, x_2\) satisfy by equation(4), term 1 will vanish i.e. equation(6) become\\
+\[
+    \alpha.0 + \lambda(bx_1 + b_2x_2 - b_3) = 0
+\]
+which will also become zero if the point is also satisfied by equation(5).\\
+This finally concludes to the fact that - \\
+\indent Scalar multiplication of equations followed by addition of the two equations from the same system of simultaneous equation then newly generated system of equations satisfy all the points satisfied jointly or simultaneously by older equations. Just for an example try to draw following equations as well some linear combinations of these equations suggested below-
+\begin{align}
+    x_1 + x_2 &= 2\nonumber\\
+    x_1 - x_2 &= 0\nonumber\\
+    \frac{1}{2}(x_1 + x_2) + \frac{1}{2}(x_1 - x_2) &= \frac{1}{2}*(2+0) &\Rightarrow x_1 &= 1\nonumber\\
+    \frac{1}{4}(x_1 + x_2) + \frac{3}{4}(x_1 - x_2) &= \frac{1}{4}*2+\frac{3}{4}*0 &\Rightarrow x_1 - \frac{1}{2} x_2&= \frac{1}{2}\nonumber\\
+    \frac{3}{4}(x_1 + x_2) + \frac{1}{4}(x_1 - x_2) &= \frac{3}{4}*2+\frac{1}{4}*0 &\Rightarrow x_1 + \frac{1}{2} x_2&= \frac{3}{2}\nonumber
+\end{align}
+
+You can see how ``Linear Combination'' of equations generate and they are bound to keep all the common points with them that are satisfied by older system of equations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+So, now we take another example to shows algorithmic way to solve equations
+\begin{align}
+    x_1 + 2x_2 + 7x_3 &= 14\label{eq1}\\
+    -x_1 + 2x_2 - 2x_3 &= -1\label{eq2}\\
+    2x_1 - x_2 - 4x_3 &= 0\label{eq3}
+\end{align}
+
+Taking~(\ref{eq1}) choose suitable \(\alpha\) so that after getting the linear combination~(\ref{eq2}) + \(\alpha\)(\ref{eq1}), the new equation should get coefficient of \(x_1\) to be 0 (zero). Similarly, for equation~(\ref{eq3}) can be replaced by an equation~(\ref{eq3})+\(\beta\)(\ref{eq1}). So, that the coefficient of \(x_1\) in new equation should vanish.\\
+
+So,
+\begin{align}
+    (\ref{eq2}) - \frac{-1}{1}(\ref{eq1}) ~ & or ~ (\ref{eq2}) + (\ref{eq1})\nonumber\\
+    (-x_1 + 2x_2 - 2x_3) + (x_4 + 2x_2 + 7x_3) &= -1 + 14\nonumber\\
+    0x_1 + 4x_2 + 5x_3 &= 13\nonumber\\
+    \text{and} (\ref{eq3}) - \frac{2}{1}(\ref{eq1}) ~ & \text{or} ~ (\ref{eq3}) - (\ref{eq1}) ~\text{ we get } \nonumber\\
+    (2x_1 - x_2 - 4x_3) - 2(x_1 + 2x_2 + 7x_3) &= 0 - 2(14) \nonumber\\
+    \Rightarrow 0x_1 - 5x_1 - 18x_3 &= -28 \nonumber
+\end{align}
+after changing the sign both sides
+\[
+5x_2 + 18x_3 = 28
+\]
+
+Now new set of equations become 
+\begin{align}
+    x_1 + 2x_2 + 7x_3 &= 14 \label{equ1} \\
+    4x_2 + 5x_3 &= 13 \label{equ2} \\
+    5x_2 + 18x_3 &= 28 \label{equ3}
+\end{align}
+
+Now replace equation(\ref{equ3}) by some Linear Combination of (\ref{equ3}) and (\ref{equ2}) so that coefficient of \(x_2\) vanishes.\\
+\begin{align}
+    && (\ref{equ3}) \leftarrow (\ref{equ3}) - \frac{5}{4}(\ref{equ2})\nonumber\\
+    && (5x_2 + 18x_3) - \frac{5}{4}(4x_2 +5x_3) &= 28-\frac{5}{4}(13)\nonumber\\
+    \Rightarrow && 0x_2 + (18 - \frac{25}{4})x_3 &= (28 - \frac{65}{4}\nonumber\\
+    \Rightarrow && \frac{47}{4}x_3 &= \frac{47}{4}\nonumber\\
+    \Rightarrow && x_3 &= 1\nonumber
+\end{align}
+The above process is known as Gauss Elimination. Now, we can find the values of the variables using Back Substitution. Summarizing the above set of equations-
+\begin{align}
+    x_1 + 2x_2 + 7x_3 &= 14\label{ee1}\\
+    4x_2 + 5x_3 & = 13 \label{ee2}\\
+    x_3 &= 1\label{ee3}
+\end{align}
+Substituting the value of \(x_3\) in (\ref{ee2}) we get
+\begin{align}
+    4x_2 + 5x_3 &= 13 \nonumber\\
+    \Rightarrow x_2 &= \frac{13-5(1)}{4} \nonumber\\
+    &= 3 \label{ee4}
+\end{align}
+Substituting \(x_3 \text{and} x_2\) values from (\ref{ee3}) \& (\ref{ee4}) back into equation(\ref{ee1}) we get 
+\[
+    x_1 = \frac{14-2(2)-7(1)}{1} = 3
+\]
+Therefore solution is (3, 2, 1).\\
+
+Do the above question with your hand (without looking at it) so as to understand if you haven't missed any point. Do it again till you get flawless answer (solution method).\\
+
+\section{Summary of the above procedure}
+This is some what an algorithmic way to solve the problem as we repeatedly tried to vanish the coefficient of leading variable from all the equations lower to the specified equations. By keep doing this we get a system of linear equation such that $i^{th}$ equation has all the coefficients zero for the first (i-1) variables. Now, if we have $n$-equations and $n$-variables the last equation has only one non-zero coefficient, the second last has two and so on.\\
+
+Therefore get the value of last variable from last equation substitute the value of variables, you get till now in the previous equation to get value of one more variable. This process continues till you get the values of all the variables.\\
+
+In next part we will try to take this process more computer friendly, as we cannot keep mathematical variables, as they can be kept here, in a program. In computers we can only play with numbers which are known at that point in time and does not have any role of mathematical variable that do not have any value during solving of the equations.
+
+Does this algorithm work for all three cases discussed in previous part?
+
+\end{document}
