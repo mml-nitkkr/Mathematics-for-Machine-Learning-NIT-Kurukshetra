@@ -45,16 +45,16 @@
     a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &= b_1 \nonumber\\
     a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &= b_2 \nonumber\\
     \vdots     ~~~~~~~~~~~~~~~~~~~~~~          & \vdots\nonumber\\
-    a_{m1}x_1 + a_{m2}x_2 + \cdots+ + a_{mn}x_n &= b_m \nonumber
+    a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n &= b_m \nonumber
 \end{align}
 
-here, $a_{ij} \in \mathbb{R}$, $b_{i} \in \mathbb{R}$ are known constants and $x_j$'s are unknowns or variables. Also, as we have seen earlier, solving the system of simultaneous linear equation may involve inverse i.e.
+here, $a_{ij} \in \mathbb{R}$, $b_{i} \in \mathbb{R}$ are known constants and $x_j$'s are unknowns or variables. The system of equations can be written as matrix equation as $A\vec{x}=\vec{b}$. Now, as we have seen earlier, solving the system of simultaneous linear equation may involve inverse i.e.
 
 \begin{align}
     A\vec{x} = \vec{b} \Rightarrow (A^{-1}(A\vec{x})) = A^{-1}\vec{b} \Rightarrow (A^{-1}A)\vec{x}  = \vec{x} = A^{-1}\vec{b} \nonumber
 \end{align}
 
-So, here we will see algorithm for both i) finding the inverse of $A$ ($A^{-1}$) and ii) solving the system of linear equations. 
+So, here we will see algorithm for both i) finding the inverse of $A$ (i.e. $A^{-1}$) and ii) solving the system of linear equations. 
 
 
 
@@ -424,18 +424,10 @@ we did some linear combination ((2) $\longleftarrow$ (2) + (1)) to get the next 
 to get the new equivalent system of equations as following?
 
 \[
-\begin{bmatrix}
-    & & \\
-    &? & \\
-    & &
-\end{bmatrix} \begin{bmatrix}[ccc|c]
+\begin{bmatrix}[ccc|c]
     1 & 2 & 7 & 14\\
     0 & 4 & 5 & 13 \\
     2 & -1 & -4 & 0
-\end{bmatrix} \begin{bmatrix}
-    & & \\
-    &? & \\
-    & &
 \end{bmatrix}
 \]
 Such operation that changes only one row of the matrix are called \textit{elementary operations} and the matrix that knocks off (make one coefficient zero) at $i,j$-th position is called \textit{elimination matrix} ($E_{ij}$).
@@ -480,7 +472,7 @@ The leading coefficient of a row (first non zero number from the left) is called
 \subsection{Back Substitution}
 If you are looking at the equations simultaneously, you must know equation (\ref{GE1}) refers to following system of equations-  \\
 
-\begin{equation} \tag{Back Substitution}
+\begin{equation} \tag{Back Substitution} 
 \begin{split}
 x_3 &= 1\\
 x_2 &= \frac{13 - 5(1)}{4} = 2 \\
@@ -619,7 +611,7 @@ So, exchanging the rows will help keeping the pivots at right position and lead 
 Consider following augmented matrix
 \begin{align}
 \begin{bmatrix}[cccc|c] 
-1 & 1 & 3 & -1 & 5 \\
+ \bg1 & 1 & 3 & -1 & 5 \\
 2 & 2 & -4 & -2 & 7 \\
 -1 & -1 & 2 & 1 & -3.5 
 \end{bmatrix}\nonumber
@@ -628,8 +620,8 @@ After, eliminations with the help of first equation of the system we get-
 
 \begin{align}
 \begin{bmatrix}[cccc|c] 
-1 & 1 & 3 & -1 & 5 \\
-0 & 0 & -10 & 0 & -3 \\
+ \bg1 & 1 & 3 & -1 & 5 \\
+0 & 0 & \bg-10 & 0 & -3 \\
 0 & 0 & 5 & 0 & 1.5 
 \end{bmatrix}\nonumber
 \end{align}
@@ -637,22 +629,33 @@ Further, with the help of second equation of the system
 
 \begin{align}
 \begin{bmatrix}[cccc|c] 
-1 & 1 & 3 & -1 & 5 \\
-0 & 0 & -10 & 0 & -3 \\
-0 & 0 & 0 & 0 & 0 
+ \bg1 & 1 & 3 & -1 & 5 \\
+ 0 & 0 & \bg-10 & 0 & -3 \\
+ 0 & 0 & 0 & 0 & 0 
 \end{bmatrix}\label{ef1}
 \end{align}
-Note that not all columns have pivots. And a row is entirely zero.\\
+Note that not all columns have pivots. And a row is entirely zero. Again looking back the corresponding equations, we get\\
+\begin{align}
+1x_1 + 1x_2 + 3x_3 +(-1)x_4 &= 5 \nonumber\\
+0x_1 + 0x_2 + (-10)x_3 + 0x_4 &= -3 \nonumber\\
+0x_1 + 0x_1 + 0x_3 + 0x_4 &= 0 \nonumber
+\end{align}
 
 \textbf{Definition:} The variables corresponding to pivots in row-echelon form are known as \textit{basic variables}. Here, variable corresponding to $Col_1$ and $Col_3$ are basic variables.\\
 %Particular solution comes from basic variables
 
 \textbf{Definition:} Variables other than basic variables are said to be \textit{free variables}.  Here, variable corresponding to $Col_2$ and $Col_4$ are free variables.\\
 
+Note that the last row is entirely zero that is both coefficient portion as well constant term is zero. This equation is always satisfied irrespective of values of the variables. Therefore, the solution of the system of equations is entirely dependent on other equations.\\
 
-If all the variables are basic that is all the columns of coefficient matrix has pivots then unique solution comes. And if there is one or more free variables then the system is lying with no or \textbf{infinitely many solutions}.
+In a previous example we have seen that if all the variables are basic that is all the columns of coefficient matrix has pivots then unique solution comes. But if not, as in the above case, then we proceed as follows- 
+\begin{enumerate}
+    \item First, set free variables to some parametric value and that can take any value
+    \item Now, we have exactly same number of rows as the number of basic variables, so we get unique solution in terms of parametric values of free variables by Back Substitution method. 
+\end{enumerate}
+So the solution is given by first letting $x_2=l$ and $x_4=k$, and then, $x_3=0.3$, $x_1=4.1-l+k, ~~\forall~l,k\in \mathbb{R}$.\\
 
-Also, note that the last row is entirely zero that is both coefficient portion as well constant term is zero. This equation is always satisfied irrespective of values of the variables. Therefore, the solution of the system of equations is entirely dependent on other equations.
+But, since these parameters are free to choose any value, the system of linear equation has infinitely many solutions. Thus, if there is at least one free variable then the system is lying with infinitely many or no solutions.\\
 
 Again, consider following system of equations-\\
 \begin{align}
@@ -662,7 +665,7 @@ Again, consider following system of equations-\\
 -1 & -1 & 2 & 1 & 10 
 \end{bmatrix}\nonumber
 \end{align}
-After, appropriate elimination we get-
+After, appropriate elimination with the help of first equation of the matrix we get-
 \begin{align}
 \begin{bmatrix}[cccc|c] 
 1 & 1 & 3 & -1 & 5 \\

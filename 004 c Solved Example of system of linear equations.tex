@@ -1,12 +1,19 @@
 \documentclass[11pt,a4paper]{article}
 
-\usepackage{lipsum}
+\usepackage{lipsum} 
 \usepackage{graphicx}
 
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ 
 \usepackage{fancyhdr}
-%\pagestyle{fancy}
 \cfoot{
-\vspace{1mm}\hspace{0.5cm}
+\hspace{0.5cm}
 \includegraphics[width=0.2\textwidth]{CC-BY-NC-SA.pdf}}
 
 \renewcommand{\headrulewidth}{0pt}
@@ -20,20 +27,19 @@
 
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{blkarray}
-\usepackage[table]{xcolor}
 \usepackage{enumerate}
 
 \begin{document}
-\title{Linear Algebra (Part 006)\\Solved Example of system of linear equations}
+\title{Linear Algebra (Part 004c)\\Solved Example of system of linear equations}
 \author{Dr Kapil\\kapil $@$ nitkkr $\cdot$ ac $\cdot$ in\\Department of Computer Applications\\ NIT Kurukshetra}
 \date{\today}
 \maketitle
 \thispagestyle{fancy}   
 
-$\boldsymbol{Question}$. 
+\textbf{Question}\\ 
+Solve the following simultaneous system of Linear Equation using Gauss Jordon method. Also state all the elimination matrices (and other matrices)\\
 
-Solve the following simultaneous system of Linear Equation using Gauss Jordon method. Also state all the elimination matrices (\& other matrices)
-
+\textbf{Answer}
 \[
 \begin{split}
     2x_1 - 3x_2 + 4x_3 - x_4 + 0x_5 &= 9\\
@@ -45,62 +51,66 @@ Solve the following simultaneous system of Linear Equation using Gauss Jordon me
 \[
 \text{A} = 
     \begin{blockarray}{cccccc}
-        x_1 & x_2 & x_3 & x_4 & x_5 & &\\
+        x_1 & x_2 & x_3 & x_4 & x_5 & b&\\
         \begin{block}{[ccccc|c]}
             2 & -3 & 4 & -1 & 0 & 9\\
             4 & -6 & 8 & -1 & 0 & 17\\
             3 & 2 & -3 & 1 & 1 & -3\\
             5 & -1 & 1 & 0 & 1 & 1
         \end{block}
-    \end{blockarray}
-    \begin{matrix}
-        \xrightarrow{ R_2 \leftarrow R_2 - 2R_1}\\
-        \xrightarrow{ R_3 \leftarrow R_3 - \frac{3}{2}R_1}\\
-        \xrightarrow{ R_4 \leftarrow R_4 - \frac{5}{2}R_1}
+    \end{blockarray}\] 
+    \[\begin{matrix}
+        \xrightarrow{ \tikz[remember picture]\node[inner sep=4pt] (A) {};R_2 \leftarrow R_2 - 2R_1}\\
+        \xrightarrow{\tikz[remember picture]\node[inner sep=4pt] (B) {}; R_3 \leftarrow R_3 - \frac{3}{2}R_1}\\
+        \xrightarrow{\tikz[remember picture]\node[inner sep=4pt] (C) {}; R_4 \leftarrow R_4 - \frac{5}{2}R_1}
     \end{matrix}
-    \begin{bmatrix}[ccccc|c]
+    \left[{\begin{array}{ccccc|c}
         2 & -3 & 4 & -1 & 0 & 9\\
         0 & 0 & 0 & 1 & 0 & -1 \\
         0 & 6.5 & -9 & 2.5 & 1 & -16.5\\
         0 & 6.5 & -9 & 2.5 & 1 & -16.5
-   \end{bmatrix}
-\]
-
-\[
-E_{21} = \begin{bmatrix}
+   \end{array}}\right]\\
+   
+\vspace{2cm}
+\tikz[remember picture]\node[inner sep=0pt] (a) {};E_{21} = \begin{bmatrix}
             1 & 0 & 0 & 0\\
             -2 & 1 & 0 & 0\\
             0 & 0 & 1 & 0\\
             0 & 0 & 0 & 1
-         \end{bmatrix}, ~~~~E_{31} = \begin{bmatrix}
+         \end{bmatrix}, ~~~~\tikz[remember picture]\node[inner sep=0pt] (b) {};E_{31} = \begin{bmatrix}
                                     1 & 0 & 0 & 0\\
                                     0 & 1 & 0 & 0\\
                                     \frac{-3}{2} & 0 & 1 & 0\\
                                     0 & 0 & 0 & 1
-                                 \end{bmatrix}, ~~~~~E_{42} = \begin{bmatrix}
+                                 \end{bmatrix}, ~~~~~\tikz[remember picture]\node[inner sep=0pt] (c) {};E_{42} = \begin{bmatrix}
                                                             1 & 0 & 0 & 0\\
                                                             0 & 1 & 0 & 0\\
                                                             0 & 0 & 1 & 0\\
-                                                            \frac{-5}{2} & 0 & 0 & 1
+                                                            \frac{-5}{2} & 0 & 0 &1
                                                        \end{bmatrix}
-\]
+\tikz[overlay, remember picture]\draw[->,>=stealth] (A.west) -- +(-4.5,0) |-(a.north);
+\tikz[overlay, remember picture]\draw[->,>=stealth] (B) -- +(-0.4,0) |- (b.north);
+\tikz[overlay, remember picture]\draw[->,>=stealth] (C.south) |- +(0,-2)-- +(4.7,-2) |- (c.north);
+\]\newpage
 \[
-E_{41}E_{31}E_{21}A \xrightarrow{R_4\leftarrow R_4 - R_3}\begin{bmatrix}[ccccc|c]
-                                                                        2 & -3 & 4 & -1 & 0 & 9\\
-                                                                        0 & 0 & 0 & 1 & 0 & -1 \\
-                                                                        0 & 6.5 & -9 & 2.5 & 1 & -16.5\\
-                                                                        0 & 0 & 0 & 0 & 0 & 0
-                                                                   \end{bmatrix} 
-\]
-
-\[
-E_{42} = \begin{bmatrix}
+E_{41}E_{31}E_{21}A \xrightarrow{R_4 \leftarrow\tikz[remember picture]\node[minimum size= 5pt,inner sep=0pt] (D) {};R_4 - R_3}\left[{\begin{array}{ccccc|c}
+                                    2 & -3 & 4 & -1 & 0 & 9\\
+                                    0 & 0 & 0 & 1 & 0 & -1 \\
+                                    0 & 6.5 & -9 & 2.5 & 1 & -16.5\\
+                                    0 & 0 & 0 & 0 & 0 & 0
+                                    \end{array}}\right] 
+                                                                    
+\tikz[remember picture]\node[inner sep=2pt](d) {};E_{42}=\begin{bmatrix}
             1 & 0 & 0 & 0\\ 
             0 & 1 & 0 & 0\\ 
             0 & 0 & 1 & 0\\ 
             0 & 0 & -1 & 1 
-         \end{bmatrix}
-\]
+         \end{bmatrix} \hspace{5cm} E_{42}E_{41}\tikz[remember picture]\node[inner sep=0pt] (E) {};E_{31}E_{21}A
+         
+\tikz[overlay, remember picture]\draw[->,thick,>=stealth] (D.north) -- +(0,1) -| (d.north);
+\tikz[overlay, remember picture]\draw[->,thick,>=stealth] (E.north) -- +(0,1);
+         \]
+
 Rearranging the columns is necessary to get 1 pivot
 \[
     \begin{bmatrix}
@@ -112,21 +122,19 @@ Rearranging the columns is necessary to get 1 pivot
                     x_1 \\ x_4 \\ x_3 \\ x_2 \\ x_5
                  \end{bmatrix} = \begin{bmatrix}
                                     9 \\ -1 \\ -16.5 \\ 0
-                                 \end{bmatrix}
-\]
-from back 
-\[
-\begin{bmatrix}[ccccc|c]
+                                 \end{bmatrix} \] Which is,
+\[                                 
+\left[{\begin{array}{ccccc|c}
         2 & -1    & 4  & -3  & 0 & 9\\
         0 & 1     & 0  & 1   & 0 & -1\\
         0 & 2.5   & -9 & 6.5 & 1 & -16.5\\
         0 & 0     & 0  & 0   & 0 & 0
-\end{bmatrix}
+\end{array}}\right]
 \]
-The above operation is column operation, So the matrix to be multiplied is on the right side of it i.e.
+The above operation is column operation,
+So the matrix to be multiplied is on the right side of it i.e.\\
 \[
-(
-\begin{bmatrix}
+(\begin{bmatrix}
    2 & -3 & 4 & -1 & 0\\
    0 & 0 & 0 & 1 & 0\\
    0 & 6.5 & -9 & 2.5 & 1\\
@@ -137,13 +145,119 @@ The above operation is column operation, So the matrix to be multiplied is on th
                 0 & 0 & 1 & 0 & 0\\
                 0 & 1 & 0 & 0 & 0\\
                 0 & 0 & 0 & 0 & 1
-              \end{bmatrix} \begin{bmatrix}
+              \end{bmatrix})( \begin{bmatrix}
                                 1 & 0 & 0 & 0 & 0\\
                                 0 & 0 & 0 & 1 & 0\\
                                 0 & 0 & 1 & 0 & 0\\
                                 0 & 1 & 0 & 0 & 0\\
                                 0 & 0 & 0 & 0 & 1
-                              \end{bmatrix}
-)
+                              \end{bmatrix} \begin{bmatrix}
+                                            x_1 \\ x_2 \\ x_3 \\ x_4 \\x_5
+                                             \end{bmatrix} )
+= \begin{bmatrix}
+9\\-1\\-16.5\\0
+\end{bmatrix}\\
+
+E_12\\
+
+R_1 \longleftarrow R_1 + R_2\\
+
+R_3 \longleftarrow R_3 - 2.5 R_2
+~~~~~\left[{\begin{array}{ccccc|c}
+2 & 0 & 4 & -3 & 0 & 8\\
+0 & 1 & 0 & 0 & 0 & -1\\
+0 & 0 & -9 & 6.5 & 1 & -1 \\
+0 & 0 & 0 & 0 & 0 & 0
+\end{array}}\right] , \\
+
+E_{12} = \begin{bmatrix}
+        1 & 1 & 0 & 0\\
+        0 & 1 & 0 & 0\\
+        0 & 0 & 1 & 0\\
+        0 & 0 & 0 & 1 \end{bmatrix}, E_{32} = \begin{bmatrix}
+                                                1 & 0 & 0 & 0\\
+                                                0 & 1 & 0 & 0\\
+                                                0 & -2.5 & 1 & 0\\
+                                                0 & 0 & 0 & 1
+                                                \end{bmatrix}
+\]
+\newpage
+
+For simplification we can further exchange its column $3^rd$ with $5^th$\\
+\[
+\begin{bmatrix}
+2 & 0 & 0 & -3 & 4\\
+0 & 1 & 0 & 0 & 0\\
+0 & 0 & 1 & 6.5 & -9\\
+0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\x_4\\x_5\\x_2\\x_3
+\end{bmatrix} = 
+\begin{bmatrix}
+8\\-1\\-14\\0
+\end{bmatrix}
+
+R_1 \Longleftarrow \frac{R_1}{2}\\
+
+\begin{bmatrix}
+\frac{1}{2} & 0 & 0 & 0\\
+0 & 1 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\longrightarrow
+\left[{\begin{array}{ccc|cc|c}
+1 & 0 & 0 & \frac{-3}{2} & 2 & 4\\
+0 & 1 & 0 & 0 & 0 & -1\\
+0 & 0 & 1 & 6.5 & -9 & -14 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0
+\end{array}}\right]\\
+
+\left[{\begin{array}{c|c|c}
+I & F & b\\ \hline
+0 & 0 & 0\\
+\end{array}}\right]
+
+\text{Basic variables}~~~ \Vec{x}~~~~ \begin{bmatrix}
+                                        x_1\\x_4\\x_5
+                                    \end{bmatrix}       
+\text{Free variables}~~~ \Vec{y}~~~~ \begin{bmatrix}
+                                        x_2\\x_3
+                                    \end{bmatrix}  \\
+                                    
+\therefore \begin{bmatrix}
+            \Vec{x}\\\Vec{y}
+            \end{bmatrix} =
+\begin{bmatrix}
+4\\-1\\-14\\0\\0
+\end{bmatrix} + 
+\begin{bmatrix}
+\frac{3}{2} & -2\\
+0 & 0\\
+-6.5 & 9\\
+1 & 0 \\
+0 & 1
+\end{bmatrix} 
+\begin{bmatrix}
+x_2\\x_3
+\end{bmatrix}\\
+
+\text{or}~~~~
+\begin{bmatrix}
+x_1\\x_2\\x_3\\x_4\\x_5
+\end{bmatrix} = 
+\begin{bmatrix}
+4 \\ 0 \\ 0 \\ -1 \\ -14
+\end{bmatrix} + 
+\begin{bmatrix}
+\frac{3}{2} & -2\\
+1 & 0\\
+0 & 1\\
+0 & 0\\
+-6.5 & 9
+\end{bmatrix}
+
 \]
 \end{document}

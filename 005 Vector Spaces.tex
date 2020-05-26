@@ -1,7 +1,6 @@
 \documentclass{article}
 
 \usepackage{fancyhdr}
-%\pagestyle{fancy}
 \cfoot{
 \vspace{1mm}\hspace{3cm}
 \includegraphics[width=0.2\textwidth]{CC-BY-NC-SA.pdf}}
@@ -33,7 +32,7 @@
   \array{#1}}
 \makeatother
 
-\title{Linear Algebra (Part 007)\\Vector Spaces}
+\title{Linear Algebra (Part 005)\\Vector Spaces}
 \author{Dr Kapil\\kapil $@$ nitkkr $\cdot$ ac $\cdot$ in\\Department of Computer Applications\\ NIT Kurukshetra}
 \date{\today}
 
@@ -43,30 +42,168 @@
 \maketitle
 \thispagestyle{fancy}
 
-As we said earlier, loosely speaking any thing or object that can be added together \& after being multiplied by a scalar, and they remain object of same type.
+\section{Group}
+As we said earlier, loosely speaking any thing or object that can be added together and after being multiplied by a scalar, the result of both the operation is of the same type, separately, then these types may be vectors.\\
+Now, we will start their definition formally with group. \\
 
-Now, we will start their definition formally with graphs. \\
-
-Graphs : Consider a set G \& an operation $\bigotimes$:G x G $\rightarrow$ G defined on G. Then (G, $\bigotimes$) is called a group iff - 
+A \textit{group} is a pair $(G, \bigotimes)$ where, $G$ is a set and $\bigotimes$ is an binary operation such that- 
 \begin{enumerate}
-    \item Closure of G under $\bigotimes$ : $\forall$ x, y $\in$ G s.t x$\bigoplus$y $\in$ G
-    \item Associativity : $\in$ x, y, z $\in$ s.t (x $\bigotimes$ y) $\bigotimes$ z = x $\bigotimes$ (y $\bigotimes$ z)
-    \item Neutral element or Identity element's existence \par $\exists$ e $\in$ G, $\forall$ x $\in$ G s.t x $\bigotimes$ e = x = e $\bigotimes$ x
-    \item Existence of inverse: $\forall$ x $\in$ G $\exists$ y $\forall$ G s.t x$\bigotimes$y = e = y $\bigotimes$ x \\ often inverse of x is denoted by $x_{-1}$. However it may not mean $\frac{1}{x}$
+    \item Closure Property ($G$ is closed under $\bigotimes$): \par ~~~~~~~  \(\forall x, y \in G, x\bigoplus y \in G\) (or $\bigotimes:G \times G \rightarrow G$)
+    
+    \item Associative Property: \par~~~~~~~ \(\forall x, y, z \in G, (x \bigotimes y)\bigotimes z = x \bigotimes (y \bigotimes z)\)
+    
+    \item Existence of Neutral element or Identity element: \par ~~~~~~~ \((\exists e \in G) [(\forall x \in G) (x \bigotimes e = x = e \bigotimes x)]\)
+    \item Existence of inverse: \par ~~~~~~~ \((\forall x \in G) [ (\exists y \in G)  (x \bigotimes y = e = y \bigotimes x )]\) \par ~~ often inverse of $x$ is denoted by $x^{-1}$. However it may not mean $\frac{1}{x}$
 \end{enumerate}
 
-An abelian group is a group that's operation is commutative i.e. $\forall$ x, y $\in$ G  x$\bigotimes$y = y$\bigotimes$x\\
+An \textit{abelian group} is a group whose operation is commutative i.e. \((\forall x, y \in G)  (x \bigotimes y = y \bigotimes x)\)\\
 
-$\boldsymbol{Q}$ Find if following of the set with associated operation are groups or not.
-
+$\boldsymbol{Question}$. Find if the following pairs of set and an operation are groups or not.
+% Can we put in table with Yes/No in second column 
 \begin{enumerate}
-    \item ($\mathbb{Z}$, +), $\mathbb{Z}$ is a set of integer 
-    \item ($\mathbb{N}_o$), $\mathbb{N}_o$ is set of natural numbers including (N, identity)
-    \item ($\mathbb{Z}, .$)
-    \item ($\mathbb{R}, .$), (N, 0`s inverse)
-    \item ($\mathbb{R} \ \{0\}, .)$ is Abelian
-    \item ($\mathbb{R}_n$, +), ($\mathbb{z}_n$, +), n \in \mathbb{N} are abelian if + is defined component wise
-    \item ($\mathbb{R}_{mxn}$, .) (
+    \item ($\mathbb{N}_0$, +), where $\mathbb{N}_0$ is set of natural numbers including 0. No, additive inverse are not in $\mathbb{N}_0$.\par
+    \textit{Proof: } 
+        \begin{enumerate}
+            \item Closure Property: Addition of any two natural numbers, is also a natural number, hence addition is closed over natural numbers.
+            \item Associative Property: Addition of real numbers is associative and hence is associative for natural numbers, hence addition is associative.
+            \item Existence of Neutral element: 
+        \end{enumerate}
+    \item ($\mathbb{Z}$, +), where $\mathbb{Z}$ is a set of integer. Yes
+    
+    \item ($\mathbb{Z}, .$) No, multiplicative inverse
+    \item ($\mathbb{R}, .$), No, 0`s inverse is not in $\mathbb{R}$)
+    \item ($\mathbb{R} \backslash \{0\}, .)$ Yes, is an abelian group
+    \item ($\mathbb{R}^n, +$), ($\mathbb{Z}^n, +$), and $n \in \mathbb{N}$ Yes, abelian group, if $+$ is defined component wise
+    \item ($\mathbb{R}^{m\times n}$, +) (Yes, Abelian)
+    \item ($\mathbb{R}^{m\times n}$, .) (No, inverse does not always exits)
+    \item The set of regular (invertible) matrices  $P\subseteq \mathbb{R}^{m\times m}$ is a group with respect to matrix multiplication and is known as \textit{general linear group}. Is it an abelian group? (No, as matrix multiplication is not commutative in general even for square matrices)
 \end{enumerate}
 
+
+\section{Vector Spaces}
+
+When we talked about groups, we have only one binary operation that takes both the elements from the same set. And the resultant element also belongs to same set.\par
+A vector space is equipped with two sets 
+\begin{enumerate}
+    \item Set of Vectors
+    \item Set of Scalars
+\end{enumerate}
+and two operations -
+\begin{enumerate}
+    \item Vector addition 
+    \item Scalar multiplication 
+\end{enumerate}
+
+A \textit{vector space} $V(N, F, + , \cdot)$ is a quadruplet, equipped with a set $N$, a binary operation `+' defined on $N$ and `$\cdot$' (generally we write the operands of scalar multiplication in juxtaposition, instead of putting `$\cdot$' between them) is scalar multiplication between elements of $N$ and field $F$ (for us it is set of real numbers, $\mathbb{R}$) where 
+\begin{enumerate}
+    \item ($N$, +) is an abelian group
+    \item Distributive Property 
+    \begin{enumerate}
+        \item \begin{math}
+            \forall ~ \lambda \in \mathbb{R}, ~ \vec{x}, \vec{y} \in N : ~~ \lambda(\vec{x} + \vec{y}) = \lambda\vec{x} + \lambda\vec{y}
+        \end{math}
+        \item \begin{math}
+            \forall ~ \lambda, \psi \in \mathbb{R}, ~ \vec{x} \in N : ~~ (\lambda + \phi)\vec{x} = \lambda\vec{x} + \psi\vec{x}
+        \end{math}
+    \end{enumerate}\
+    \item Associative Property: 
+        \begin{math}\forall ~ \lambda, \psi \in \mathbb{R}, ~ \vec{x} \in N  ~~ \lambda(\psi\vec{x}) = (\lambda \psi)\vec{x}
+        \end{math}
+    \item Existence of neutral element in scalars
+         identity element in scalar with respect to scalar multiplication: \par~~\begin{math}\exists~~ 1 \in \mathbb{R} ~~ \forall ~~ \vec{x} \in N ~~\text{such that }1\cdot\vec{x} = \vec{x}\end{math}
+            
+    \item Identity element with respect to the abelian group $(N , +)$ is represented as $\vec{0}$.
+        
+\end{enumerate}
+
+The element like $\lambda, \psi \in \mathbb{R}$ or $F$ are called scalars.\\
+Let us list here all possible operations and list if they are useful (listed as defined) here or not (undefined)
+\begin{itemize}
+    \item +: \(N \times N \rightarrow N\) (Vector Addition)
+    \item +: \(\mathbb{R} \times N \rightarrow N\) (Undefined) 
+    \item +: \(N \times \mathbb{R} \rightarrow N\) (Undefined) 
+    \item +: \(\mathbb{R}\times \mathbb{R} \rightarrow \mathbb{R}\) (Addition of two Scalars)
+    \item \(\cdot: N \times N \rightarrow N\) (Undefined) 
+    \item \(\cdot: \mathbb{R} \times \mathbb{R} \rightarrow \mathbb{R}\) (multiplication among scalar)
+    \item \(\cdot: \mathbb{R} \times N \rightarrow N\) (Scalar multiplication) and is commutative and hence same as that of
+    \item \(\cdot: N \times \mathbb{R} \rightarrow N\)
+\end{itemize}
+So, in all four operations are defined. But outside vector, many other things can also be defined as per one's requirement for example-
+\[
+\vec{a}, \vec{b} \in N ~\text{then}~ \vec{a}\cdot\vec{b} = \begin{pmatrix}a_1 \\ \vdots \\ a_n \end{pmatrix}\cdot \begin{pmatrix}b_1 \\ \vdots \\ b_n \end{pmatrix} = \begin{pmatrix} a_1b_1 \\ \vdots \\ a_nb_n\end{pmatrix}
+\]
+
+i.e. component-wise multiplication or we can define it as dot product or matrix multiplication.\\
+
+$\boldsymbol{Examples}$\par
+$\boldsymbol{Question}.$ Does $N = \mathbb{R}^n$ makes a vector space with $\mathbb{R}$ is field or set of scalars and usual addition or multiplication operations are defined.\\
+
+$\boldsymbol{Question}.~~N = \mathbb{R}^{m\times n}$ is set of matrices of a given order with scalars in $\mathbb{R}$. If equipped with usual operations of addition and multiplication is defined, then does $(N,F,+,\cdot)$ make a vector space?.\\
+
+To make notations smaller any vector space $(N,+,\cdot)$ will be denoted by V. And to mean $\vec{x} \in N$ we will write $\vec{x} \in V$. We also assume that there is no difference in vector if it is in $\mathbb{R}^n$ or $\mathbb{R}^{n \times 1}$ or $\mathbb{R}^{1 \times n}$. Specially, $\mathbb{R}^n$ and $\mathbb{R}^{n \times 1}$ are exactly same, depicting column vector.\\
+
+While $\mathbb{R}^{n \times 1}$ and $\mathbb{R}^{1 \times n}$ may be considered transpose and can be distinguished. \par
+So, usually we assume only column vectors $\vec{x}$. And whenever we require row vector we will use $\vec{x}^T$ to state that it is transpose of some column vector.
+
+
+\section{Subspace}
+
+These are subsets of some vector space and fulfills all the properties or requirement of being vector space within the subset.\\
+
+$\boldsymbol{Vector ~ Subspace}$ : Let $V = (N, +,\cdot)$ be a vector space and $N_1 \subseteq N$ , $N_1 \neq \phi$. Then $U = (N_1,+,\cdot)$ is called \textit{vector subspace} of $V$ (or linear subspace) if $U$ is a vector space\par
+To denote $U$ is subspace of $V$, we write $U \subseteq V$.
+
+Although, since $N_1 \subseteq N$ and $V$ is given to be vector space, many properties such as commutative, distributive will be followed and need not be proved yet we need to confirm -
+\begin{enumerate}
+    \item $N_1 \neq \phi$ i.e. at least $\vec{O} \in N_1$, the additive identity
+    \item $+: N_1 \times N_1 \rightarrow N_1$ i.e. vector addition is closed on $N_1$ \\
+          $\cdot: \mathbb{R} \times N_1 \rightarrow N_1$ i.e. scalar multiplication is closed on $N_1$
+\end{enumerate}
+
+$\boldsymbol{Example}$\\
+
+Trivial subspaces, for any vector space $V, \{0\}$ and $V$ are \textit{trivial subspaces}.
+\begin{itemize}
+    \item Is $\mathbb{R}^2$ a Vector Space?
+    \item Is $(0,0)^T$ is a subspace of $\mathbb{R}^2$
+    \item Is \begin{math}\{(x,y) | (x \in \mathbb{R}) \wedge (y = 0)\}\end{math} is subspace of $\mathbb{R}^2$
+    \item Is \begin{math}\{(x,y) | (x = 2c) \wedge (y = c) ~ \forall ~ c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$
+    \item Is \begin{math}\{(x,y) | (x = 2c + 5) \wedge (y = c) ~ \forall ~ c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$
+\end{itemize}
+Which of the following figure depicts a subspace with usual definition of operations\\
+% Can we take snaps of hand drawn images and include them
+\begin{itemize}
+    \item Prove that solution set of a homogeneous system of linear equation i.e. $\{\vec{x}|~~A\vec{x} = \vec{0}\}$ is a vector space.
+    \item Intersection of two subspaces is also a subspace.
+\end{itemize}
+
+I am trying to prove one such example and you need to copy it by hand and then recreate the proof on some other question.\\
+
+$\boldsymbol{Q.}$ Is \begin{math} \{(x,y)|(x = 2c) \wedge (y=c)~~\forall c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$ ?\\
+
+% refactored up to 181
+
+$\boldsymbol{Proof:}~~ \mathbb{R}^2$ is vector space with usual definition of addition and scalar multiple \{We assume that it is given\}. Now, we know that set $N_1 = \{(x,y) | (x = 2c) \wedge y = c ~~\forall c \in \mathbb{R}\}$ is a subset of $\mathbb{R}_2$. So, quadruplet corresponding to $N_1$ can be a subspace? Now, to prove that $(N_1,\mathbb{R}, +,\cdot)$ is subspace. We need to prove following things.
+\begin{enumerate}
+    \item \begin{math} N_1 \neq \phi\text{ and }\vec{0} \in N_1 \end{math} \\ 
+     \textit{Proof:} Since $0 \in \mathbb{R}$ and by definition $\forall c\in \mathbb{R} ~~\vec{x} = (2c,c)\in N_1 $ and $c$ can take value $0,~~\therefore \vec{x} = (2\cdot 0, 1\cdot 0) = (0, 0) \in N_1$.
+    
+    
+    \item Addition is closed over $N_1$\\
+    \textit{Proof:} Let \begin{math} \vec{x}_1, \vec{x}_2 \in N_1 \end{math} \\ $\therefore \exists c_1\in \mathbb{R}~~ \vec{x}_1 = (2c_1, c_1)$, similarly, $\exists c_2\in \mathbb{R}~~ \vec{x}_2 = (2c_2, c_2)$ 
+    \begin{align}
+        \therefore \vec{x_1} + \vec{x_2} &= (2c_1 + 2c_2, c_1+c_2) \nonumber \\
+                                     &= (2(c_1 + c_2), 1(c_1 + c_2)) \nonumber
+    \end{align}  
+    \begin{math}\because c_1 + c_2 \in \mathbb{R}\text{ (as }c_1 \in \mathbb{R}, c_2 \in \mathbb{R})\end{math}. Then by definition of $N_1$, \begin{math} \vec{x_1} + \vec{x_2} \in N_1\end{math}.
+    Hence, addition is closed over $N_1$.
+    
+    \item Now, finally we have to prove that scalar multiplication is also closed on $N_1$.\\
+    \textit{Proof:} Let \begin{math} \vec{x}\in N_1, ~~\therefore \vec{x} = (2c, c) \in \mathbb{R}^2 \end{math} where \begin{math} c \in \mathbb{R} \end{math}\\
+And for any $d \in \mathbb{R}$, consider $d\cdot(2c, c) = (2c\cdot d,c\cdot d)$ \\ 
+Now, let $e = c\cdot d \in \mathbb{R} ~~\therefore (2e, e) \in N_1$ (by definition)\\
+Hence scalar multiplication is also closed over $N_1$
+    \item All other properties of being vector space is fulfilled because $N_1\subseteq \mathbb{R}^2$ and $(\mathbb{R}^2,\mathbb{R},+,\cdot)$ is known to be a vector space.
+\end{enumerate}
+ Thus, $\{(x, y)| (x=2e) \wedge (y = e) \forall c \in \mathbb{R}\}$ is subspace over usual definition of vector addition and scalar multiplication.
 \end{document}

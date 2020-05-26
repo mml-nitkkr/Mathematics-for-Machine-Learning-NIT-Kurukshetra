@@ -1,0 +1,46 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\cfoot{
+\vspace{1mm}\hspace{3cm}
+\includegraphics[width=0.2\textwidth]{CC-BY-NC-SA.pdf}}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength\headheight{80.0pt}
+\addtolength{\textheight}{-80.0pt}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{blkarray}
+\usepackage[table]{xcolor}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\newcommand\bg{\cellcolor{gray!70}}
+
+\usepackage{stackengine,graphicx}
+\def\stacktype{L}
+\def\useanchorwidth{T}
+\newcommand\strike[1]{\stackon[3.3pt]{#1}{\rule{4.5ex}{1pt}}}
+\newcommand\vstrike[1]{\stackon[0pt]{#1}{\smash{\rule[-3pt]{1pt}{2.9ex}}}}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\title{Linear Algebra (Part 008)\\Linear Independence}
+\author{Dr Kapil\\kapil $@$ nitkkr $\cdot$ ac $\cdot$ in\\Department of Computer Applications\\ NIT Kurukshetra}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+this is just to check github
+
+
+\end{document}
