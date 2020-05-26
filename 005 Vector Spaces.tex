@@ -61,21 +61,22 @@ An \textit{abelian group} is a group whose operation is commutative i.e. \((\for
 $\boldsymbol{Question}$. Find if the following pairs of set and an operation are groups or not.
 % Can we put in table with Yes/No in second column 
 \begin{enumerate}
-    \item ($\mathbb{N}_0$, +), where $\mathbb{N}_0$ is set of natural numbers including 0. No, additive inverse are not in $\mathbb{N}_0$.\par
+    \item ($\mathbb{N}_0$, +), where $\mathbb{N}_0$ is set of natural numbers including 0.\par
     \textit{Proof: } 
         \begin{enumerate}
             \item Closure Property: Addition of any two natural numbers, is also a natural number, hence addition is closed over natural numbers.
             \item Associative Property: Addition of real numbers is associative and hence is associative for natural numbers, hence addition is associative.
-            \item Existence of Neutral element: $N$
+            \item Existence of Neutral element: Since $0\in \mathbb{N}_0$, which is an identity element. So condition satisfied.
+            \item Existence of inverse: Consider $2\in \mathbb{N}_0$, now we need something that when added to $2$ should give the neutral element $0$. Such an element is $-2\notin \mathbb{N}_0$, hence $\mathbb{N}_0$ does not have inverse.
         \end{enumerate}
-    \item ($\mathbb{Z}$, +), where $\mathbb{Z}$ is a set of integer. Yes
-    
-    \item ($\mathbb{Z}, .$) No, multiplicative inverse
-    \item ($\mathbb{R}, .$), No, 0`s inverse is not in $\mathbb{R}$)
-    \item ($\mathbb{R} \backslash \{0\}, .)$ Yes, is an abelian group
-    \item ($\mathbb{R}^n, +$), ($\mathbb{Z}^n, +$), and $n \in \mathbb{N}$ Yes, abelian group, if $+$ is defined component wise
-    \item ($\mathbb{R}^{m\times n}$, +) (Yes, Abelian)
-    \item ($\mathbb{R}^{m\times n}$, .) (No, inverse does not always exits)
+        Hence, $(\mathbb{N}_0, +)$ is not a group.
+    \item $(\mathbb{Z}, +)$, where $\mathbb{Z}$ is a set of integer. Yes
+    \item $(\mathbb{Z}, \cdot)$ No, multiplicative inverse
+    \item $(\mathbb{R}, \cdot)$, No, 0`s inverse is not in $\mathbb{R}$)
+    \item $(\mathbb{R} \backslash \{0\}, \cdot)$ Yes, is an abelian group
+    \item $(\mathbb{R}^n, +), (\mathbb{Z}^n, +)$, and $n \in \mathbb{N}$ Yes, abelian group, if $+$ is defined component wise
+    \item $(\mathbb{R}^{m\times n}, +)$ (Yes, Abelian)
+    \item $(\mathbb{R}^{m\times n}, \cdot)$ (No, inverse does not always exits)
     \item The set of regular (invertible) matrices  $P\subseteq \mathbb{R}^{m\times m}$ is a group with respect to matrix multiplication and is known as \textit{general linear group}. Is it an abelian group? (No, as matrix multiplication is not commutative in general even for square matrices)
 \end{enumerate}
 
@@ -165,19 +166,22 @@ $\boldsymbol{Example}$\\
 Trivial subspaces, for any vector space $V, \{0\}$ and $V$ are \textit{trivial subspaces}.
 \begin{itemize}
     \item Is $\mathbb{R}^2$ a Vector Space?
-    \item Is $(0,0)^T$ is a subspace of $\mathbb{R}^2$
-    \item Is \begin{math}\{(x,y) | (x \in \mathbb{R}) \wedge (y = 0)\}\end{math} is subspace of $\mathbb{R}^2$
-    \item Is \begin{math}\{(x,y) | (x = 2c) \wedge (y = c) ~ \forall ~ c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$
-    \item Is \begin{math}\{(x,y) | (x = 2c + 5) \wedge (y = c) ~ \forall ~ c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$
+    \item Is $(0,0)^T$ is a subspace of $\mathbb{R}^2$?
+    \item Is \begin{math}\{(x,y) | (x \in \mathbb{R}) \wedge (y = 0)\}\end{math} is subspace of $\mathbb{R}^2$?
+    \item Is \begin{math}\{(x,y) | (x = 2c) \wedge (y = c) ~ \forall ~ c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$?
+    \item Is \begin{math}\{(x,y) | (x = 2c + 5) \wedge (y = c) ~ \forall ~ c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$?
 \end{itemize}
 Which of the following figure depicts a subspace with usual definition of operations\\
 % Can we take snaps of hand drawn images and include them
+\textcolor{red}{Pics needs to be included}.
+
+
 \begin{itemize}
     \item Prove that solution set of a homogeneous system of linear equation i.e. $\{\vec{x}|~~A\vec{x} = \vec{0}\}$ is a vector space.
     \item Intersection of two subspaces is also a subspace.
 \end{itemize}
 
-I am trying to prove one such example and you need to copy it by hand and then recreate the proof on some other question.\\
+I am proving one such example and you need to copy it by hand and then recreate the proof on some other question.\\
 
 $\boldsymbol{Q.}$ Is \begin{math} \{(x,y)|(x = 2c) \wedge (y=c)~~\forall c \in \mathbb{R}\}\end{math} is subspace of $\mathbb{R}^2$ ?\\
 
