@@ -1,0 +1,306 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\cfoot{
+\vspace{1mm}\hspace{3cm}
+\includegraphics[width=0.2\textwidth]{CC-BY-NC-SA.pdf}}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength\headheight{80.0pt}
+\addtolength{\textheight}{-80.0pt}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{blkarray}
+\usepackage[table]{xcolor}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\newcommand\bg{\cellcolor{gray!70}}
+
+\usepackage{stackengine,graphicx}
+\def\stacktype{L}
+\def\useanchorwidth{T}
+\newcommand\strike[1]{\stackon[3.3pt]{#1}{\rule{4.5ex}{1pt}}}
+\newcommand\vstrike[1]{\stackon[0pt]{#1}{\smash{\rule[-3pt]{1pt}{2.9ex}}}}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows,positioning,automata}
+
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\title{Basis and Rank (Part 007)}
+\author{Dr. Kapil \\Kapil$@$nitkkr$\cdot$ac$\cdot$in\\Department of Computer Application\\NIT Kurukshetra}
+\date{\today}
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+Consider a vector v=($\nu$ ,+,.) and set of vectors A=\{ ${x_1}$,$\ldots$ ,${x_k}$\} $\subseteq \nu$. if every vector $\Vec{\vartheta} \in \nu $  can be expressed as some linear combination of vectors in A. then $\lambda$ is known as \underline{generating set} of V. \\
+
+the set of all possible linear combination of vector in A is called \underline{span of} A or span(A)\\
+if spans the vector space V,  the write \underline{V=span(A)} or V=span(${x_1}$,$\ldots$,${x_k}$)\\
+\\
+\textbf{\underline{Basis}}\\
+Let V=($\nu$,+,.) and A $\subseteq$ $\nu$ . A is generating set of V is called minimal if \\
+$\notexixts$ X $\subseteq$ A s.t V=span(X) \\
+Every linearly independent generating set of V is minimal and is known as Basis of V.\\
+\\
+Let V=($\nu$,+, .) be a vector space \& B=$\nu$ , B $\ne$ $\phi$.\\
+Then the following statements are equivalent -
+\begin{enumerate}[i]
+    \item B is basis of V
+    \item B is minimal generating set of V
+    \item B is maximally linearly V=y independent set of vectors in V
+    \item $\forall$ $\in$ $\Vec{x}$ can be expressed as l.c. of vectors in B uniquely.
+\end{enumerate}
+i.e. B$\Vec{y}$ = $\Vec{x}$ has unique solution.
+when $\Vec{y}$ is unique scaling factor of corresponding columns of B. columns of B are all the vectors in the B. \\
+\textbf{Example}\\
+
+    \bigg\{ 
+    \begin{pmatrix}
+    1\\2x
+    \end{pmatrix}
+    ,
+    \bigg\|  x $\in$ IR
+    \bigg\}
+\\
+${A_1}$ = \bigg\{
+\begin{pmatrix}
+1\\2
+\end{pmatrix}
+,
+\begin{pmatrix}
+2\\4
+\end{pmatrix}
+,\begin{pmatrix}
+3\\6
+\end{pmatrix}\bigg\} or ${A_2}$ = \bigg\{
+\begin{pmatrix}
+1\\2
+\end{pmatrix},
+\begin{pmatrix}
+0.5\\1
+\end{pmatrix}
+,\begin{pmatrix}
+3\\6
+\end{pmatrix}\bigg\} or ${A_3}$ = \bigg\{
+\begin{pmatrix}
+0\\0
+\end{pmatrix},
+\begin{pmatrix}
+1\\2
+\end{pmatrix}\bigg\}
+\\
+can be generating set of V .But notice all of these ${A_1},{A_2},{A_3}$ are linearly dependent.\\
+Hence ,they can not be basis.\\
+i hope you have got A= \bigg\{
+\begin{pmatrix}
+1\\2
+\end{pmatrix}
+\bigg\} can also be a generating set having only one item . And this set is linearly independent i.e ${C_1}$x 
+\begin{pmatrix} 
+1 \\ 2
+\end{pmatrix} = 
+\begin{pmatrix} 
+0 \\ 0
+\end{pmatrix} 
+is possible if ${c_1}$=0
+\\
+therefore , B=\bigg\{
+\begin{pmatrix} 
+1 \\ 2 
+\end{pmatrix}
+\bigg\} is also a basis of V. But let me remind you that this is not only the basis.
+\\
+${B_1}$ = \bigg\{
+\begin{pmatrix}
+0.5\\1
+\end{pmatrix}
+ or
+ ${B_2}$ = \bigg\{
+\begin{pmatrix}
+3\\6
+\end{pmatrix}
+or
+${B_3}$ = \bigg\{
+\begin{pmatrix}
+2.5\\5
+\end{pmatrix}
+\bigg\}
+\\
+All of them are basis and can span entire V independently . i.e 
+\begin{align*}
+    V=spans({B_1})\\
+     =spans({B_2})\\
+     =spans({B_3})\\
+\end{align*}
+\textbf{Example}\\
+Let us take another example :-
+Let V=
+ \bigg\{
+\begin{pmatrix}
+0\\1
+\end{pmatrix}
+,
+\begin{pmatrix}
+1\\0
+\end{pmatrix}
+,\begin{pmatrix}
+2\\3
+\end{pmatrix}
+,\begin{pmatrix}
+3\\2
+\end{pmatrix}
+,\begin{pmatrix}
+4\\5
+\end{pmatrix}
+,\begin{pmatrix}
+x\\y
+\end{pmatrix}
+\bigg\|  x,y $\in$ IR
+\bigg\}
+%sachchidanand yu must look here in this line i cant write somethings .please match this line wiith real pdf%
+\\
+You can see $\Vec{v_1}$ and $\Vec{v_2}$ can generate any vector in V
+\\
+i.e x.$\Vec{v_1}$+y.$\Vec{v_1}$=\begin{pmatrix}
+x\\y
+\end{pmatrix}
+$\forall$ x,y $\in$ IR
+\\
+$\therefore {B_1}$ = \bigg\{
+\begin{pmatrix}
+1\\0
+\end{pmatrix}
+,
+\begin{pmatrix}
+0\\1
+\end{pmatrix}
+\bigg\} 
+or
+${B_2}$ = \bigg\{
+\begin{pmatrix}
+2\\3
+\end{pmatrix},
+\begin{pmatrix}
+1\\0
+\end{pmatrix}
+\bigg\}
+or 
+${B_3}$ = \bigg\{
+\begin{pmatrix}
+2\\3
+\end{pmatrix},
+\begin{pmatrix}
+4\\5
+\end{pmatrix}\bigg\}
+\\
+all other can generate any \begin{pmatrix}
+x\\y
+\end{pmatrix}
+$\in$V.
+because it means finding right $\alpha$ , $\beta \in $ IR , s.t
+\\
+\begin{pmatrix}
+2\\3
+\end{pmatrix}$\alpha$
++ \begin{pmatrix}
+4\\5
+\end{pmatrix}$\beta$ = 
+\begin{pmatrix}
+2\alpha+ 4\beta\\
+3\alpha+5\beta    
+\end{pmatrix}
+=
+\begin{pmatrix}
+x\\y
+\end{pmatrix}\\
+which is essentially a system of linear equations with matrix equivalent A$\Vec{x}$ = $\Vec{b}$ , Here $\Vec{x}$=\begin{pmatrix}
+\alpha\\\beta
+\end{pmatrix}  \& $\Vec{b}$=\begin{pmatrix}
+x\\y
+\end{pmatrix}\\
+Since A is not singular or determinant of A =10-12=-2$\ne$0 therefore , it will always have unique solution.\\
+Basically ,V here is exactly $IR^2$.\\
+Let us move and take an example in $IR^3$ to understand the idea clearly.\\
+Consider a set of vectors \bigg\{
+\begin{pmatrix}
+1\\0\\0
+\end{pmatrix},
+\begin{pmatrix}
+0\\1\\0
+\end{pmatrix},
+\begin{pmatrix}
+0\\0\\1
+\end{pmatrix}
+\bigg\}
+\\ These are linearly independent i.e le. of these vectors are zero iff all the scalars multiplied to the vectors are zero . In other words if  Ac=0 $\iff$ c= $\Vec{0}$ or Ac =0 has unique solution.\\
+A=\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}, c=
+\begin{bmatrix}
+{c_1}\\
+{c_2}\\
+{c_3}
+\end{bmatrix}
+And further you know that you can make any arbitrary point in the 3D space by using the 3vectors i.e .
+\begin{pmatrix}
+x\\y\\z
+\end{pmatrix}=x
+\begin{pmatrix}
+1\\0\\0
+\end{pmatrix}+y\begin{pmatrix}
+0\\1\\0
+\end{pmatrix}+z\begin{pmatrix}
+0\\0\\1
+\end{pmatrix}
+\\
+thus, we can say columns of A spans $IR^3$. Hence columns of A forms a basis of $IR^3$ .
+\\
+let us try to find if the following vectors forms a basis-
+\\\begin{pmatrix}
+4\\2\\6
+\end{pmatrix},
+\begin{pmatrix}
+3\\6\\2
+\end{pmatrix},\begin{pmatrix}
+5\\7\\5
+\end{pmatrix},\begin{pmatrix}
+1\\5\\-1
+\end{pmatrix}
+To check we have to find if all the vectors are linearly independent of each other or not. i.e\\
+\begin{bmatrix}
+4 & 3 & 5 & 1\\
+2 & 6 & 7 & 5\\
+6 & 2 & 5 & -1\\
+\end{bmatrix}
+\begin{bmatrix}
+{x_1}\\
+{x_2}\\
+{x_3}\\
+{x_4}
+\end{bmatrix}=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
+ should have unique solution.\\
+ we cannot find determinant here, So now we have another trick to identify. Find now echelon form then the columns corresponding to pivot elements can generate all the vectors that do not have pivots.
+ \\
+ \textbf{ARGUE} [ max. no. of pivots you can find in any mxn matrix in min(m,n) . Why?\\
+ For this question only two columns will be found. Hence currently it cannot work as basis . But here we have found , how to identify basis from a set of vectors.\\
+ \textbf{Example}[ Find the right l.c of pivot columns that can make not pivot columns .\\
+ \textbf{Note}:- the $3^rd$ vectors, $\Vec{v_3}$=$\Vec{v_2}$+$\frac{1}{2}\Vec{v_1}$ ,$\Vec{v_4}$=$\Vec{v_3}$-$\Vec{v_1}$\\
+ I made it like that , You notice the connection columns with rows . As you did row operations to find pivot column.
+\end{document}
