@@ -300,4 +300,15 @@ Every vector space $V$ (except where $\mathcal{V}=\{\vec{0}\}$) possess at least
 If $U$ is some subspace of $V$, then $dim(U)\leq dim(V)$. But $dim(U)$ is same as that of $dim(V)$ is possible if and only if $U=V$. You should notice that dimension of vector space does not relate with the number of components in each vector of the vector space. For example, the vector space $V = span \left (\left \{\begin{bmatrix} 1\\0 \end{bmatrix} \right\} \right )$ is a one dimensional vector space.
 
 \section{Rank}
+A \textit{rank} of a matrix is the number of linearly independent rows. Generally denoted by $rank(A)$ or $rk(A)$. We are listing here properties of the rank of a $m\times n$ order matrix $A$.
+\begin{enumerate}
+    \item \(rank(A)=rank(A^T)\).
+    \item \(span(col(A))\subseteq\mathbb{R}^m\). Here, $col(A)$ set of column vectors of matrix $A$. And $span(col(A))$ is span of the column vectors of $A$, and is known as \textit{column space} of $A$, i.e. $dim(span(col(A)))=rank(A)\leq m$. A basis of the column space can be given by original pivot columns (identified by Gauss elimination) of $A$ or by non-zero rows of row echelon form of $A^T$.
+    \item \(span(row(A))\subseteq\mathbb{R}^n\). Here, $row(A)$ set of row vectors of matrix $A$. And $span(row(A))$ is known as \textit{row space} of $A$.In other words, $dim(span(row(A)))=rank(A^T)\leq n$.
+    \item As $rank(A)\leq m$, $rank(A^T)\leq n$, and \(rank(A)=rank(A^T)\), \(\therefore rank(A)\leq min(m,n)\).
+    \item For all $A\in\mathbb{R}^{n\times n}$, $A$ is regular (invertible) if and only if $rank(A)=n$.
+    \item $A\vec{x}=\vec{b}$ is solvable iff $\vec{b}\in span(col(A))$. Or we can say, $rank(A)=rank([A|b])$, where $[A|b]$ is the augmented, coefficient matrix with last column to be the constant part.
+    \item The set of vectors \(\{\vec{x}\suchthat A\vec{x}=\vec{0}\}\) is a vector space known as \textit{Null Space} or $kernel(A)$. The $dim(kernel(A))=n-rank(A)=\text{number of non-pivot columns.}$
+    \item A rectangular matrix $A$ or order $m\times n$ is said to be \textit{full rank} if $rank(A)=min(m,n)$. But if the $rank(A)<min(m,n)$, then the matrix is called to be \textit{rank deficient}.
+\end{enumerate}
 \end{document}
