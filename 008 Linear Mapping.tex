@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\cfoot{
+\vspace{1mm}\hspace{3cm}
+\includegraphics[width=0.2\textwidth]{CC-BY-NC-SA.pdf}}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength\headheight{80.0pt}
+\addtolength{\textheight}{-80.0pt}
+
+\usepackage[margin = 3cm, footskip = 30pt]{geometry}
+\usepackage{amsmath}
+\usepackage{blkarray}
+\usepackage[table]{xcolor}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\newcommand\bg{\cellcolor{gray!70}}
+
+\usepackage{stackengine,graphicx}
+\def\stacktype{L}
+\def\useanchorwidth{T}
+\newcommand\strike[1]{\stackon[3.3pt]{#1}{\rule{4.5ex}{1pt}}}
+\newcommand\vstrike[1]{\stackon[0pt]{#1}{\smash{\rule[-3pt]{1pt}{2.9ex}}}}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows,positioning,automata}
+
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\title{Linear Mapping (Part 008)}
+\author{Dr Kapil\\kapil $@$ nitkkr $\cdot$ ac $\cdot$ in\\ Department of Computer Applications\\ NIT Kurukshetra}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+Mapping is another word to refer a function. Now, we want to study those mapping which when used on vectors do not change there property of linearity (the core property).
+
+i.e. if \( \Phi : V \rightarrow W \), where V, W are real vector spaces. then the function $\Phi$ preserves the structure of the vector space if
+\begin{align}
+\Vec{\Phi}(\Vec{x} + \Vec{y}) &= \Vec{\Phi}(\Vec{x}) + \Vec{\Phi}(\Vec{y}) ~~~~~~~~~~~~~~~\forall \Vec{x},\Vec{y} \in V \nonumber \\
+\Vec{\Phi}(\lambda \Vec{x}) &= \lambda \Vec{\Phi}(\Vec{x}) ~~~~~~~~~~~~~~~~ \forall \Vec{x} \in V ~~ \& ~~ \forall \lambda \in \mathbb{R} \nonumber
+\end{align}
+
+This can be summarized as follows - \\
+For a vector spaces V, W a mapping $\Phi$: V $\rightarrow$ W is known as Linear Mapping (or Vector Space homomorphism  $\backslash$ Linear Transformation) if 
+\begin{align}
+    \forall \Vec{x}, \Vec{y} \in V \forall \lambda , \Phi \in \mathbb{R} \nonumber \\
+    \Phi (\lambda \Vec{x} + \psi \Vec{y}) = \lambda \Phi (\Vec{x}) + \psi \Phi (\Vec{y)} \nonumber
+\end{align}
+
+We will see that any linear mapping can be written in the form of matrices.
+So, first let us check if matrices shows Linear Mapping or not\\
+
+\end{document}
