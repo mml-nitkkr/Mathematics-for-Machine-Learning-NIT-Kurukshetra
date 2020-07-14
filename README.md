@@ -4,4 +4,4 @@ The videos are available here
 https://www.youtube.com/playlist?list=PLhaKPfXHFtO_Qzzxku7zoiSIsczpISFZI
 
 Pdfs are available here
-https://drive.google.com/drive/u/4/folders/1Azn5oylwumBbxKhgqHSKeKUspg5_0MtB
+https://drive.google.com/drive/folders/1Azn5oylwumBbxKhgqHSKeKUspg5_0MtB?usp=sharing
