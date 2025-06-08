@@ -1,0 +1,289 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}[margin=10mm]
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{bbm}
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black]{hyperref}
+\geometry{margin=1in}
+\newcommand{\dottoeq}[2]{%
+    \noindent\makebox[0pt][l]{#1}%
+    \hfill%
+    \tikz[baseline] \draw[dotted] (0,.5ex) -- (2, .5ex);%
+    \hspace{0.2em}(\ref{#2})%
+}
+\title{\textbf{Linear Algebra (Part 010)}\\[1ex]
+\large Basis Change}
+\author{Dr.Kapil\\\href{mailto:kapil@nitkkr.ac.in}{kapil@nitkkr.ac.in}\\Department of Computer Applications\\NIT Kurukshetra}
+\begin{document}
+\maketitle
+
+In the following, we will study how transformation matrices of a linear mapping $\phi: V \to W$ change with change in basis in $V$ and $W$.
+
+\section*{Basis}
+
+Let $B = (\vec{b}_1, \vec{b}_2, \ldots, \vec{b}_n)$ and $\tilde{B} = (\tilde{\vec{b}}_1, \tilde{\vec{b}}_2, \ldots, \tilde{\vec{b}}_n)$ be two different ordered bases for vector space $V$ \&\ $C = (\vec{c}_1, \ldots, \vec{c}_m)$ and $\tilde{C} = (\tilde{\vec{c}}_1, \ldots, \tilde{\vec{c}}_m)$ be ordered bases of $W$.\\ Further, Let $A_\phi \in \mathbb{R}^{m\times n}$ is transformation matrix of the linear mapping $\phi: V \to W$ with respect to bases $B$ \&\ $C$.
+\\Therefore, any 
+\begin{equation}
+\phi(B) = C A_\phi \hspace{2cm}
+\end{equation}
+where,
+$$
+ \phi(B) = [\phi(\vec{b}_1) \cdots \phi(\vec{b}_n)]
+$$
+Similarly, let $\tilde{A}_\phi \in \mathbb{R}^{m \times n}$ is a transformation matrix of linear mapping $\phi: V \to W$ with respect to bases $\tilde{B}$ and $\tilde{C}$.
+
+\begin{equation}
+\phi(\tilde{B}) = \tilde{C} \tilde{A}_\phi \hspace{2cm}
+\end{equation}
+
+Also Since $\tilde{B}$ is another basis of $V$, then every column of $\tilde{B}$ can be written as a linear combination of $B$. Let the columns $S$ matrix provides the right linear combination to generate bases vectors of $\tilde{B}$.
+\\Therefore, 
+\begin{equation}
+\tilde{B}=BS
+\end{equation}
+
+Similarly, for $T$ be a matrix that keeps the linear combination in columns that can translate bases vectors from $C$ to $\tilde{C}$.
+\newpage
+\begin{equation}
+    \therefore \tilde{C}=CT
+\end{equation}
+\begin{equation}
+    \therefore \phi({\tilde{B}})=CT
+\end{equation}
+Further, $\phi$ is a linear mapping 
+\begin{equation*}
+\phi(\tilde{B})=\phi(BS)=
+\left[
+\phi(B s_{i_1}) \quad
+\phi(B s_{i_2}) \quad
+\cdots \quad
+\phi(B s_{i_n})
+\right]
+\end{equation*}
+where $S_{ij}$ denotes the entire J$^{th}$ column of matrix S,
+\begin{equation*}
+\phi(\underbrace{\tilde{B}_j}_{\text{$j^{\text{th}}$ basis}}) = \phi(B s_j) = \phi\left( \vec{b}_1 s_{1j} + \vec{b}_2 s_{2j} + \vec{b}_3 s_{3j} + \cdots + \vec{b}_n s_{nj} \right)
+\end{equation*}
+\begin{equation*}
+= \phi(\vec{b}_1) s_{1j} + \phi(\vec{b}_2) s_{2j} + \cdots + \phi(\vec{b}_n) s_{nj} \qquad (\because \phi \text{ is linear mapping})
+\end{equation*}
+\begin{equation*}
+= \left[ \phi(\vec{b}_1) \quad \phi(\vec{b}_2) \quad \cdots \quad \phi(\vec{b}_n) \right]
+\begin{bmatrix}
+s_{1j} \\
+s_{2j} \\
+\vdots \\
+s_{nj}
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+= \phi(B) s_j \qquad \forall j
+\end{equation*}
+\begin{equation}
+    \therefore \phi(\tilde{B})= \phi(B)S=CA_{\phi}S 
+\end{equation}
+equating (5) \&\ (6):
+\begin{equation*}
+    CT \tilde{A_{\phi}}=CA_{\phi}S
+\end{equation*}
+Since $C$ is linear ordered basis matrix, it must contain linearly independent columns.
+\\therefore,
+\begin{equation*}
+    CT\tilde{A_{\phi}}=CA_{\phi}S
+    \implies T\tilde{A_{\phi}}=A_{\phi}S
+\end{equation*}
+Also if $T$ is invertible then $A_{\phi}$ = $T^{-1}A_{\phi}S$.\\
+\textbf{Q.} What is the benefit of basis change?\\
+\textbf{Q.} We are given a matrix and we have to transform a lot of objects, then what could be the basis which eases this transformation?\\
+\textbf{Ex.} Let transformation matrix be $A_{\phi}$ = $\begin{bmatrix}
+2 & 1 \\
+1 & 2
+\end{bmatrix}
+$\\
+with respect to standard basis or canonical basis 
+$\begin{bmatrix}
+1 \\ 0 
+\end{bmatrix}$
+\&\ 
+$\begin{bmatrix}
+0 \\ 1 
+\end{bmatrix}$.\\
+if we change the basis to 
+$\begin{bmatrix}
+    1\\1
+\end{bmatrix}
+$
+,
+$\begin{bmatrix}
+    1 \\ -1
+\end{bmatrix}
+$ \\
+Then the $B$ = 
+$\begin{bmatrix}
+    1 & 0 \\
+    0 & 1
+\end{bmatrix}
+$
+\newpage
+Assuming, $C$=
+$\begin{bmatrix}
+    1 & 0\\
+    0 & 1
+\end{bmatrix}
+$ 
+\&\ $\tilde{C}$=
+$\begin{bmatrix}
+    1 & 1\\
+    1 & -1
+\end{bmatrix}
+$
+and the new transformation matrix \\ $$\tilde{A_{\phi}}=T^{-1}A_{\phi}S.
+$$
+where $S$ is the matrix such that, $\tilde{B}=BS
+\implies \begin{bmatrix}
+    1 & 1\\
+    1 & -1
+\end{bmatrix}
+=
+\begin{bmatrix}
+    1 & 0\\
+    0 & 1
+\end{bmatrix}S
+$
+\begin{equation*}
+    \implies S = 
+    \begin{bmatrix}
+        1 & 1\\
+        1 & -1
+    \end{bmatrix}
+\end{equation*}
+and, $T$ is the matrix such that, $\tilde{C}=CT
+\therefore T^{-1}=\tilde{C}^{-1}C$
+\begin{equation*}
+    \implies T^{-1}=
+    \begin{bmatrix}
+        -1 & -1\\
+        -1 & 1
+    \end{bmatrix}\frac{1}{-2}
+    =\frac{1}{2}\begin{bmatrix}
+        1 & 1\\
+        1 & -1
+    \end{bmatrix}
+\end{equation*}
+$\therefore\tilde{A_{\phi}}=
+\frac{1}{2}\left(
+\begin{bmatrix}
+    1 & 1\\
+    1 & -1
+\end{bmatrix}
+\begin{bmatrix}
+        1 & 1\\
+        1 & -1
+\end{bmatrix}
+\right)
+\begin{bmatrix}
+    1 & 1\\
+    1 & -1
+\end{bmatrix}
+= \frac{1}{2}\left(
+\begin{bmatrix}
+    3 & 3\\
+    1 & -1
+\end{bmatrix}
+\begin{bmatrix}
+        1 & 1\\
+        1 & -1
+\end{bmatrix}
+\right)=
+\frac{1}{2}\begin{bmatrix}
+    6 & 0\\
+    0 & 2
+\end{bmatrix}=
+\begin{bmatrix}
+    3 & 0\\
+    0 & 1
+\end{bmatrix}.
+$
+\\
+\newline
+now, you can see that the transformations becomes so special \&\ doing computation with it is easy although not chainging the results if change of the beasis is allowed.
+\newline
+\\Let us observe that change of basis has not changed the vectors relative situation (locations). it just changed the Co-ordinate system.
+\newline\\Notice that, if we have following linear mapping/homo-morphism-
+\begin{itemize}
+    \item  Automorphism:
+    $\begin{cases}
+        \psi_{B\tilde{B}} : V_{\tilde{B}} \to V_{B} & \text{do } S \\
+        \Xi_{C\tilde{C}} : W_{\tilde{C}} \to W_{C} & \text{do } T
+    \end{cases}$
+    \item Transformation matrix:
+    $\begin{cases}
+        \phi_{{C}{B}}: V_{{B}} \to W_{{C}}
+        \quad 
+        \text{then    } {A}_\phi \text{ is the matrix.}\\
+        \phi_{\tilde{C}\tilde{B}}: V_{\tilde{B}} \to W_{\tilde{C}}       \quad \text{do }  \tilde{A}_\phi .
+    \end{cases}$
+\end{itemize}
+
+\begin{center}
+\begin{tikzcd}[column sep=large,row sep=large]
+B \arrow[r, "\phi_{CB}", "A_\phi"'] \arrow[d, "\psi_{B\tilde{B}}"', "S"] & C \arrow[d, "\Xi_{C\tilde{C}}", "T"'] \\
+{\tilde{B}} \arrow[r, "\phi_{\tilde{C}\tilde{B}}", "\tilde{A}_\phi"'] & {\tilde{C}}
+\end{tikzcd}
+
+\vspace{0.5em}
+\textbf{Figure:} Shows Linear mappings
+\end{center}
+
+$$
+\therefore \phi_{C\tilde{B}} = \Xi_{C\tilde{C}}^{-1} \circ \phi_{CB} \circ \psi_{B\tilde{B}}
+$$
+
+Which is what it changes to when we convert the linear mapping to their matrix counterparts:
+$$
+\text{i.e., }
+\tilde{A}_\phi = T^{-1} A_\phi S
+$$
+\newpage
+$
+\tilde{y} = \tilde{A}_\phi \tilde{x} \quad \text{where } \tilde{x} \in V_{\tilde{B}} \text{ and } \tilde{y} \in W_{\tilde{C}}
+$
+
+i.e., $\tilde{A}_\phi$ is corresponding to the mapping:
+$
+\phi_{\tilde{C}\tilde{B}}
+$\\
+\newline
+$\Xi_{CC}, \, \psi_{BB}$ are called \underline{Identity mappings} ${id}_W$ \& ${id}_V$ as they mapped the vectors into the same vector space only but with different basis.\\
+\newline
+\textbf{Definition:} Two matrices $A, \tilde{A} \in \mathbb{R}^{m \times n}$ are equivalent to each other if $\exists$ invertible/regular matrices $S \in \mathbb{R}^{n \times n}$ and $T \in \mathbb{R}^{m \times m}$ such that:
+$$
+\tilde{A} = T^{-1} A S \quad \equiv\quad \tilde{A} =T(A(Sx))
+$$
+\newline
+\textbf{Definition:} Two equivalent matrices $A, \tilde{A} \in \mathbb{R}^{n \times n}$ are said to be similar if $\exists$ invertible/regular matrix $S \in \mathbb{R}^{n \times n}$ such that:
+$$
+\tilde{A} = S^{-1} A S
+$$
+\\
+Also, let there be three vector spaces $V, W, X$.  
+And we have the following linear mappings:
+$$
+\phi : V \rightarrow W \quad ; \quad \psi : W \rightarrow X
+\text{ then,}
+$$
+$$
+\psi \circ \phi : V \rightarrow X \quad \text{is also a linear mapping.}
+$$
+\\
+Let $A_\phi$ be the transformation matrix corresponding to $\phi$,  
+and $A_\psi$ correspond to $\psi$, then:
+$$
+A_{\psi \circ \phi} = A_\psi A_\phi
+$$
+will be the transformation matrix corresponding to the mapping $\psi \circ \phi$.
+
+\end{document}
+
+
